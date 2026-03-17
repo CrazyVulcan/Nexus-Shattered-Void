@@ -46,6 +46,76 @@
       flex-wrap: wrap;
       background: rgba(0,0,0,0.15);
     }
+    .feature-input-row {
+      display: flex;
+      gap: var(--sp-2);
+      margin-bottom: var(--sp-3);
+    }
+    .feature-input-row .form-input {
+      flex: 1;
+    }
+    .feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-2);
+    }
+    .feature-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--sp-2);
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.15);
+      padding: 0.45rem 0.55rem;
+      font-size: 0.82rem;
+    }
+    .feature-item button {
+      flex-shrink: 0;
+    }
+
+    @page {
+      size: A4 portrait;
+      margin: 10mm;
+    }
+    @media print {
+      body, .page-wrapper, .page-content {
+        background: #fff !important;
+      }
+      .builder-layout {
+        display: block;
+        min-height: auto;
+      }
+      .builder-col {
+        border: 1px solid #111;
+        margin-bottom: 8mm;
+        break-inside: avoid;
+      }
+      .builder-actions,
+      #save-fleet-btn,
+      #load-fleet-btn,
+      #export-btn,
+      #share-btn,
+      #print-ssd-btn,
+      #add-feature-btn,
+      .feature-item button,
+      .tab-btn {
+        display: none !important;
+      }
+      .tab-panel {
+        display: block !important;
+      }
+      .tab-panel:not(.active) {
+        display: none !important;
+      }
+      .builder-col-body {
+        overflow: visible;
+      }
+      .total-cost-display {
+        border-top: 1px solid #111;
+      }
+    }
+
     @media (max-width: 1100px) {
       .builder-layout {
         grid-template-columns: 260px 1fr;
@@ -154,12 +224,23 @@
               <span style="color:var(--color-text-muted);font-size:0.85rem">None equipped</span>
             </div>
           </div>
+          <div class="build-summary-section" style="margin-top:var(--sp-5)">
+            <div class="build-summary-label">SSD Features</div>
+            <div class="feature-input-row">
+              <input id="feature-input" class="form-input" type="text" maxlength="80" placeholder="Add custom SSD feature">
+              <button class="btn btn-secondary btn-sm" id="add-feature-btn">Add</button>
+            </div>
+            <div id="summary-features" class="feature-list">
+              <span style="color:var(--color-text-muted);font-size:0.85rem">No custom features</span>
+            </div>
+          </div>
         </div>
         <div class="total-cost-display">
           <span class="total-cost-label">Total Cost</span>
           <span class="total-cost-value"><span id="total-cost">0</span> pts</span>
         </div>
         <div class="builder-actions">
+          <button class="btn btn-ghost btn-sm" id="print-ssd-btn">🖨️ Print SSD (A4)</button>
           <button class="btn btn-primary btn-sm" id="export-btn">📤 Export</button>
           <button class="btn btn-secondary btn-sm" id="share-btn">🔗 Share</button>
         </div>

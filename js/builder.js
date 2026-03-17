@@ -15,6 +15,7 @@ const state = {
   equippedWeapons: [],
   equippedModules: [],
   equippedUpgrades: [],
+  customFeatures: [],
 };
 
 // ── Toast ────────────────────────────────────────────────────
@@ -295,6 +296,53 @@ function updateSummary() {
 
   renderList('summary-weapons', state.equippedWeapons);
   renderList('summary-modules', state.equippedModules);
+
+  const featureEl = $('summary-features');
+  if (featureEl) {
+    if (state.customFeatures.length === 0) {
+      featureEl.innerHTML = '<span style="color:var(--color-text-muted);font-size:0.85rem">No custom features</span>';
+    } else {
+      featureEl.innerHTML = state.customFeatures.map((feature, index) => `
+        <div class="feature-item">
+          <span>${feature}</span>
+          <button class="btn btn-danger btn-sm" data-feature-remove="${index}">Remove</button>
+        </div>
+      `).join('');
+      featureEl.querySelectorAll('[data-feature-remove]').forEach(btn => {
+        btn.addEventListener('click', () => removeCustomFeature(Number(btn.dataset.featureRemove)));
+      });
+    }
+  }
+}
+
+function addCustomFeature() {
+  const input = $('feature-input');
+  if (!input) return;
+  const value = input.value.trim();
+  if (!value) {
+    showToast('Enter a feature name first.', 'warning');
+    return;
+  }
+  if (state.customFeatures.length >= 12) {
+    showToast('Maximum 12 custom features per SSD.', 'warning');
+    return;
+  }
+  state.customFeatures.push(value);
+  input.value = '';
+  updateSummary();
+}
+
+function removeCustomFeature(index) {
+  state.customFeatures = state.customFeatures.filter((_, i) => i !== index);
+  updateSummary();
+}
+
+function printSSD() {
+  if (!state.selectedShip) {
+    showToast('Select a ship hull before printing.', 'warning');
+    return;
+  }
+  window.print();
 }
 
 // ── Build JSON object ─────────────────────────────────────────
@@ -306,6 +354,7 @@ function buildExportObject() {
     weapons: state.equippedWeapons.map(w => w.id),
     modules: state.equippedModules.map(m => m.id),
     upgrades: state.equippedUpgrades.map(u => u.id),
+    customFeatures: state.customFeatures,
     totalCost: totalCost(),
     exportedAt: new Date().toISOString(),
   };
@@ -343,6 +392,7 @@ function loadFleet() {
     }
     state.equippedWeapons = fleet.weapons.map(id => state.weapons.find(w => w.id === id)).filter(Boolean);
     state.equippedModules = fleet.modules.map(id => state.modules.find(m => m.id === id)).filter(Boolean);
+    state.customFeatures = Array.isArray(fleet.customFeatures) ? fleet.customFeatures : [];
     updateSummary();
     renderActiveTab();
     showToast(`Fleet loaded: ${fleet.shipName || ship?.name}`, 'success');
@@ -418,6 +468,7 @@ function loadFromURL() {
     if (ship) { state.selectedShip = ship; $('ship-select').value = ship.id; renderShipStats(); }
     state.equippedWeapons = (fleet.weapons || []).map(id => state.weapons.find(w => w.id === id)).filter(Boolean);
     state.equippedModules = (fleet.modules || []).map(id => state.modules.find(m => m.id === id)).filter(Boolean);
+    state.customFeatures = Array.isArray(fleet.customFeatures) ? fleet.customFeatures : [];
     updateSummary();
     renderActiveTab();
     showToast('Build loaded from shared link!', 'success');
@@ -447,6 +498,7 @@ function wireControls() {
     state.equippedWeapons = [];
     state.equippedModules = [];
     state.equippedUpgrades = [];
+    state.customFeatures = [];
     renderShipDropdown();
     renderShipStats();
     updateSummary();
@@ -458,6 +510,7 @@ function wireControls() {
     state.equippedWeapons = [];
     state.equippedModules = [];
     state.equippedUpgrades = [];
+    state.customFeatures = [];
     renderShipStats();
     updateSummary();
     renderActiveTab();
@@ -467,6 +520,14 @@ function wireControls() {
   $('load-fleet-btn')?.addEventListener('click', loadFleet);
   $('export-btn')?.addEventListener('click', openExportModal);
   $('share-btn')?.addEventListener('click', shareBuild);
+  $('print-ssd-btn')?.addEventListener('click', printSSD);
+  $('add-feature-btn')?.addEventListener('click', addCustomFeature);
+  $('feature-input')?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      addCustomFeature();
+    }
+  });
 }
 
 // ── Init ──────────────────────────────────────────────────────
