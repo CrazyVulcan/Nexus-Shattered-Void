@@ -3,226 +3,222 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ship Builder — NEXUS: Shattered Void</title>
-  <meta name="description" content="Build custom fleet lists for Nexus: Shattered Void. Select hulls, equip weapons and modules, calculate point costs.">
+  <title>SSD Builder — NEXUS: Shattered Void</title>
+  <meta name="description" content="Build and print Star Ship Displays (SSD) for Nexus: Shattered Void.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/global.css">
   <link rel="stylesheet" href="../css/components.css">
   <style>
-    .builder-layout {
+    :root { --sheet-line: #1f1f1f; --sheet-bg: #f4f4f4; }
+    .ssd-page { padding: var(--sp-5); max-width: 1200px; margin: 0 auto; }
+    .builder-toolbar {
       display: grid;
-      grid-template-columns: 280px 1fr 280px;
-      min-height: calc(100vh - var(--nav-height));
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: var(--sp-3);
+      margin-bottom: var(--sp-4);
+      align-items: end;
     }
-    .builder-col {
-      border-right: 1px solid var(--color-border);
-      display: flex;
-      flex-direction: column;
-    }
-    .builder-col:last-child { border-right: none; }
-    .builder-col-header {
-      padding: var(--sp-4) var(--sp-5);
-      border-bottom: 1px solid var(--color-border);
-      background: rgba(0,0,0,0.2);
+    .toolbar-actions { display: flex; gap: var(--sp-2); flex-wrap: wrap; justify-content: flex-end; }
+
+    .ssd-sheet {
+      background: var(--sheet-bg);
+      border: 2px solid var(--sheet-line);
+      color: #111;
+      width: 100%;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 8mm;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
       font-family: var(--font-mono);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--color-text-muted);
-      display: flex;
+    }
+    .sheet-header {
+      display: grid;
+      grid-template-columns: 2fr auto 1fr;
       align-items: center;
-      justify-content: space-between;
-    }
-    .builder-col-body {
-      flex: 1;
-      padding: var(--sp-5);
-      overflow-y: auto;
-    }
-    .builder-actions {
-      padding: var(--sp-4) var(--sp-5);
-      border-top: 1px solid var(--color-border);
-      display: flex;
-      gap: var(--sp-2);
-      flex-wrap: wrap;
-      background: rgba(0,0,0,0.15);
-    }
-    .feature-input-row {
-      display: flex;
-      gap: var(--sp-2);
+      gap: var(--sp-3);
+      border-bottom: 2px solid var(--sheet-line);
+      padding-bottom: var(--sp-2);
       margin-bottom: var(--sp-3);
     }
-    .feature-input-row .form-input {
-      flex: 1;
+    .sheet-title-input {
+      width: 100%;
+      border: 1px solid var(--sheet-line);
+      background: white;
+      color: #111;
+      font-size: 1.25rem;
+      font-weight: 700;
+      padding: 0.35rem 0.5rem;
+      text-transform: uppercase;
     }
-    .feature-list {
-      display: flex;
-      flex-direction: column;
-      gap: var(--sp-2);
+    .sheet-subtitle { font-size: 0.9rem; font-weight: 700; margin-top: 2px; }
+    .fp-display { font-size: 2rem; font-weight: 800; text-align: center; }
+    .faction-display { text-align: right; font-size: 0.95rem; font-weight: 700; text-transform: uppercase; }
+
+    .sheet-body { display: grid; grid-template-columns: 1.25fr 1fr; gap: var(--sp-3); }
+    .left-grid { display: grid; gap: var(--sp-3); }
+    .subsystem {
+      border: 1px solid var(--sheet-line);
+      padding: var(--sp-2);
+      background: rgba(255,255,255,0.65);
     }
+    .subsystem-header { display: flex; justify-content: space-between; margin-bottom: var(--sp-2); font-weight: 700; }
+    .track-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 4px; }
+    .track-box {
+      appearance: none;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      margin: 0;
+      border: 1px solid #1f1f1f;
+      background: #fff;
+      cursor: pointer;
+    }
+    .track-box:checked { background: #111; }
+
+    .center-panel {
+      border: 1px solid var(--sheet-line);
+      background: rgba(255,255,255,0.65);
+      padding: var(--sp-3);
+    }
+    .silhouette {
+      border: 1px solid var(--sheet-line);
+      height: 180px;
+      display: grid;
+      place-items: center;
+      margin-bottom: var(--sp-3);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      background: repeating-linear-gradient(45deg, #f7f7f7, #f7f7f7 6px, #efefef 6px, #efefef 12px);
+    }
+    .stat-line { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-2); margin-bottom: var(--sp-3); }
+    .stat-chip { border: 1px solid var(--sheet-line); padding: 0.4rem; text-align: center; font-weight: 700; background: #fff; }
+
+    .weapon-list { display: grid; gap: var(--sp-3); }
+    .weapon-slot {
+      border: 1px solid var(--sheet-line);
+      background: rgba(255,255,255,0.65);
+      padding: var(--sp-2);
+    }
+    .weapon-slot-header { font-weight: 700; margin-bottom: var(--sp-2); }
+    .weapon-meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-top: 6px; }
+    .weapon-meta div { border: 1px solid var(--sheet-line); padding: 0.2rem 0.35rem; background: #fff; font-size: 0.8rem; }
+
+    .feature-add { display: flex; gap: var(--sp-2); margin-top: var(--sp-2); }
+    .feature-list { margin-top: var(--sp-2); display: grid; gap: 4px; }
     .feature-item {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      gap: var(--sp-2);
-      border: 1px solid var(--color-border);
-      border-radius: 4px;
-      background: rgba(0, 0, 0, 0.15);
-      padding: 0.45rem 0.55rem;
-      font-size: 0.82rem;
-    }
-    .feature-item button {
-      flex-shrink: 0;
+      align-items: center;
+      border: 1px solid var(--sheet-line);
+      background: #fff;
+      padding: 0.25rem 0.45rem;
+      font-size: 0.8rem;
     }
 
-    @page {
-      size: A4 portrait;
-      margin: 10mm;
+    .sheet-footer {
+      margin-top: var(--sp-3);
+      border-top: 1px solid var(--sheet-line);
+      padding-top: var(--sp-2);
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      text-transform: uppercase;
     }
+
+    @media (max-width: 980px) {
+      .builder-toolbar { grid-template-columns: 1fr 1fr; }
+      .sheet-body { grid-template-columns: 1fr; }
+    }
+
+    @page { size: A4 portrait; margin: 8mm; }
     @media print {
-      body, .page-wrapper, .page-content {
-        background: #fff !important;
-      }
-      .builder-layout {
-        display: block;
-        min-height: auto;
-      }
-      .builder-col {
-        border: 1px solid #111;
-        margin-bottom: 8mm;
-        break-inside: avoid;
-      }
-      .builder-actions,
-      #save-fleet-btn,
-      #load-fleet-btn,
-      #export-btn,
-      #share-btn,
-      #print-ssd-btn,
-      #add-feature-btn,
-      .feature-item button,
-      .tab-btn {
-        display: none !important;
-      }
-      .tab-panel {
-        display: block !important;
-      }
-      .tab-panel:not(.active) {
-        display: none !important;
-      }
-      .builder-col-body {
-        overflow: visible;
-      }
-      .total-cost-display {
-        border-top: 1px solid #111;
-      }
-    }
-
-    @media (max-width: 1100px) {
-      .builder-layout {
-        grid-template-columns: 260px 1fr;
-      }
-      .builder-col:last-child {
-        grid-column: 1 / -1;
-        border-top: 1px solid var(--color-border);
-        border-right: none;
-      }
-    }
-    @media (max-width: 768px) {
-      .builder-layout { grid-template-columns: 1fr; }
-      .builder-col { border-right: none; border-bottom: 1px solid var(--color-border); }
+      body, .page-wrapper, .page-content { background: #fff !important; }
+      .ssd-page { padding: 0; max-width: none; }
+      .builder-toolbar, .btn-remove-feature { display: none !important; }
+      .ssd-sheet { box-shadow: none; max-width: none; width: 100%; padding: 6mm; }
     }
   </style>
 </head>
 <body class="page-wrapper">
   <div class="page-content">
-    <div class="builder-layout">
+    <main class="ssd-page">
+      <section class="builder-toolbar">
+        <div class="form-group">
+          <label class="form-label" for="faction-select">Faction</label>
+          <select id="faction-select" class="form-select"></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="ship-select">Hull</label>
+          <select id="ship-select" class="form-select"></select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="ship-name-input">SSD Name</label>
+          <input id="ship-name-input" class="form-input" type="text" maxlength="40" placeholder="AKIRA CLASS">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="ship-type-input">Class / Type</label>
+          <input id="ship-type-input" class="form-input" type="text" maxlength="40" placeholder="Battle Cruiser">
+        </div>
+        <div class="toolbar-actions">
+          <button id="save-sheet-btn" class="btn btn-secondary btn-sm">💾 Save</button>
+          <button id="load-sheet-btn" class="btn btn-ghost btn-sm">📂 Load</button>
+          <button id="print-sheet-btn" class="btn btn-primary btn-sm">🖨️ Print A4</button>
+        </div>
+      </section>
 
-      <!-- LEFT: Faction + Hull selection -->
-      <div class="builder-col">
-        <div class="builder-col-header">
-          <span>Fleet Configuration</span>
-        </div>
-        <div class="builder-col-body">
-          <div class="form-group">
-            <label class="form-label" for="faction-select">Faction</label>
-            <select class="form-select" id="faction-select">
-              <option value="">— Loading… —</option>
-            </select>
+      <section class="ssd-sheet" id="ssd-sheet">
+        <header class="sheet-header">
+          <div>
+            <input id="sheet-title" class="sheet-title-input" type="text" value="Unnamed Class">
+            <div class="sheet-subtitle" id="sheet-subtitle">No Hull Selected</div>
           </div>
-          <div class="form-group">
-            <label class="form-label" for="ship-select">Ship Hull</label>
-            <select class="form-select" id="ship-select">
-              <option value="">— Select faction first —</option>
-            </select>
-          </div>
-          <div id="ship-stats-panel">
-            <div class="empty-state">
-              <div class="empty-state-icon">🚀</div>
-              <h3>No ship selected</h3>
-              <p>Choose a faction and hull to begin building.</p>
-            </div>
-          </div>
-        </div>
-        <div class="builder-actions">
-          <button class="btn btn-secondary btn-sm" id="save-fleet-btn">💾 Save Fleet</button>
-          <button class="btn btn-ghost btn-sm" id="load-fleet-btn">📂 Load Fleet</button>
-        </div>
-      </div>
+          <div class="fp-display"><span id="sheet-fp">0</span> FP</div>
+          <div class="faction-display" id="sheet-faction">Unaligned</div>
+        </header>
 
-      <!-- MIDDLE: Weapons / Modules tabs -->
-      <div class="builder-col">
-        <div class="builder-col-header">
-          <span>Equipment</span>
-        </div>
-        <div class="builder-col-body">
-          <div class="tabs">
-            <button class="tab-btn active" data-tab="weapons">⚔️ Weapons</button>
-            <button class="tab-btn" data-tab="modules">🔧 Modules</button>
-            <button class="tab-btn" data-tab="upgrades">⬆️ Upgrades</button>
+        <div class="sheet-body">
+          <div class="left-grid">
+            <article class="subsystem">
+              <div class="subsystem-header"><span>1-3 Structure</span><span id="structure-total">0</span></div>
+              <div id="track-structure" class="track-grid"></div>
+            </article>
+            <article class="subsystem">
+              <div class="subsystem-header"><span>1-2 Engineering</span><span id="engineering-total">0</span></div>
+              <div id="track-engineering" class="track-grid"></div>
+            </article>
+            <article class="subsystem">
+              <div class="subsystem-header"><span>3-4 Weapons</span><span id="weapons-total">0</span></div>
+              <div id="track-weapons" class="track-grid"></div>
+            </article>
+            <article class="subsystem">
+              <div class="subsystem-header"><span>5-6 Systems</span><span id="systems-total">0</span></div>
+              <div id="track-systems" class="track-grid"></div>
+            </article>
           </div>
-          <div id="tab-weapons" class="tab-panel active">
-            <div class="empty-state">
-              <div class="empty-state-icon">🔒</div>
-              <h3>Select a ship first</h3>
-            </div>
-          </div>
-          <div id="tab-modules" class="tab-panel">
-            <div class="empty-state">
-              <div class="empty-state-icon">🔒</div>
-              <h3>Select a ship first</h3>
-            </div>
-          </div>
-          <div id="tab-upgrades" class="tab-panel">
-            <div class="empty-state">
-              <div class="empty-state-icon">⚙️</div>
-              <h3>Upgrades Coming Soon</h3>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <!-- RIGHT: Build Summary -->
-      <div class="builder-col">
-        <div class="builder-col-header">
-          <span>Build Summary</span>
-        </div>
-        <div class="builder-col-body">
-          <div class="build-summary-section" style="margin-bottom:var(--sp-5)">
-            <div class="build-summary-label">Hull</div>
-            <div id="summary-ship">
-              <span style="color:var(--color-text-muted);font-size:0.85rem">No hull selected</span>
-            </div>
-          </div>
-          <div class="build-summary-section" style="margin-bottom:var(--sp-5)">
-            <div class="build-summary-label">Weapons</div>
-            <div id="summary-weapons" class="equipped-list">
-              <span style="color:var(--color-text-muted);font-size:0.85rem">None equipped</span>
-            </div>
-          </div>
-          <div class="build-summary-section">
-            <div class="build-summary-label">Modules</div>
-            <div id="summary-modules" class="equipped-list">
-              <span style="color:var(--color-text-muted);font-size:0.85rem">None equipped</span>
-            </div>
+          <div class="right-grid">
+            <article class="center-panel">
+              <div class="silhouette">Ship Silhouette Area</div>
+              <div class="stat-line">
+                <div class="stat-chip">SPD <span id="stat-speed">0</span></div>
+                <div class="stat-chip">AGI <span id="stat-agility">0</span></div>
+                <div class="stat-chip">SNS <span id="stat-sensors">0</span></div>
+              </div>
+              <div class="stat-line">
+                <div class="stat-chip">HULL <span id="stat-hull">0</span></div>
+                <div class="stat-chip">SHD <span id="stat-shields">0</span></div>
+                <div class="stat-chip">CREW <span id="stat-crew">0</span></div>
+              </div>
+
+              <div class="subsystem-header"><span>SSD Features</span><span id="feature-count">0</span></div>
+              <div class="feature-add">
+                <input id="feature-input" class="form-input" type="text" maxlength="80" placeholder="Add feature (ex: FTL Drive)">
+                <button id="add-feature-btn" class="btn btn-secondary btn-sm">Add</button>
+              </div>
+              <div id="feature-list" class="feature-list"></div>
+            </article>
+
+            <article class="weapon-list" id="weapon-list"></article>
           </div>
           <div class="build-summary-section" style="margin-top:var(--sp-5)">
             <div class="build-summary-label">SSD Features</div>
@@ -235,18 +231,13 @@
             </div>
           </div>
         </div>
-        <div class="total-cost-display">
-          <span class="total-cost-label">Total Cost</span>
-          <span class="total-cost-value"><span id="total-cost">0</span> pts</span>
-        </div>
-        <div class="builder-actions">
-          <button class="btn btn-ghost btn-sm" id="print-ssd-btn">🖨️ Print SSD (A4)</button>
-          <button class="btn btn-primary btn-sm" id="export-btn">📤 Export</button>
-          <button class="btn btn-secondary btn-sm" id="share-btn">🔗 Share</button>
-        </div>
-      </div>
 
-    </div>
+        <footer class="sheet-footer">
+          <span>Nexus: Shattered Void — Starship Display Builder</span>
+          <span id="print-date"></span>
+        </footer>
+      </section>
+    </main>
   </div>
 
   <script type="module" src="../js/builder.js"></script>
