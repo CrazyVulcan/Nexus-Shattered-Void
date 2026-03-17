@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <radialGradient id="glowGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#00d4ff" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#0a0a1a" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="64" height="64" rx="8" fill="#0a0a1a"/>
+
+  <!-- Glow halo -->
+  <circle cx="32" cy="32" r="28" fill="url(#glowGrad)"/>
+
+  <!-- Outer ring -->
+  <circle cx="32" cy="32" r="26" fill="none" stroke="#00d4ff" stroke-width="1.5" stroke-opacity="0.6"/>
+
+  <!-- Inner ring -->
+  <circle cx="32" cy="32" r="18" fill="none" stroke="#8b00ff" stroke-width="1" stroke-opacity="0.7" stroke-dasharray="4 3"/>
+
+  <!-- Center void circle -->
+  <circle cx="32" cy="32" r="8" fill="#0a0a1a" stroke="#00d4ff" stroke-width="1.5"/>
+
+  <!-- N letter -->
+  <text x="32" y="37" font-family="monospace" font-size="11" font-weight="900"
+        fill="#00d4ff" text-anchor="middle" filter="url(#glow)">N</text>
+
+  <!-- Cardinal tick marks -->
+  <line x1="32" y1="4"  x2="32" y2="10" stroke="#00d4ff" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="32" y1="54" x2="32" y2="60" stroke="#00d4ff" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="4"  y1="32" x2="10" y2="32" stroke="#00d4ff" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="54" y1="32" x2="60" y2="32" stroke="#00d4ff" stroke-width="1.5" stroke-linecap="round"/>
+
+  <!-- Diagonal ticks (smaller) -->
+  <line x1="12" y1="12" x2="16" y2="16" stroke="#8b00ff" stroke-width="1" stroke-linecap="round" opacity="0.7"/>
+  <line x1="52" y1="12" x2="48" y2="16" stroke="#8b00ff" stroke-width="1" stroke-linecap="round" opacity="0.7"/>
+  <line x1="12" y1="52" x2="16" y2="48" stroke="#8b00ff" stroke-width="1" stroke-linecap="round" opacity="0.7"/>
+  <line x1="52" y1="52" x2="48" y2="48" stroke="#8b00ff" stroke-width="1" stroke-linecap="round" opacity="0.7"/>
+</svg>

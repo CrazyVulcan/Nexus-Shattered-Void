@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Community — NEXUS: Shattered Void</title>
+  <meta name="description" content="Community fleet gallery and shared builds for Nexus: Shattered Void.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/components.css">
+</head>
+<body class="page-wrapper">
+  <div class="page-content">
+    <div class="container">
+      <div class="section">
+        <!-- Header -->
+        <div class="flex-between" style="flex-wrap:wrap;gap:var(--sp-4);margin-bottom:var(--sp-10)">
+          <div>
+            <div style="font-family:var(--font-mono);font-size:0.8rem;color:var(--color-cyan);text-transform:uppercase;letter-spacing:0.2em;margin-bottom:var(--sp-3)">👥 Community Hub</div>
+            <h1 style="margin-bottom:var(--sp-3)">Fleet <span style="color:var(--color-cyan)">Gallery</span></h1>
+            <p style="color:var(--color-text-dim);max-width:540px">Share your fleet builds with the community. Browse creations from other commanders across the void.</p>
+          </div>
+          <div style="display:flex;gap:var(--sp-3);align-items:flex-end;flex-wrap:wrap">
+            <button class="btn btn-primary" id="submit-build-btn">📤 Submit Your Build</button>
+            <a href="../pages/builder.html" class="btn btn-secondary">🛠️ Open Builder</a>
+          </div>
+        </div>
+
+        <!-- Filter bar -->
+        <div style="display:flex;gap:var(--sp-3);flex-wrap:wrap;margin-bottom:var(--sp-8);padding:var(--sp-4) var(--sp-5);background:var(--color-bg-card);border:1px solid var(--color-border);border-radius:var(--radius-md)">
+          <span style="color:var(--color-text-muted);font-size:0.8rem;font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.1em;display:flex;align-items:center;margin-right:var(--sp-2)">Filter:</span>
+          <button class="btn btn-sm btn-secondary active-filter" data-filter="all">All Factions</button>
+          <button class="btn btn-sm btn-ghost" data-filter="terran-republic">Terran Republic</button>
+          <button class="btn btn-sm btn-ghost" data-filter="void-syndicate">Void Syndicate</button>
+          <button class="btn btn-sm btn-ghost" data-filter="chorus-collective">Chorus Collective</button>
+          <button class="btn btn-sm btn-ghost" data-filter="iron-dominion">Iron Dominion</button>
+        </div>
+
+        <!-- Placeholder community builds -->
+        <div class="grid grid-3" id="community-grid">
+
+          <!-- Example build 1 -->
+          <div class="card" data-faction="terran-republic">
+            <div class="card-header" style="display:flex;align-items:flex-start;justify-content:space-between">
+              <div>
+                <div style="font-size:0.75rem;color:var(--color-text-muted);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px">Terran Republic</div>
+                <h3 style="font-size:1rem">Iron Vanguard Strike Force</h3>
+              </div>
+              <span class="cost-badge">312 pts</span>
+            </div>
+            <div style="margin-bottom:var(--sp-4)">
+              <div style="font-size:0.8rem;color:var(--color-text-dim);margin-bottom:var(--sp-3)">
+                <strong style="color:var(--color-text)">Ships:</strong> Sovereign Cruiser, Ironclad Destroyer × 2, Valiant Frigate
+              </div>
+              <div style="font-size:0.8rem;color:var(--color-text-dim)">
+                <strong style="color:var(--color-text)">Strategy:</strong> Mid-range sustained fire. Frigates screen while Cruiser and Destroyers lay down coordinated volleys.
+              </div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:var(--sp-4)">
+              <span class="badge badge-blue">Fleet Doctrine</span>
+              <span class="badge badge-gray">Balanced</span>
+              <span class="badge badge-gray">Mid-Range</span>
+            </div>
+            <div class="card-footer" style="display:flex;align-items:center;justify-content:space-between">
+              <span style="font-size:0.8rem;color:var(--color-text-muted);font-family:var(--font-mono)">by Commander_Orvax</span>
+              <button class="btn btn-ghost btn-sm" onclick="loadCommunityBuild('build-1')">Load Build</button>
+            </div>
+          </div>
+
+          <!-- Example build 2 -->
+          <div class="card" data-faction="void-syndicate">
+            <div class="card-header" style="display:flex;align-items:flex-start;justify-content:space-between">
+              <div>
+                <div style="font-size:0.75rem;color:var(--color-text-muted);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px">Void Syndicate</div>
+                <h3 style="font-size:1rem">Ghost Protocol Swarm</h3>
+              </div>
+              <span class="cost-badge">295 pts</span>
+            </div>
+            <div style="margin-bottom:var(--sp-4)">
+              <div style="font-size:0.8rem;color:var(--color-text-dim);margin-bottom:var(--sp-3)">
+                <strong style="color:var(--color-text)">Ships:</strong> Wraith Stealth Cruiser, Jackal Raider × 3, Phantom Interceptor × 2
+              </div>
+              <div style="font-size:0.8rem;color:var(--color-text-dim)">
+                <strong style="color:var(--color-text)">Strategy:</strong> Maximum target saturation. Interceptors disrupt, Raiders pressure flanks, Wraith eliminates high-value targets.
+              </div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:var(--sp-4)">
+              <span class="badge badge-purple">Shadow Protocol</span>
+              <span class="badge badge-gray">Aggressive</span>
+              <span class="badge badge-gray">Speed Rush</span>
+            </div>
+            <div class="card-footer" style="display:flex;align-items:center;justify-content:space-between">
+              <span style="font-size:0.8rem;color:var(--color-text-muted);font-family:var(--font-mono)">by VoidRunner_77</span>
+              <button class="btn btn-ghost btn-sm" onclick="loadCommunityBuild('build-2')">Load Build</button>
+            </div>
+          </div>
+
+          <!-- Example build 3 -->
+          <div class="card" data-faction="iron-dominion">
+            <div class="card-header" style="display:flex;align-items:flex-start;justify-content:space-between">
+              <div>
+                <div style="font-size:0.75rem;color:var(--color-text-muted);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px">Iron Dominion</div>
+                <h3 style="font-size:1rem">The Unyielding Wall</h3>
+              </div>
+              <span class="cost-badge">480 pts</span>
+            </div>
+            <div style="margin-bottom:var(--sp-4)">
+              <div style="font-size:0.8rem;color:var(--color-text-dim);margin-bottom:var(--sp-3)">
+                <strong style="color:var(--color-text)">Ships:</strong> Conquest Dreadnought, Vanguard Battle Frigate × 4
+              </div>
+              <div style="font-size:0.8rem;color:var(--color-text-dim)">
+                <strong style="color:var(--color-text)">Strategy:</strong> Pure attrition. The Dreadnought locks down the center and suppresses everything within 8". Frigates absorb damage and screen.
+              </div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:var(--sp-4)">
+              <span class="badge badge-orange">Unyielding</span>
+              <span class="badge badge-gray">Siege</span>
+              <span class="badge badge-gray">500 pts</span>
+            </div>
+            <div class="card-footer" style="display:flex;align-items:center;justify-content:space-between">
+              <span style="font-size:0.8rem;color:var(--color-text-muted);font-family:var(--font-mono)">by IronFist_Admiral</span>
+              <button class="btn btn-ghost btn-sm" onclick="loadCommunityBuild('build-3')">Load Build</button>
+            </div>
+          </div>
+
+          <!-- Example build 4 -->
+          <div class="card" data-faction="chorus-collective">
+            <div class="card-header" style="display:flex;align-items:flex-start;justify-content:space-between">
+              <div>
+                <div style="font-size:0.75rem;color:var(--color-text-muted);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:4px">Chorus Collective</div>
+                <h3 style="font-size:1rem">The Living Tide</h3>
+              </div>
+              <span class="cost-badge">350 pts</span>
+            </div>
+            <div style="margin-bottom:var(--sp-4)">
+              <div style="font-size:0.8rem;color:var(--color-text-dim);margin-bottom:var(--sp-3)">
+                <strong style="color:var(--color-text)">Ships:</strong> Resonance Cruiser × 2, Bloom Spore Carrier × 2
+              </div>
+              <div style="font-size:0.8rem;color:var(--color-text-dim)">
+                <strong style="color:var(--color-text)">Strategy:</strong> Overwhelming drone production with resonance harmony field coverage. Everything stays linked for maximum bonus sharing.
+              </div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:var(--sp-4)">
+              <span class="badge badge-teal">Resonance Link</span>
+              <span class="badge badge-gray">Carrier</span>
+              <span class="badge badge-gray">Bio-Swarm</span>
+            </div>
+            <div class="card-footer" style="display:flex;align-items:center;justify-content:space-between">
+              <span style="font-size:0.8rem;color:var(--color-text-muted);font-family:var(--font-mono)">by ChorusVoice_X</span>
+              <button class="btn btn-ghost btn-sm" onclick="loadCommunityBuild('build-4')">Load Build</button>
+            </div>
+          </div>
+
+          <!-- Placeholder "submit your build" card -->
+          <div class="card" style="border-style:dashed;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;min-height:200px;cursor:pointer" id="submit-build-card">
+            <div style="font-size:2.5rem;margin-bottom:var(--sp-3);opacity:0.5">+</div>
+            <h3 style="font-size:1rem;color:var(--color-text-dim);margin-bottom:var(--sp-2)">Submit Your Build</h3>
+            <p style="font-size:0.85rem;color:var(--color-text-muted);max-width:180px">Share your fleet with the community via JSON export from the Builder.</p>
+          </div>
+        </div>
+
+        <!-- Submit modal -->
+        <div id="submit-modal" class="modal-overlay hidden">
+          <div class="modal-panel" style="max-width:500px">
+            <div class="modal-header">
+              <h2 class="modal-title">Submit Your Fleet Build</h2>
+              <button class="modal-close" id="close-submit-modal">✕</button>
+            </div>
+            <div class="modal-body">
+              <p style="color:var(--color-text-dim);font-size:0.9rem;margin-bottom:var(--sp-5)">
+                Export your build JSON from the Ship Builder, then paste it below to share with the community.
+              </p>
+              <div class="form-group">
+                <label class="form-label">Build Name</label>
+                <input class="form-input" type="text" placeholder="e.g. Ghost Protocol Swarm">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Commander Name</label>
+                <input class="form-input" type="text" placeholder="Your callsign">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Build JSON</label>
+                <textarea class="form-textarea" style="height:160px;font-family:var(--font-mono);font-size:0.78rem" placeholder='Paste exported JSON here…'></textarea>
+              </div>
+              <div class="info-panel" style="margin-top:0">
+                <span style="font-size:0.85rem;color:var(--color-text-dim)">Community gallery submissions are reviewed before publishing. This feature is currently in preview — full gallery API coming soon.</span>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-ghost btn-sm" id="close-submit-modal-2">Cancel</button>
+              <button class="btn btn-primary btn-sm" onclick="submitBuild()">Submit Build</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import init from '../js/nav.js';
+    init();
+
+    // Filter logic
+    document.querySelectorAll('[data-filter]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-filter]').forEach(b => {
+          b.classList.remove('active-filter');
+          b.className = b.className.replace('btn-secondary', 'btn-ghost');
+        });
+        btn.classList.add('active-filter');
+        btn.className = btn.className.replace('btn-ghost', 'btn-secondary');
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('#community-grid .card[data-faction]').forEach(card => {
+          card.style.display = (filter === 'all' || card.dataset.faction === filter) ? '' : 'none';
+        });
+      });
+    });
+
+    // Submit modal
+    const modal = document.getElementById('submit-modal');
+    document.getElementById('submit-build-btn').addEventListener('click', () => modal.classList.remove('hidden'));
+    document.getElementById('submit-build-card').addEventListener('click', () => modal.classList.remove('hidden'));
+    document.getElementById('close-submit-modal').addEventListener('click', () => modal.classList.add('hidden'));
+    document.getElementById('close-submit-modal-2').addEventListener('click', () => modal.classList.add('hidden'));
+    modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.add('hidden'); });
+
+    window.submitBuild = function() {
+      modal.classList.add('hidden');
+      // Toast feedback
+      let c = document.getElementById('toast-container');
+      if (!c) { c = document.createElement('div'); c.id='toast-container'; c.className='toast-container'; document.body.appendChild(c); }
+      const t = document.createElement('div');
+      t.className='toast success';
+      t.innerHTML='<span class="toast-icon">✅</span><span class="toast-msg">Build submitted for review!</span>';
+      c.appendChild(t);
+      setTimeout(()=>t.remove(), 3500);
+    };
+
+    window.loadCommunityBuild = function(id) {
+      let c = document.getElementById('toast-container');
+      if (!c) { c = document.createElement('div'); c.id='toast-container'; c.className='toast-container'; document.body.appendChild(c); }
+      const t = document.createElement('div');
+      t.className='toast info';
+      t.innerHTML='<span class="toast-icon">ℹ️</span><span class="toast-msg">Community build loading via Builder is coming soon!</span>';
+      c.appendChild(t);
+      setTimeout(()=>t.remove(), 3500);
+    };
+  </script>
+</body>
+</html>

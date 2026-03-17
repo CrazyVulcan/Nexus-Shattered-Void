@@ -1,0 +1,254 @@
+[
+  {
+    "id": "frigate-tf1",
+    "faction": "terran-republic",
+    "name": "Valiant-class Frigate",
+    "type": "Frigate",
+    "baseCost": 45,
+    "stats": {
+      "hull": 4,
+      "shields": 2,
+      "speed": 8,
+      "agility": 3,
+      "sensors": 4,
+      "crew": 2
+    },
+    "slots": {
+      "weapons": 2,
+      "modules": 2,
+      "upgrades": 1
+    },
+    "description": "The backbone of the Republic fleet. Fast, reliable, and cheap enough to field in numbers."
+  },
+  {
+    "id": "destroyer-td1",
+    "faction": "terran-republic",
+    "name": "Ironclad-class Destroyer",
+    "type": "Destroyer",
+    "baseCost": 80,
+    "stats": {
+      "hull": 7,
+      "shields": 3,
+      "speed": 6,
+      "agility": 2,
+      "sensors": 4,
+      "crew": 4
+    },
+    "slots": {
+      "weapons": 3,
+      "modules": 3,
+      "upgrades": 2
+    },
+    "description": "A heavy escort vessel capable of independent patrol missions."
+  },
+  {
+    "id": "cruiser-tc1",
+    "faction": "terran-republic",
+    "name": "Sovereign-class Cruiser",
+    "type": "Cruiser",
+    "baseCost": 150,
+    "stats": {
+      "hull": 12,
+      "shields": 5,
+      "speed": 5,
+      "agility": 1,
+      "sensors": 6,
+      "crew": 8
+    },
+    "slots": {
+      "weapons": 5,
+      "modules": 5,
+      "upgrades": 3
+    },
+    "description": "The command ship of Republic battle groups. Heavily armed and armored."
+  },
+  {
+    "id": "carrier-tfc1",
+    "faction": "terran-republic",
+    "name": "Aegis-class Fleet Carrier",
+    "type": "Carrier",
+    "baseCost": 180,
+    "stats": {
+      "hull": 14,
+      "shields": 6,
+      "speed": 4,
+      "agility": 1,
+      "sensors": 8,
+      "crew": 12
+    },
+    "slots": {
+      "weapons": 3,
+      "modules": 7,
+      "upgrades": 4
+    },
+    "description": "A massive fleet support ship that deploys wings of fighter drones and coordinates fleet-wide tactics."
+  },
+  {
+    "id": "dreadnought-tdn1",
+    "faction": "terran-republic",
+    "name": "Colossus-class Dreadnought",
+    "type": "Dreadnought",
+    "baseCost": 260,
+    "stats": {
+      "hull": 22,
+      "shields": 9,
+      "speed": 3,
+      "agility": 0,
+      "sensors": 7,
+      "crew": 18
+    },
+    "slots": {
+      "weapons": 7,
+      "modules": 7,
+      "upgrades": 5
+    },
+    "description": "Humanity's ultimate warship. The Colossus-class turns the tide of any engagement it joins."
+  },
+  {
+    "id": "interceptor-vi1",
+    "faction": "void-syndicate",
+    "name": "Phantom-class Interceptor",
+    "type": "Interceptor",
+    "baseCost": 35,
+    "stats": {
+      "hull": 2,
+      "shields": 1,
+      "speed": 14,
+      "agility": 5,
+      "sensors": 3,
+      "crew": 1
+    },
+    "slots": {
+      "weapons": 2,
+      "modules": 1,
+      "upgrades": 1
+    },
+    "description": "Blazing fast and nearly invisible on sensors. Dies if you look at it wrong."
+  },
+  {
+    "id": "raider-vr1",
+    "faction": "void-syndicate",
+    "name": "Jackal-class Raider",
+    "type": "Raider",
+    "baseCost": 65,
+    "stats": {
+      "hull": 4,
+      "shields": 2,
+      "speed": 11,
+      "agility": 4,
+      "sensors": 4,
+      "crew": 3
+    },
+    "slots": {
+      "weapons": 3,
+      "modules": 2,
+      "upgrades": 2
+    },
+    "description": "The workhorse of the Syndicate fleet. Fast enough to pick its fights."
+  },
+  {
+    "id": "stealth-cruiser-vsc1",
+    "faction": "void-syndicate",
+    "name": "Wraith-class Stealth Cruiser",
+    "type": "Stealth Cruiser",
+    "baseCost": 130,
+    "stats": {
+      "hull": 8,
+      "shields": 3,
+      "speed": 9,
+      "agility": 3,
+      "sensors": 7,
+      "crew": 6
+    },
+    "slots": {
+      "weapons": 4,
+      "modules": 4,
+      "upgrades": 3
+    },
+    "description": "The Syndicate's flagship terror weapon. Appears from nowhere, strikes hard, vanishes."
+  },
+  {
+    "id": "spore-carrier-cs1",
+    "faction": "chorus-collective",
+    "name": "Bloom-class Spore Carrier",
+    "type": "Carrier",
+    "baseCost": 120,
+    "stats": {
+      "hull": 9,
+      "shields": 4,
+      "speed": 4,
+      "agility": 1,
+      "sensors": 8,
+      "crew": 0
+    },
+    "slots": {
+      "weapons": 2,
+      "modules": 6,
+      "upgrades": 2
+    },
+    "description": "A living vessel that spawns swarms of bio-drones. Its true danger lies not in its own weapons."
+  },
+  {
+    "id": "resonance-cruiser-cr1",
+    "faction": "chorus-collective",
+    "name": "Resonance-class Cruiser",
+    "type": "Cruiser",
+    "baseCost": 140,
+    "stats": {
+      "hull": 10,
+      "shields": 6,
+      "speed": 6,
+      "agility": 2,
+      "sensors": 9,
+      "crew": 0
+    },
+    "slots": {
+      "weapons": 5,
+      "modules": 5,
+      "upgrades": 2
+    },
+    "description": "Channels exotic energy frequencies as weapons. Its harmonics destabilize enemy shields."
+  },
+  {
+    "id": "battle-frigate-if1",
+    "faction": "iron-dominion",
+    "name": "Vanguard-class Battle Frigate",
+    "type": "Battle Frigate",
+    "baseCost": 60,
+    "stats": {
+      "hull": 6,
+      "shields": 3,
+      "speed": 5,
+      "agility": 1,
+      "sensors": 3,
+      "crew": 3
+    },
+    "slots": {
+      "weapons": 3,
+      "modules": 2,
+      "upgrades": 1
+    },
+    "description": "A heavily armored frigate that forms the anvil of Dominion assaults."
+  },
+  {
+    "id": "fortress-dreadnought-ifd1",
+    "faction": "iron-dominion",
+    "name": "Conquest-class Fortress Dreadnought",
+    "type": "Dreadnought",
+    "baseCost": 280,
+    "stats": {
+      "hull": 25,
+      "shields": 10,
+      "speed": 3,
+      "agility": 0,
+      "sensors": 5,
+      "crew": 20
+    },
+    "slots": {
+      "weapons": 8,
+      "modules": 8,
+      "upgrades": 5
+    },
+    "description": "A mobile space station with guns. The Dominion's ultimate expression of overwhelming force."
+  }
+]
