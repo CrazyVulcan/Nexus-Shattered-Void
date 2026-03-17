@@ -55,6 +55,7 @@ export function initRulebook() {
     tocToggle.addEventListener('click', () => {
       const collapsed = tocPanel.classList.toggle('toc-collapsed');
       tocToggle.setAttribute('aria-expanded', String(!collapsed));
+      tocToggle.textContent = collapsed ? '▼ Expand' : '▲ Collapse';
     });
   }
 }
