@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rulebook — NEXUS: Shattered Void</title>
+  <meta name="description" content="The complete rules for Nexus: Shattered Void. Fleet building, movement, combat, and more.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <style>
+    .rulebook-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: calc(100vh - var(--nav-height));
+    }
+    .toc-sidebar {
+      background: var(--color-bg-2);
+      border-right: 1px solid var(--color-border);
+      position: sticky;
+      top: var(--nav-height);
+      height: calc(100vh - var(--nav-height));
+      overflow-y: auto;
+      padding: var(--sp-5) var(--sp-3);
+    }
+    .toc-header {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--color-text-muted);
+      font-family: var(--font-mono);
+      padding: 0 var(--sp-2) var(--sp-4);
+      border-bottom: 1px solid var(--color-border);
+      margin-bottom: var(--sp-4);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .toc-toggle-btn {
+      display: none;
+      background: none;
+      border: 1px solid var(--color-border);
+      color: var(--color-text-dim);
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border-radius: var(--radius);
+      cursor: pointer;
+    }
+    .rulebook-main {
+      padding: var(--sp-10) var(--sp-10) var(--sp-16);
+      max-width: 860px;
+    }
+    .rulebook-header {
+      margin-bottom: var(--sp-12);
+      padding-bottom: var(--sp-8);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .rulebook-header h1 {
+      font-size: 2rem;
+      margin-bottom: var(--sp-3);
+    }
+    .rulebook-version {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--color-text-muted);
+      margin-bottom: var(--sp-5);
+    }
+    .toc-collapsed .toc-nav { display: none; }
+    @media (max-width: 768px) {
+      .rulebook-layout { grid-template-columns: 1fr; }
+      .toc-sidebar {
+        position: static;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--color-border);
+      }
+      .toc-toggle-btn { display: block; }
+      .rulebook-main { padding: var(--sp-6) var(--sp-5) var(--sp-12); }
+    }
+  </style>
+</head>
+<body class="page-wrapper">
+  <div class="page-content">
+    <div class="rulebook-layout">
+
+      <!-- TOC Sidebar -->
+      <aside class="toc-sidebar" id="toc-panel">
+        <div class="toc-header">
+          <span>Table of Contents</span>
+          <button class="toc-toggle-btn" id="toc-toggle" aria-expanded="true">▲ Collapse</button>
+        </div>
+        <nav class="toc-nav" aria-label="Rulebook table of contents">
+          <a href="#intro" class="toc-link">1. Introduction</a>
+          <a href="#components" class="toc-link">2. Components</a>
+          <a href="#setup" class="toc-link">3. Game Setup</a>
+          <a href="#fleet-building" class="toc-link">4. Fleet Building</a>
+          <a href="#turn-structure" class="toc-link">5. Turn Structure</a>
+          <a href="#movement" class="toc-link">6. Movement</a>
+          <a href="#combat" class="toc-link">7. Combat</a>
+          <a href="#damage" class="toc-link">8. Damage & Destruction</a>
+          <a href="#special-rules" class="toc-link">9. Special Rules</a>
+          <a href="#scenarios" class="toc-link">10. Scenarios</a>
+        </nav>
+        <div style="margin-top:var(--sp-8);padding:var(--sp-4);border-top:1px solid var(--color-border)">
+          <a href="#" class="btn btn-secondary btn-sm" style="width:100%;justify-content:center" onclick="return false" title="Download PDF (coming soon)">
+            📄 Download PDF
+          </a>
+        </div>
+      </aside>
+
+      <!-- Rulebook Content -->
+      <main class="rulebook-main" id="rulebook-main">
+        <div class="rulebook-header">
+          <h1>NEXUS: Shattered Void<br><span style="color:var(--color-cyan)">Core Rulebook</span></h1>
+          <div class="rulebook-version">VERSION 1.0 — CORE RULES</div>
+          <p style="color:var(--color-text-dim);max-width:640px;line-height:1.7">
+            Welcome to Nexus: Shattered Void. This rulebook contains everything you need to play competitive tactical fleet combat across the ruins of a shattered galaxy. Read through these rules, build your fleet, and prepare for battle.
+          </p>
+          <div style="display:flex;gap:var(--sp-3);flex-wrap:wrap;margin-top:var(--sp-5)">
+            <span class="badge badge-cyan">2–6 Players</span>
+            <span class="badge badge-gray">60–120 Min</span>
+            <span class="badge badge-gray">Ages 14+</span>
+            <span class="badge badge-purple">Core Rules v1.0</span>
+          </div>
+        </div>
+
+        <!-- Section 1 -->
+        <section class="rulebook-section" id="intro">
+          <h2>1. Introduction</h2>
+          <p>Nexus: Shattered Void is a tactical miniature fleet combat game for two to six players. Players command fleets of starships representing one of four major factions, battling for control of the Nexus Fragments—ancient shards of impossible power scattered across the ruins of the galactic core.</p>
+          <h3>Overview</h3>
+          <p>Each player builds a fleet from their chosen faction using a point budget. Fleets are made up of ship hulls equipped with weapons, modules, and upgrade cards. Players then take turns activating ships, moving them, and resolving attacks.</p>
+          <p>The game ends when one side's fleet is destroyed or when a scenario's victory condition is met. The player or team with the most victory points wins.</p>
+          <h3>Design Philosophy</h3>
+          <p>Nexus: Shattered Void is designed around three core pillars:</p>
+          <ul>
+            <li><strong>Meaningful Choices:</strong> Every decision—from fleet building to target selection—matters and carries consequences.</li>
+            <li><strong>Asymmetric Factions:</strong> Each faction has a distinct identity and playstyle that rewards mastering its particular strengths.</li>
+            <li><strong>Tactical Depth without Complexity:</strong> Rules are intuitive once learned, but create genuinely complex situations through interaction.</li>
+          </ul>
+          <div class="info-panel">
+            <strong style="color:var(--color-cyan)">Tip for New Players:</strong> We recommend starting with the Terran Republic for your first game. Their balanced playstyle is the most forgiving while you learn the rules.
+          </div>
+        </section>
+
+        <!-- Section 2 -->
+        <section class="rulebook-section" id="components">
+          <h2>2. Components</h2>
+          <p>A full Nexus: Shattered Void starter set includes the following components. The full rulebook assumes you have access to appropriate miniatures or ship tokens; this is a system-agnostic ruleset.</p>
+          <h3>Required Components</h3>
+          <ul>
+            <li>Ship models or tokens (one per ship in your fleet)</li>
+            <li>6-sided dice (d6) — at least 10 per player recommended</li>
+            <li>8-sided dice (d8) — at least 4 per player recommended</li>
+            <li>Measuring tape or ruler (in inches)</li>
+            <li>Ship record sheets (printable from the website)</li>
+            <li>Token set: Shield tokens, Damage markers, Status tokens</li>
+          </ul>
+          <h3>Optional Components</h3>
+          <ul>
+            <li>Terrain: asteroids, space stations, derelict hulks, debris fields</li>
+            <li>Scenario cards (available as free downloads)</li>
+            <li>Fleet roster sheets</li>
+          </ul>
+          <h3>Dice Notation</h3>
+          <p>This rulebook uses standard dice notation: <code>XdY</code> means roll X dice with Y faces. <code>2d6</code> means roll two six-sided dice. <code>1d8+2</code> means roll one eight-sided die and add 2 to the result.</p>
+        </section>
+
+        <!-- Section 3 -->
+        <section class="rulebook-section" id="setup">
+          <h2>3. Game Setup</h2>
+          <h3>Preparing the Battlefield</h3>
+          <p>Nexus: Shattered Void is played on a flat surface. The standard game area is <strong>48" × 48"</strong> (4' × 4'). For larger fleets or narrative scenarios, 60" × 48" is recommended.</p>
+          <ol>
+            <li>Agree on a point limit for the game (standard: 300 points; narrative: 500+; skirmish: 150).</li>
+            <li>Place terrain. Each player alternates placing one terrain piece until both agree the board is ready, or follow the scenario terrain rules.</li>
+            <li>Determine deployment zones. In standard play, each player deploys from within 8" of their table edge.</li>
+            <li>Players roll off (highest roll goes first). The winner chooses their deployment zone.</li>
+            <li>Players alternate deploying ships one at a time, starting with the player who won the roll-off.</li>
+            <li>The player who deployed last takes the first turn.</li>
+          </ol>
+          <h3>Terrain Types</h3>
+          <div class="data-table" style="overflow-x:auto;display:block">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Terrain</th>
+                  <th>Cover</th>
+                  <th>Movement</th>
+                  <th>Effect</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Asteroid Field</td><td>+1 Defense</td><td>Half Speed</td><td>Roll 1d6 on entry; on 1, take 1 damage</td></tr>
+                <tr><td>Nebula</td><td>Full Block</td><td>Normal</td><td>Sensors count as 0 inside nebula</td></tr>
+                <tr><td>Debris Field</td><td>+1 Defense</td><td>−2 Speed</td><td>No effect on entering</td></tr>
+                <tr><td>Space Station</td><td>Full Block</td><td>Impassable</td><td>Can be captured (scenario rules)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Section 4 -->
+        <section class="rulebook-section" id="fleet-building">
+          <h2>4. Fleet Building</h2>
+          <p>Before a game, each player constructs a fleet within an agreed point limit. Fleets must follow these rules:</p>
+          <h3>Fleet Construction Rules</h3>
+          <ol>
+            <li><strong>Faction Lock:</strong> All ships in a fleet must belong to the same faction. Mixed-faction fleets require scenario-specific rules.</li>
+            <li><strong>Point Limit:</strong> The combined cost of all ships and their equipment cannot exceed the agreed limit.</li>
+            <li><strong>Hull Limits:</strong> You may take any number of ships, subject to the following:<br>
+              — Maximum of 1 Dreadnought per fleet<br>
+              — Maximum of 2 Cruisers (or Stealth Cruisers) per fleet<br>
+              — No limit on Frigates, Destroyers, Raiders, or Interceptors</li>
+            <li><strong>Slot Limits:</strong> Equipment is limited by the ship's weapon/module/upgrade slots. You cannot equip more items than available slots.</li>
+            <li><strong>Faction Restrictions:</strong> Faction-restricted weapons and modules may only be equipped on ships of the listed faction.</li>
+            <li><strong>Hull Size Minimums:</strong> Some items list a minimum hull size. You cannot equip them on ships smaller than the listed size.</li>
+          </ol>
+          <h3>Ship Costs</h3>
+          <p>The cost of a ship is its <strong>Base Cost</strong> plus the <strong>cost of all equipped weapons, modules, and upgrades</strong>.</p>
+          <div class="rule-box">
+            <strong>Example Fleet (300 pts — Terran Republic)</strong>
+            Sovereign-class Cruiser (150) + Plasma Cannon (20) + Targeting Computer (18) = 188 pts<br>
+            Valiant-class Frigate × 2 (45 × 2 = 90) + Laser Battery × 2 (12 × 2 = 24) = 114 pts<br>
+            <strong>Total: 302 pts</strong> — over budget by 2! Swap one Laser Battery for a Flak Battery (8 pts) to bring it to 298 pts. ✓
+          </div>
+        </section>
+
+        <!-- Section 5 -->
+        <section class="rulebook-section" id="turn-structure">
+          <h2>5. Turn Structure</h2>
+          <p>Nexus: Shattered Void uses an <strong>alternating activation</strong> system. Players do not take entire turns at once—instead, they take turns activating individual ships.</p>
+          <h3>Round Sequence</h3>
+          <ol>
+            <li><strong>Start of Round:</strong> Resolve any "start of round" effects (e.g., Bio-Regeneration, Spore tokens).</li>
+            <li><strong>Activation Phase:</strong> Starting with the player who has Priority, alternate activating one ship each until all ships have been activated.</li>
+            <li><strong>End of Round:</strong> Resolve "end of round" effects. Recharge shields (see Shields). Check victory conditions.</li>
+          </ol>
+          <h3>Activation</h3>
+          <p>When you activate a ship, it may perform <strong>two actions</strong> in any order:</p>
+          <ul>
+            <li><strong>Move:</strong> Move the ship up to its Speed value in inches.</li>
+            <li><strong>Attack:</strong> Fire one or more weapons at an enemy ship.</li>
+            <li><strong>Boost:</strong> Move an additional half Speed (rounded down). This counts as an action.</li>
+            <li><strong>Reinforce:</strong> Spend an action to add 1 temporary Shield point (removed at end of round).</li>
+            <li><strong>Scan:</strong> Spend an action to reveal a stealthed ship within Sensors range.</li>
+          </ul>
+          <h3>Priority</h3>
+          <p>At the start of each round, both players roll 1d6 and add their fleet's highest Sensors value. The player with the higher total has <strong>Priority</strong> and activates first. On a tie, Priority passes to the player who did not have it last round.</p>
+        </section>
+
+        <!-- Section 6 -->
+        <section class="rulebook-section" id="movement">
+          <h2>6. Movement</h2>
+          <p>Movement in Nexus is measured in inches from the front of the ship's base to the front of where it ends up.</p>
+          <h3>Movement Rules</h3>
+          <ul>
+            <li>Ships may move up to their <strong>Speed</strong> value in inches.</li>
+            <li>Ships may turn freely during their move—there is no facing restriction by default.</li>
+            <li>Ships may not move through other ships (friendly or enemy) unless a special rule specifically allows it.</li>
+            <li>Ships may end their movement in contact with terrain but not inside terrain (except when using specific modules).</li>
+          </ul>
+          <h3>Agility</h3>
+          <p>A ship's <strong>Agility</strong> determines how well it can evade attacks. It is used as a defense bonus when being targeted (see Combat). High-agility ships like the Phantom-class Interceptor are hard to hit, but often have low hull and shield values to compensate.</p>
+          <h3>Overwatch</h3>
+          <p>A ship that has not yet been activated may declare <strong>Overwatch</strong> at any point during the opponent's activation. The ship makes one attack with one weapon against the activating enemy ship. The overwatch ship then counts as activated for this round (it has used its activation defensively).</p>
+          <div class="warning-panel">
+            <strong style="color:#ff7733">⚠️ Important:</strong> Ships on Overwatch may only fire at ships that move within their weapon's range during the current activation. Overwatch does not trigger on attacks—only on movement.
+          </div>
+        </section>
+
+        <!-- Section 7 -->
+        <section class="rulebook-section" id="combat">
+          <h2>7. Combat</h2>
+          <p>Combat in Nexus: Shattered Void is resolved with dice rolls. Attacking is part of a ship's activation—a ship may attack once per activation unless a special rule says otherwise.</p>
+          <h3>Line of Sight</h3>
+          <p>To attack, a ship must have <strong>Line of Sight (LOS)</strong> to the target. Draw an imaginary line from any point on the attacking ship's base to any point on the target's base. If this line is not blocked by terrain with the "Full Block" cover type, LOS exists.</p>
+          <h3>Attack Resolution</h3>
+          <ol>
+            <li><strong>Select weapon and target.</strong> The target must be within the weapon's range and LOS.</li>
+            <li><strong>Roll to hit.</strong> Roll 1d6. Add the attacking ship's Sensors value. The result must meet or exceed the <strong>Target Number</strong> (see below).</li>
+            <li><strong>Roll damage.</strong> If the attack hits, roll the weapon's damage dice.</li>
+            <li><strong>Apply shields.</strong> Subtract the target's Shield value from the damage total (minimum 0). Note: some weapons bypass shields.</li>
+            <li><strong>Apply hull damage.</strong> Reduce the target's Hull points by the remaining damage.</li>
+          </ol>
+          <h3>Target Number</h3>
+          <p>The base Target Number to hit is <strong>7</strong>. Modifiers apply:</p>
+          <div class="data-table" style="overflow-x:auto;display:block">
+            <table class="data-table">
+              <thead><tr><th>Condition</th><th>Modifier</th></tr></thead>
+              <tbody>
+                <tr><td>Target Agility</td><td>+Agility value to TN</td></tr>
+                <tr><td>Cover (Asteroid/Debris)</td><td>+1 to TN</td></tr>
+                <tr><td>Attacker has Advanced Targeting Computer</td><td>−1 to TN</td></tr>
+                <tr><td>Target has Sensor-Absorbent Coating</td><td>+2 to TN for Long/Extreme range</td></tr>
+                <tr><td>Fleet Doctrine (Terran, 3+ ships in range)</td><td>−1 to TN</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h3>Critical Hits</h3>
+          <p>If the attack roll (before modifiers) is a natural 6, it is a <strong>Critical Hit</strong>. Critical hits deal an additional 1d6 damage that ignores shields. Some weapons have additional critical hit effects listed in their special rules.</p>
+        </section>
+
+        <!-- Section 8 -->
+        <section class="rulebook-section" id="damage">
+          <h2>8. Damage &amp; Destruction</h2>
+          <h3>Hull Points</h3>
+          <p>Each ship has a Hull Points (HP) value. Damage reduces HP. When a ship's HP reaches 0, it is <strong>destroyed</strong> and removed from the battlefield.</p>
+          <h3>Shields</h3>
+          <p>Shields absorb damage before it reaches the hull. Each point of incoming damage is reduced by 1 for each Shield point the ship has. Shields do not run out during a round—they apply to every hit the ship takes.</p>
+          <p>At the end of each round, shields recharge to their full value automatically, unless a specific rule prevents this (e.g., EMP Projector).</p>
+          <h3>Crippled State</h3>
+          <p>When a ship is reduced to half its starting HP (rounded down), it becomes <strong>Crippled</strong>. A Crippled ship:</p>
+          <ul>
+            <li>Moves at half Speed (rounded up).</li>
+            <li>Suffers −1 to all attack rolls.</li>
+            <li>Its shields are reduced by half (rounded down).</li>
+          </ul>
+          <h3>Destruction</h3>
+          <p>When a ship is destroyed, remove it from the table. The opponent scores Victory Points equal to the ship's <strong>total cost</strong> (base cost + all equipped items). Certain scenarios award bonus VP for destroying specific ship types.</p>
+          <div class="info-panel">
+            <strong style="color:var(--color-cyan)">Salvage Rule (Optional):</strong> In narrative campaigns, when a ship is destroyed, roll 1d6. On a 5+, one randomly determined equipped module survives and can be recovered if the destroying player holds the area at game end.
+          </div>
+        </section>
+
+        <!-- Section 9 -->
+        <section class="rulebook-section" id="special-rules">
+          <h2>9. Special Rules</h2>
+          <p>Many ships, weapons, modules, and faction abilities reference special rules. The most common are listed here. Full special rule text is always printed on the item card; the entries below serve as reference summaries.</p>
+          <h3>Common Special Rules</h3>
+          <div class="special-rule">
+            <div class="special-rule-name">Limited [X]</div>
+            <div class="special-rule-text">This weapon or ability can only be used X times per game. Track uses with tokens.</div>
+          </div>
+          <div class="special-rule">
+            <div class="special-rule-name">Piercing</div>
+            <div class="special-rule-text">This weapon ignores a specified amount of the target's shield value when calculating damage.</div>
+          </div>
+          <div class="special-rule">
+            <div class="special-rule-name">Guided</div>
+            <div class="special-rule-text">You may re-roll one failed attack die when firing this weapon.</div>
+          </div>
+          <div class="special-rule">
+            <div class="special-rule-name">Area Effect [X]</div>
+            <div class="special-rule-text">All ships within X inches of the target (including friendlies) are also hit and take the listed effect.</div>
+          </div>
+          <div class="special-rule">
+            <div class="special-rule-name">Slow Reload</div>
+            <div class="special-rule-text">This weapon cannot be fired two activations in a row. Place a Reload token when fired; remove at end of next activation.</div>
+          </div>
+          <div class="special-rule">
+            <div class="special-rule-name">Overcharge</div>
+            <div class="special-rule-text">You may spend the listed resource (crew, hull) to increase the weapon's output as described.</div>
+          </div>
+          <h3>Faction Special Rules</h3>
+          <p>Each faction has two inherent special rules that apply to all ships of that faction automatically. These are detailed in the Factions Database. Faction special rules are always in effect and do not require activation.</p>
+        </section>
+
+        <!-- Section 10 -->
+        <section class="rulebook-section" id="scenarios">
+          <h2>10. Scenarios</h2>
+          <p>While simply destroying the enemy fleet is a valid victory condition, Nexus: Shattered Void is designed around objectives. The following standard scenarios can be played with any two factions.</p>
+          <h3>Scenario 1: Total Annihilation</h3>
+          <p><strong>Setup:</strong> Standard deployment. <strong>Victory:</strong> The player who destroys the most total point value of enemy ships wins. Play until one fleet is completely destroyed, or until agreed time limit. Tie goes to the player with more HP remaining across their fleet.</p>
+          <h3>Scenario 2: Nexus Fragment Capture</h3>
+          <p><strong>Setup:</strong> Place 3 Nexus Fragment objectives in the center of the board, spaced 12" apart. <strong>Victory:</strong> Control an objective by having a ship within 3" with no enemy ships within 3". Score 2 VP per round for each controlled objective. First to 12 VP wins, or highest at game end.</p>
+          <h3>Scenario 3: Breakthrough</h3>
+          <p><strong>Setup:</strong> One player is the Attacker; the other is the Defender. Attacker deploys 8" from one edge; Defender deploys anywhere in the center 12" strip. <strong>Victory:</strong> Attacker scores 3 VP for each ship that exits through the Defender's table edge. Defender scores 1 VP per Attacker ship destroyed. Play 6 rounds.</p>
+          <h3>Scenario 4: Escort Mission</h3>
+          <p><strong>Setup:</strong> Attacker has one Carrier or Dreadnought designated as the Escort Target. This ship begins 4" from Attacker's edge. <strong>Victory:</strong> Attacker scores 10 VP if the Escort Target exits through the opposite edge. Defender scores 10 VP if the Escort Target is destroyed. Play 8 rounds.</p>
+          <div class="info-panel">
+            <strong style="color:var(--color-cyan)">Campaign Rules:</strong> Full campaign rules allowing persistent fleets across multiple games, with ship repairs, casualties, and faction reputation will be available in the Campaign Supplement. Check the news page for release updates.
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <script type="module" src="../js/rulebook.js"></script>
+</body>
+</html>

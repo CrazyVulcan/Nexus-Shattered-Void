@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXUS: Shattered Void — Tactical Fleet Combat</title>
+  <meta name="description" content="Nexus: Shattered Void is a modular tactical fleet combat tabletop game. Build your fleet, choose your faction, and conquer the void.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="css/global.css">
+  <link rel="stylesheet" href="css/components.css">
+  <style>
+    /* ── Starfield ── */
+    #starfield { position:fixed; inset:0; pointer-events:none; z-index:0; overflow:hidden; }
+    .page-content { position:relative; z-index:1; padding-top:0; }
+
+    /* ── Hero scanline effect ── */
+    .hero::after {
+      content:'';
+      position:absolute;
+      left:0; right:0;
+      height:2px;
+      background:linear-gradient(90deg, transparent, rgba(0,212,255,0.3), transparent);
+      animation: scanline 6s linear infinite;
+      pointer-events:none;
+    }
+
+    /* ── Feature cards ── */
+    .feature-icon {
+      width:56px; height:56px;
+      border-radius:var(--radius-md);
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.6rem;
+      margin-bottom:var(--sp-5);
+      background:rgba(0,212,255,0.1);
+      border:1px solid rgba(0,212,255,0.2);
+    }
+
+    /* ── Factions grid ── */
+    .home-faction-card {
+      background:var(--color-bg-card);
+      border:1px solid var(--color-border);
+      border-radius:var(--radius-md);
+      padding:var(--sp-6);
+      position:relative;
+      overflow:hidden;
+      transition:all var(--transition);
+      text-decoration:none;
+      display:block;
+    }
+    .home-faction-card::before {
+      content:'';
+      position:absolute;
+      top:0; left:0; right:0;
+      height:3px;
+      background:var(--faction-color, var(--color-cyan));
+      opacity:0.8;
+    }
+    .home-faction-card::after {
+      content:'';
+      position:absolute;
+      bottom:0; right:0;
+      width:120px; height:120px;
+      border-radius:50%;
+      background:var(--faction-color, var(--color-cyan));
+      opacity:0.04;
+      transform:translate(40%, 40%);
+      transition:opacity var(--transition);
+    }
+    .home-faction-card:hover {
+      border-color:var(--faction-color, var(--color-cyan));
+      transform:translateY(-4px);
+      box-shadow:0 12px 40px rgba(0,0,0,0.5);
+    }
+    .home-faction-card:hover::after { opacity:0.08; }
+    .home-faction-name {
+      font-size:1.1rem; font-weight:700;
+      color:var(--color-text-bright);
+      margin-bottom:var(--sp-2);
+    }
+    .home-faction-desc {
+      font-size:0.85rem;
+      color:var(--color-text-dim);
+      line-height:1.6;
+      margin-bottom:var(--sp-4);
+      display:-webkit-box;
+      -webkit-line-clamp:3;
+      -webkit-box-orient:vertical;
+      overflow:hidden;
+    }
+
+    /* ── Stat bar ── */
+    .stat-bar-row { display:flex; align-items:center; gap:var(--sp-3); margin-bottom:var(--sp-2); }
+    .stat-bar-label { font-family:var(--font-mono); font-size:0.7rem; color:var(--color-text-muted); width:72px; flex-shrink:0; text-transform:uppercase; }
+    .stat-bar-track { flex:1; height:4px; background:rgba(255,255,255,0.08); border-radius:2px; overflow:hidden; }
+    .stat-bar-fill  { height:100%; border-radius:2px; background:var(--color-cyan); }
+  </style>
+</head>
+<body class="page-wrapper">
+  <!-- Stars injected by JS -->
+  <div id="starfield"></div>
+
+  <div class="page-content">
+    <!-- Hero -->
+    <section class="hero" id="home-hero">
+      <div class="hero-bg"></div>
+      <div class="hero-content anim-fade-in">
+        <div class="hero-eyebrow">Tabletop Fleet Combat</div>
+        <h1 class="hero-title">NEXUS:<br>SHATTERED VOID</h1>
+        <p class="hero-subtitle">
+          Tactical fleet combat across the shattered remnants of a dead galaxy.
+          Command ancient warships, forge unlikely alliances, and wage war among the stars.
+        </p>
+        <div class="hero-cta">
+          <a href="/pages/builder.html" class="btn btn-primary btn-lg">⚔️ Ship Builder</a>
+          <a href="/pages/factions.html" class="btn btn-secondary btn-lg">🌌 Factions Database</a>
+          <a href="/pages/rulebook.html" class="btn btn-ghost btn-lg">📖 Free Rulebook</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- What is Nexus? -->
+    <section class="section" id="about-section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">What is Nexus: Shattered Void?</h2>
+          <p>A modular tactical fleet combat game for 2–6 players. Build custom fleets, command diverse factions, and fight for dominance across the void.</p>
+        </div>
+        <div class="grid grid-3">
+          <div class="card">
+            <div class="feature-icon">🌌</div>
+            <h3 style="margin-bottom:var(--sp-3)">The Setting</h3>
+            <p style="color:var(--color-text-dim);font-size:0.9rem;line-height:1.7">
+              Ten thousand years ago, a cataclysmic weapon shattered the galactic core. The Nexus Fragments—drifting remnants of impossible energy—scattered across the void. Now four great powers fight over them, each believing the Fragments hold the key to absolute power.
+            </p>
+            <a href="/pages/lore-archive.html" class="btn btn-ghost btn-sm" style="margin-top:var(--sp-4)">Explore Lore →</a>
+          </div>
+          <div class="card" style="border-color:rgba(139,0,255,0.3)">
+            <div class="feature-icon" style="background:rgba(139,0,255,0.1);border-color:rgba(139,0,255,0.2);color:#bb66ff">⚔️</div>
+            <h3 style="margin-bottom:var(--sp-3)">The Gameplay</h3>
+            <p style="color:var(--color-text-dim);font-size:0.9rem;line-height:1.7">
+              Alternate activation, dice-based combat with meaningful tactical decisions. Each ship has unique stats, weapon slots, and module bays. Fleet composition matters as much as tactics. Games take 60–120 minutes with fleets of 3–10 ships per side.
+            </p>
+            <a href="/pages/rulebook.html" class="btn btn-ghost btn-sm" style="margin-top:var(--sp-4)">Read Rules →</a>
+          </div>
+          <div class="card">
+            <div class="feature-icon" style="background:rgba(0,212,160,0.1);border-color:rgba(0,212,160,0.2);color:var(--color-teal)">🚀</div>
+            <h3 style="margin-bottom:var(--sp-3)">Build Your Fleet</h3>
+            <p style="color:var(--color-text-dim);font-size:0.9rem;line-height:1.7">
+              Choose from four asymmetric factions, each with exclusive ship hulls, weapons, and modules. The Ship Builder tool lets you design, save, and share custom fleet lists. Every point of your budget matters.
+            </p>
+            <a href="/pages/builder.html" class="btn btn-ghost btn-sm" style="margin-top:var(--sp-4)">Open Builder →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Factions section -->
+    <section class="section" style="background:var(--color-bg-2);border-top:1px solid var(--color-border);border-bottom:1px solid var(--color-border)">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">The Four Factions</h2>
+          <p>Each faction plays differently. Who will you command?</p>
+        </div>
+        <div class="grid grid-4" id="factions-grid">
+          <div class="loading-overlay" style="grid-column:1/-1">
+            <div class="spinner"></div><p>Loading factions…</p>
+          </div>
+        </div>
+        <div style="text-align:center;margin-top:var(--sp-8)">
+          <a href="/pages/factions.html" class="btn btn-secondary">View Full Factions Database →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick-start section -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header">
+          <h2 class="section-title">Ready to Play?</h2>
+          <p>Everything you need to start commanding fleets across the shattered void.</p>
+        </div>
+        <div class="grid grid-3">
+          <div style="text-align:center;padding:var(--sp-8) var(--sp-6)">
+            <div style="font-size:3rem;margin-bottom:var(--sp-4)">📥</div>
+            <h3 style="margin-bottom:var(--sp-3)">1. Get the Rulebook</h3>
+            <p style="color:var(--color-text-dim);font-size:0.9rem;margin-bottom:var(--sp-5)">The complete rulebook is free. Read it online or download a print-friendly version.</p>
+            <a href="/pages/rulebook.html" class="btn btn-secondary">Read Rulebook</a>
+          </div>
+          <div style="text-align:center;padding:var(--sp-8) var(--sp-6);background:rgba(0,212,255,0.03);border:1px solid var(--color-border);border-radius:var(--radius-lg)">
+            <div style="font-size:3rem;margin-bottom:var(--sp-4)">🛠️</div>
+            <h3 style="margin-bottom:var(--sp-3)">2. Build Your Fleet</h3>
+            <p style="color:var(--color-text-dim);font-size:0.9rem;margin-bottom:var(--sp-5)">Use the interactive Ship Builder to design your fleet, equip weapons and modules, and share builds with friends.</p>
+            <a href="/pages/builder.html" class="btn btn-primary">Open Builder</a>
+          </div>
+          <div style="text-align:center;padding:var(--sp-8) var(--sp-6)">
+            <div style="font-size:3rem;margin-bottom:var(--sp-4)">🎲</div>
+            <h3 style="margin-bottom:var(--sp-3)">3. Battle!</h3>
+            <p style="color:var(--color-text-dim);font-size:0.9rem;margin-bottom:var(--sp-5)">Set up your table, deploy your fleets, and fight for dominance across the Shattered Void. May the better admiral win.</p>
+            <a href="/pages/battle-simulator.html" class="btn btn-secondary">Battle Simulator</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script type="module">
+    import init from '/js/nav.js';
+    import { loadFactions } from '/js/data-loader.js';
+
+    init();
+
+    // Render faction cards
+    async function renderFactions() {
+      const grid = document.getElementById('factions-grid');
+      if (!grid) return;
+      try {
+        const factions = await loadFactions();
+        grid.innerHTML = factions.map(f => `
+          <a href="/pages/factions.html?faction=${f.id}"
+             class="home-faction-card"
+             style="--faction-color:${f.color}">
+            <div class="home-faction-name">${f.name}</div>
+            <div class="home-faction-desc">${f.description}</div>
+            <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px">
+              ${f.playstyle.map(p => `<span class="badge badge-gray" style="font-size:0.65rem">${p}</span>`).join('')}
+            </div>
+            <span class="btn btn-ghost btn-sm" style="pointer-events:none">View Faction →</span>
+          </a>`).join('');
+      } catch(e) {
+        grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><p>Failed to load factions</p></div>`;
+      }
+    }
+    renderFactions();
+
+    // Generate starfield
+    function createStars() {
+      const container = document.getElementById('starfield');
+      if (!container) return;
+      const count = 160;
+      for (let i = 0; i < count; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        const size = Math.random() * 2.5 + 0.5;
+        star.style.cssText = `
+          width:${size}px; height:${size}px;
+          left:${Math.random()*100}%;
+          top:${Math.random()*100}%;
+          --dur:${(Math.random()*4+2).toFixed(1)}s;
+          --delay:${(Math.random()*4).toFixed(1)}s;
+          opacity:${(Math.random()*0.5+0.2).toFixed(2)};
+        `;
+        container.appendChild(star);
+      }
+    }
+    createStars();
+  </script>
+</body>
+</html>

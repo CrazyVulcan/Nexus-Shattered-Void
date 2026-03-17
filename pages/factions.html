@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Factions Database — NEXUS: Shattered Void</title>
+  <meta name="description" content="Browse all four factions in Nexus: Shattered Void. Learn about special rules, ship hulls, and playstyles.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <style>
+    .factions-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: calc(100vh - var(--nav-height));
+    }
+    .factions-sidebar {
+      background: var(--color-bg-2);
+      border-right: 1px solid var(--color-border);
+      position: sticky;
+      top: var(--nav-height);
+      height: calc(100vh - var(--nav-height));
+      overflow-y: auto;
+      padding: var(--sp-5) var(--sp-4);
+    }
+    .factions-sidebar-title {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--color-text-muted);
+      font-family: var(--font-mono);
+      padding: 0 var(--sp-2) var(--sp-4);
+      border-bottom: 1px solid var(--color-border);
+      margin-bottom: var(--sp-4);
+    }
+    #faction-sidebar-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-3);
+    }
+    .faction-detail-main {
+      padding: var(--sp-8);
+      overflow-y: auto;
+    }
+    @media (max-width: 768px) {
+      .factions-layout { grid-template-columns: 1fr; }
+      .factions-sidebar {
+        position: static;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--color-border);
+      }
+    }
+  </style>
+</head>
+<body class="page-wrapper">
+  <div class="page-content">
+    <div class="factions-layout">
+      <!-- Sidebar -->
+      <aside class="factions-sidebar">
+        <div class="factions-sidebar-title">Factions Database</div>
+        <div id="faction-sidebar-list">
+          <div class="loading-overlay" style="padding:2rem 0">
+            <div class="spinner"></div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Detail Panel -->
+      <main class="faction-detail-main">
+        <div id="faction-detail">
+          <div class="loading-overlay">
+            <div class="spinner spinner-lg"></div>
+            <p>Loading faction data…</p>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script type="module" src="../js/factions.js"></script>
+</body>
+</html>

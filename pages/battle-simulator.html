@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Battle Simulator — NEXUS: Shattered Void</title>
+  <meta name="description" content="Battle Simulator for Nexus: Shattered Void — coming soon.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <style>
+    .coming-soon-hero {
+      min-height: calc(100vh - var(--nav-height));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: var(--sp-12) var(--sp-6);
+    }
+    .mockup-panel {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      opacity: 0.4;
+      pointer-events: none;
+      user-select: none;
+    }
+    .mockup-bar {
+      height: 36px;
+      background: rgba(0,0,0,0.4);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      padding: 0 var(--sp-4);
+      gap: var(--sp-2);
+    }
+    .mockup-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--color-border);
+    }
+    .mockup-content {
+      padding: var(--sp-6);
+    }
+    .mockup-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-4);
+    }
+    .mockup-block {
+      height: 80px;
+      background: rgba(0,212,255,0.04);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+    }
+    .mockup-btn {
+      height: 32px;
+      background: rgba(0,128,255,0.15);
+      border: 1px solid rgba(0,128,255,0.2);
+      border-radius: var(--radius);
+      margin-top: var(--sp-4);
+    }
+  </style>
+</head>
+<body class="page-wrapper">
+  <div class="page-content">
+    <div class="coming-soon-hero">
+      <div style="max-width:700px">
+        <div style="font-size:4rem;margin-bottom:var(--sp-5)">⚔️</div>
+        <div style="font-family:var(--font-mono);font-size:0.8rem;color:var(--color-cyan);text-transform:uppercase;letter-spacing:0.2em;margin-bottom:var(--sp-4)">Coming Soon</div>
+        <h1 style="margin-bottom:var(--sp-5)">Battle <span style="color:var(--color-cyan)">Simulator</span></h1>
+        <p style="color:var(--color-text-dim);font-size:1.05rem;line-height:1.75;max-width:540px;margin:0 auto var(--sp-8)">
+          The Battle Simulator will let you fight out tactical engagements between two fleets directly in your browser. Roll dice, resolve combat, track damage—all without needing a physical table.
+        </p>
+
+        <!-- Planned features -->
+        <div class="grid grid-2" style="text-align:left;margin-bottom:var(--sp-10);gap:var(--sp-4)">
+          <div class="card" style="padding:var(--sp-5)">
+            <div style="font-size:1.5rem;margin-bottom:var(--sp-3)">🎲</div>
+            <h3 style="font-size:1rem;margin-bottom:var(--sp-2)">Automated Combat</h3>
+            <p style="color:var(--color-text-dim);font-size:0.875rem">Automated dice rolling with all modifiers applied. Focus on tactics, not arithmetic.</p>
+          </div>
+          <div class="card" style="padding:var(--sp-5)">
+            <div style="font-size:1.5rem;margin-bottom:var(--sp-3)">🚀</div>
+            <h3 style="font-size:1rem;margin-bottom:var(--sp-2)">Fleet Import</h3>
+            <p style="color:var(--color-text-dim);font-size:0.875rem">Import fleets directly from the Ship Builder. No re-entry needed.</p>
+          </div>
+          <div class="card" style="padding:var(--sp-5)">
+            <div style="font-size:1.5rem;margin-bottom:var(--sp-3)">📊</div>
+            <h3 style="font-size:1rem;margin-bottom:var(--sp-2)">Combat Log</h3>
+            <p style="color:var(--color-text-dim);font-size:0.875rem">Full round-by-round log of every attack, hit, and effect for post-game review.</p>
+          </div>
+          <div class="card" style="padding:var(--sp-5)">
+            <div style="font-size:1.5rem;margin-bottom:var(--sp-3)">🌐</div>
+            <h3 style="font-size:1rem;margin-bottom:var(--sp-2)">Online Multiplayer</h3>
+            <p style="color:var(--color-text-dim);font-size:0.875rem">Play remotely against friends. Link-based game sessions, no login required.</p>
+          </div>
+        </div>
+
+        <!-- Mockup of planned UI -->
+        <div class="mockup-panel" style="max-width:500px;margin:0 auto var(--sp-10)">
+          <div class="mockup-bar">
+            <div class="mockup-dot"></div>
+            <div class="mockup-dot"></div>
+            <div class="mockup-dot"></div>
+          </div>
+          <div class="mockup-content">
+            <div class="mockup-grid">
+              <div class="mockup-block"></div>
+              <div class="mockup-block"></div>
+            </div>
+            <div class="mockup-btn"></div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:var(--sp-4);justify-content:center;flex-wrap:wrap">
+          <a href="../pages/builder.html" class="btn btn-primary">Build Your Fleet First</a>
+          <a href="../pages/news.html" class="btn btn-secondary">Follow Development</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import init from '../js/nav.js';
+    init();
+  </script>
+</body>
+</html>

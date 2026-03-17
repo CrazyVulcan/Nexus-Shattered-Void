@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ship Builder — NEXUS: Shattered Void</title>
+  <meta name="description" content="Build custom fleet lists for Nexus: Shattered Void. Select hulls, equip weapons and modules, calculate point costs.">
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <style>
+    .builder-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr 280px;
+      min-height: calc(100vh - var(--nav-height));
+    }
+    .builder-col {
+      border-right: 1px solid var(--color-border);
+      display: flex;
+      flex-direction: column;
+    }
+    .builder-col:last-child { border-right: none; }
+    .builder-col-header {
+      padding: var(--sp-4) var(--sp-5);
+      border-bottom: 1px solid var(--color-border);
+      background: rgba(0,0,0,0.2);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .builder-col-body {
+      flex: 1;
+      padding: var(--sp-5);
+      overflow-y: auto;
+    }
+    .builder-actions {
+      padding: var(--sp-4) var(--sp-5);
+      border-top: 1px solid var(--color-border);
+      display: flex;
+      gap: var(--sp-2);
+      flex-wrap: wrap;
+      background: rgba(0,0,0,0.15);
+    }
+    @media (max-width: 1100px) {
+      .builder-layout {
+        grid-template-columns: 260px 1fr;
+      }
+      .builder-col:last-child {
+        grid-column: 1 / -1;
+        border-top: 1px solid var(--color-border);
+        border-right: none;
+      }
+    }
+    @media (max-width: 768px) {
+      .builder-layout { grid-template-columns: 1fr; }
+      .builder-col { border-right: none; border-bottom: 1px solid var(--color-border); }
+    }
+  </style>
+</head>
+<body class="page-wrapper">
+  <div class="page-content">
+    <div class="builder-layout">
+
+      <!-- LEFT: Faction + Hull selection -->
+      <div class="builder-col">
+        <div class="builder-col-header">
+          <span>Fleet Configuration</span>
+        </div>
+        <div class="builder-col-body">
+          <div class="form-group">
+            <label class="form-label" for="faction-select">Faction</label>
+            <select class="form-select" id="faction-select">
+              <option value="">— Loading… —</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="ship-select">Ship Hull</label>
+            <select class="form-select" id="ship-select">
+              <option value="">— Select faction first —</option>
+            </select>
+          </div>
+          <div id="ship-stats-panel">
+            <div class="empty-state">
+              <div class="empty-state-icon">🚀</div>
+              <h3>No ship selected</h3>
+              <p>Choose a faction and hull to begin building.</p>
+            </div>
+          </div>
+        </div>
+        <div class="builder-actions">
+          <button class="btn btn-secondary btn-sm" id="save-fleet-btn">💾 Save Fleet</button>
+          <button class="btn btn-ghost btn-sm" id="load-fleet-btn">📂 Load Fleet</button>
+        </div>
+      </div>
+
+      <!-- MIDDLE: Weapons / Modules tabs -->
+      <div class="builder-col">
+        <div class="builder-col-header">
+          <span>Equipment</span>
+        </div>
+        <div class="builder-col-body">
+          <div class="tabs">
+            <button class="tab-btn active" data-tab="weapons">⚔️ Weapons</button>
+            <button class="tab-btn" data-tab="modules">🔧 Modules</button>
+            <button class="tab-btn" data-tab="upgrades">⬆️ Upgrades</button>
+          </div>
+          <div id="tab-weapons" class="tab-panel active">
+            <div class="empty-state">
+              <div class="empty-state-icon">🔒</div>
+              <h3>Select a ship first</h3>
+            </div>
+          </div>
+          <div id="tab-modules" class="tab-panel">
+            <div class="empty-state">
+              <div class="empty-state-icon">🔒</div>
+              <h3>Select a ship first</h3>
+            </div>
+          </div>
+          <div id="tab-upgrades" class="tab-panel">
+            <div class="empty-state">
+              <div class="empty-state-icon">⚙️</div>
+              <h3>Upgrades Coming Soon</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Build Summary -->
+      <div class="builder-col">
+        <div class="builder-col-header">
+          <span>Build Summary</span>
+        </div>
+        <div class="builder-col-body">
+          <div class="build-summary-section" style="margin-bottom:var(--sp-5)">
+            <div class="build-summary-label">Hull</div>
+            <div id="summary-ship">
+              <span style="color:var(--color-text-muted);font-size:0.85rem">No hull selected</span>
+            </div>
+          </div>
+          <div class="build-summary-section" style="margin-bottom:var(--sp-5)">
+            <div class="build-summary-label">Weapons</div>
+            <div id="summary-weapons" class="equipped-list">
+              <span style="color:var(--color-text-muted);font-size:0.85rem">None equipped</span>
+            </div>
+          </div>
+          <div class="build-summary-section">
+            <div class="build-summary-label">Modules</div>
+            <div id="summary-modules" class="equipped-list">
+              <span style="color:var(--color-text-muted);font-size:0.85rem">None equipped</span>
+            </div>
+          </div>
+        </div>
+        <div class="total-cost-display">
+          <span class="total-cost-label">Total Cost</span>
+          <span class="total-cost-value"><span id="total-cost">0</span> pts</span>
+        </div>
+        <div class="builder-actions">
+          <button class="btn btn-primary btn-sm" id="export-btn">📤 Export</button>
+          <button class="btn btn-secondary btn-sm" id="share-btn">🔗 Share</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script type="module" src="../js/builder.js"></script>
+</body>
+</html>
