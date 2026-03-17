@@ -1,510 +1,357 @@
-/* ============================================================
-   builder.js — Ship builder page logic
-   ============================================================ */
-import { loadFactions, loadShips, loadWeapons, loadModules } from './data-loader.js';
+import { loadFactions, loadShips, loadWeapons } from './data-loader.js';
 import { initNav, initFooter } from './nav.js';
 
-// ── State ────────────────────────────────────────────────────
 const state = {
   factions: [],
   ships: [],
   weapons: [],
-  modules: [],
   selectedFaction: null,
   selectedShip: null,
-  equippedWeapons: [],
-  equippedModules: [],
-  equippedUpgrades: [],
+  weaponSlots: [null, null, null],
+  weaponTraits: ['', '', ''],
+  customFeatures: [],
 };
 
-// ── Toast ────────────────────────────────────────────────────
-function showToast(msg, type = 'info') {
-  let container = document.getElementById('toast-container');
+const $ = (id) => document.getElementById(id);
+
+function showToast(message, type = 'info') {
+  let container = $('toast-container');
   if (!container) {
     container = document.createElement('div');
     container.id = 'toast-container';
     container.className = 'toast-container';
     document.body.appendChild(container);
   }
-  const icons = { info: 'ℹ️', success: '✅', error: '❌', warning: '⚠️' };
   const toast = document.createElement('div');
   toast.className = `toast ${type}`;
-  toast.innerHTML = `
-    <span class="toast-icon">${icons[type] || icons.info}</span>
-    <span class="toast-msg">${msg}</span>
-    <button class="toast-close" aria-label="Dismiss">✕</button>
-  `;
-  toast.querySelector('.toast-close').addEventListener('click', () => toast.remove());
+  toast.innerHTML = `<span class="toast-msg">${message}</span>`;
   container.appendChild(toast);
-  setTimeout(() => toast.remove(), 3500);
+  setTimeout(() => toast.remove(), 2400);
 }
 
-// ── DOM helpers ──────────────────────────────────────────────
-const $ = (id) => document.getElementById(id);
+function availableShips() {
+  if (!state.selectedFaction) return [];
+  return state.ships.filter((ship) => ship.faction === state.selectedFaction.id);
+}
 
-// ── Calculate total cost ─────────────────────────────────────
-function totalCost() {
+function availableWeapons() {
+  if (!state.selectedShip) return [];
+  return state.weapons.filter((weapon) => {
+    const factionOk = !weapon.factionRestricted || weapon.factionRestricted.includes(state.selectedFaction.id);
+    return factionOk;
+  });
+}
+
+function totalFP() {
   const base = state.selectedShip?.baseCost ?? 0;
-  const wCost = state.equippedWeapons.reduce((s, w) => s + w.cost, 0);
-  const mCost = state.equippedModules.reduce((s, m) => s + m.cost, 0);
-  const uCost = state.equippedUpgrades.reduce((s, u) => s + u.cost, 0);
-  return base + wCost + mCost + uCost;
+  const weaponCost = state.weaponSlots
+    .map((id) => state.weapons.find((weapon) => weapon.id === id)?.cost || 0)
+    .reduce((sum, cost) => sum + cost, 0);
+  return base + weaponCost;
 }
 
-// ── Render faction dropdown ──────────────────────────────────
-function renderFactionDropdown() {
-  const sel = $('faction-select');
-  if (!sel) return;
-  sel.innerHTML = '<option value="">— Select Faction —</option>' +
-    state.factions.map(f => `<option value="${f.id}">${f.name}</option>`).join('');
-  if (state.selectedFaction) sel.value = state.selectedFaction.id;
+function renderFactionSelect() {
+  const select = $('faction-select');
+  select.innerHTML = '<option value="">— Select Faction —</option>' +
+    state.factions.map((faction) => `<option value="${faction.id}">${faction.name}</option>`).join('');
 }
 
-// ── Render ship dropdown ─────────────────────────────────────
-function renderShipDropdown() {
-  const sel = $('ship-select');
-  if (!sel) return;
-  const ships = state.factions.length && state.selectedFaction
-    ? state.ships.filter(s => s.faction === state.selectedFaction.id)
-    : [];
-  sel.innerHTML = '<option value="">— Select Ship Hull —</option>' +
-    ships.map(s => `<option value="${s.id}">${s.name} (${s.type}) — ${s.baseCost} pts</option>`).join('');
-  if (state.selectedShip) sel.value = state.selectedShip.id;
+function renderShipSelect() {
+  const select = $('ship-select');
+  const ships = availableShips();
+  select.innerHTML = '<option value="">— Select Hull —</option>' +
+    ships.map((ship) => `<option value="${ship.id}">${ship.name}</option>`).join('');
 }
 
-// ── Render ship stats block ──────────────────────────────────
-function renderShipStats() {
-  const panel = $('ship-stats-panel');
-  if (!panel) return;
+function setTrack(trackId, count) {
+  const container = $(trackId);
+  if (!container) return;
+  container.innerHTML = '';
+  for (let i = 0; i < count; i += 1) {
+    const box = document.createElement('input');
+    box.type = 'checkbox';
+    box.className = 'track-box';
+    box.setAttribute('aria-label', `${trackId} box ${i + 1}`);
+    container.appendChild(box);
+  }
+}
+
+function syncTracks() {
   if (!state.selectedShip) {
-    panel.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🚀</div><h3>No ship selected</h3><p>Choose a faction and hull to begin.</p></div>';
+    setTrack('track-structure', 12);
+    setTrack('track-engineering', 10);
+    setTrack('track-weapons', 10);
+    setTrack('track-systems', 10);
+    $('structure-total').textContent = '12';
+    $('engineering-total').textContent = '10';
+    $('weapons-total').textContent = '10';
+    $('systems-total').textContent = '10';
     return;
   }
-  const s = state.selectedShip;
-  const slots = s.slots;
-  panel.innerHTML = `
-    <div class="ship-stat-block anim-fade-in">
-      <div class="ship-stat-header">
-        <div>
-          <div class="ship-stat-name">${s.name}</div>
-          <div class="ship-stat-type">${s.type}</div>
-        </div>
-        <span class="cost-badge">${s.baseCost} pts</span>
+
+  const { stats, slots } = state.selectedShip;
+  const structureBoxes = Math.max(8, stats.hull * 2);
+  const engineeringBoxes = Math.max(8, (stats.shields + stats.crew) * 2);
+  const weaponsBoxes = Math.max(8, slots.weapons * 5);
+  const systemsBoxes = Math.max(8, slots.modules * 4);
+
+  setTrack('track-structure', structureBoxes);
+  setTrack('track-engineering', engineeringBoxes);
+  setTrack('track-weapons', weaponsBoxes);
+  setTrack('track-systems', systemsBoxes);
+
+  $('structure-total').textContent = String(structureBoxes);
+  $('engineering-total').textContent = String(engineeringBoxes);
+  $('weapons-total').textContent = String(weaponsBoxes);
+  $('systems-total').textContent = String(systemsBoxes);
+}
+
+function renderWeaponSlots() {
+  const container = $('weapon-list');
+  const options = availableWeapons();
+  const slotCap = state.selectedShip?.slots.weapons ?? 0;
+  container.innerHTML = '';
+
+  for (let slot = 0; slot < 3; slot += 1) {
+    const disabled = slot >= slotCap;
+    const selectedId = state.weaponSlots[slot];
+    const selectedWeapon = state.weapons.find((weapon) => weapon.id === selectedId);
+
+    const card = document.createElement('article');
+    card.className = 'weapon-slot';
+    card.innerHTML = `
+      <div class="weapon-slot-header">Weapon Slot ${slot + 1}${disabled ? ' (Locked by Hull)' : ''}</div>
+      <select class="form-select" data-weapon-slot="${slot}" ${disabled ? 'disabled' : ''}>
+        <option value="">— Select Weapon —</option>
+        ${options.map((weapon) => `<option value="${weapon.id}" ${weapon.id === selectedId ? 'selected' : ''}>${weapon.name}</option>`).join('')}
+      </select>
+      <div class="weapon-meta">
+        <div>DMG ${selectedWeapon?.damage || '—'}</div>
+        <div>RNG ${selectedWeapon?.range || '—'}</div>
+        <div>x${selectedWeapon ? Math.max(1, Math.ceil((selectedWeapon.cost || 1) / 8)) : '—'}</div>
       </div>
-      <div class="ship-stats-grid">
-        <div class="stat-cell"><span class="stat-label">Hull</span><span class="stat-value">${s.stats.hull}</span></div>
-        <div class="stat-cell"><span class="stat-label">Shields</span><span class="stat-value">${s.stats.shields}</span></div>
-        <div class="stat-cell"><span class="stat-label">Speed</span><span class="stat-value">${s.stats.speed}</span></div>
-        <div class="stat-cell"><span class="stat-label">Agility</span><span class="stat-value">${s.stats.agility}</span></div>
-        <div class="stat-cell"><span class="stat-label">Sensors</span><span class="stat-value">${s.stats.sensors}</span></div>
-        <div class="stat-cell"><span class="stat-label">Crew</span><span class="stat-value">${s.stats.crew}</span></div>
-      </div>
-      <div class="ship-slots">
-        <div class="slot-indicator">⚔️ Weapons: <span>${slots.weapons}</span></div>
-        <div class="slot-indicator">🔧 Modules: <span>${slots.modules}</span></div>
-        <div class="slot-indicator">⬆️ Upgrades: <span>${slots.upgrades}</span></div>
-      </div>
+      <input class="form-input" type="text" data-weapon-trait="${slot}" maxlength="80" placeholder="Trait text" value="${state.weaponTraits[slot] || ''}" ${disabled ? 'disabled' : ''}>
+    `;
+    container.appendChild(card);
+  }
+
+  container.querySelectorAll('[data-weapon-slot]').forEach((select) => {
+    select.addEventListener('change', (event) => {
+      const slot = Number(event.target.dataset.weaponSlot);
+      state.weaponSlots[slot] = event.target.value || null;
+      syncHeaderAndStats();
+      renderWeaponSlots();
+    });
+  });
+
+  container.querySelectorAll('[data-weapon-trait]').forEach((input) => {
+    input.addEventListener('input', (event) => {
+      const slot = Number(event.target.dataset.weaponTrait);
+      state.weaponTraits[slot] = event.target.value;
+    });
+  });
+}
+
+function renderFeatures() {
+  const list = $('feature-list');
+  $('feature-count').textContent = String(state.customFeatures.length);
+
+  if (!state.customFeatures.length) {
+    list.innerHTML = '<div class="feature-item"><span>No custom features</span></div>';
+    return;
+  }
+
+  list.innerHTML = state.customFeatures.map((feature, index) => `
+    <div class="feature-item">
+      <span>${feature}</span>
+      <button class="btn btn-danger btn-sm btn-remove-feature" data-remove-feature="${index}">Remove</button>
     </div>
-    <p style="color:var(--color-text-dim);font-size:0.85rem;margin-top:var(--sp-4);padding:0 var(--sp-2)">${s.description}</p>
-  `;
+  `).join('');
+
+  list.querySelectorAll('[data-remove-feature]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const index = Number(button.dataset.removeFeature);
+      state.customFeatures = state.customFeatures.filter((_, itemIndex) => itemIndex !== index);
+      renderFeatures();
+    });
+  });
 }
 
-// ── Filter items by faction and hull size ────────────────────
-const HULL_ORDER = ['Interceptor', 'Frigate', 'Raider', 'Battle Frigate', 'Destroyer', 'Gunship', 'Stealth Cruiser', 'Cruiser', 'Carrier', 'Dreadnought'];
+function syncHeaderAndStats() {
+  const ship = state.selectedShip;
+  $('sheet-faction').textContent = state.selectedFaction?.name || 'Unaligned';
+  $('sheet-fp').textContent = String(totalFP());
+  $('print-date').textContent = new Date().toLocaleDateString();
 
-function hullRank(type) {
-  const idx = HULL_ORDER.indexOf(type);
-  return idx === -1 ? 5 : idx;
+  if (!ship) {
+    $('sheet-subtitle').textContent = 'No Hull Selected';
+    $('stat-speed').textContent = '0';
+    $('stat-agility').textContent = '0';
+    $('stat-sensors').textContent = '0';
+    $('stat-hull').textContent = '0';
+    $('stat-shields').textContent = '0';
+    $('stat-crew').textContent = '0';
+    return;
+  }
+
+  $('sheet-subtitle').textContent = ship.type;
+  $('stat-speed').textContent = String(ship.stats.speed);
+  $('stat-agility').textContent = String(ship.stats.agility);
+  $('stat-sensors').textContent = String(ship.stats.sensors);
+  $('stat-hull').textContent = String(ship.stats.hull);
+  $('stat-shields').textContent = String(ship.stats.shields);
+  $('stat-crew').textContent = String(ship.stats.crew);
 }
 
-function meetsMinHull(item, shipType) {
-  if (!item.minHullSize) return true;
-  return hullRank(shipType) >= hullRank(item.minHullSize);
-}
-
-function isFactionCompatible(item, factionId) {
-  if (!item.factionRestricted || item.factionRestricted.length === 0) return true;
-  return item.factionRestricted.includes(factionId);
-}
-
-function getAvailableWeapons() {
-  if (!state.selectedShip) return [];
-  return state.weapons.filter(w =>
-    isFactionCompatible(w, state.selectedFaction?.id) &&
-    meetsMinHull(w, state.selectedShip.type)
-  );
-}
-
-function getAvailableModules() {
-  if (!state.selectedShip) return [];
-  return state.modules.filter(m =>
-    isFactionCompatible(m, state.selectedFaction?.id) &&
-    meetsMinHull(m, state.selectedShip.type)
-  );
-}
-
-// ── Render available items tab ───────────────────────────────
-function renderItemsList(items, equippedList, slotMax, addCallback, removeCallback, emptyMsg) {
+function applyShipSelection() {
   if (!state.selectedShip) {
-    return `<div class="empty-state"><div class="empty-state-icon">🔒</div><h3>Select a ship first</h3></div>`;
+    state.weaponSlots = [null, null, null];
+    state.weaponTraits = ['', '', ''];
+    $('ship-name-input').value = '';
+    $('ship-type-input').value = '';
+    $('sheet-title').value = 'Unnamed Class';
+  } else {
+    state.weaponSlots = [null, null, null];
+    state.weaponTraits = ['', '', ''];
+    const shipName = state.selectedShip.name.replace(/-class\s*/i, '').trim();
+    $('ship-name-input').value = shipName;
+    $('ship-type-input').value = state.selectedShip.type;
+    $('sheet-title').value = shipName.toUpperCase();
   }
 
-  const typeColors = {
-    'Energy': 'badge-cyan', 'Kinetic': 'badge-gray', 'Missile': 'badge-orange',
-    'Exotic': 'badge-purple', 'Defense': 'badge-blue', 'Engine': 'badge-teal',
-    'Support': 'badge-gray', 'Offensive': 'badge-red', 'Special': 'badge-purple',
+  state.customFeatures = [];
+  renderFeatures();
+  syncTracks();
+  syncHeaderAndStats();
+  renderWeaponSlots();
+}
+
+function buildSaveData() {
+  return {
+    faction: state.selectedFaction?.id || null,
+    ship: state.selectedShip?.id || null,
+    sheetTitle: $('sheet-title').value,
+    shipName: $('ship-name-input').value,
+    shipType: $('ship-type-input').value,
+    weaponSlots: state.weaponSlots,
+    weaponTraits: state.weaponTraits,
+    customFeatures: state.customFeatures,
   };
-
-  const used = equippedList.length;
-  const slotInfo = `<div style="margin-bottom:var(--sp-4);font-family:var(--font-mono);font-size:0.8rem;color:var(--color-text-dim)">
-    Slots used: <span style="color:${used >= slotMax ? 'var(--color-red)' : 'var(--color-cyan)'}">${used} / ${slotMax}</span>
-  </div>`;
-
-  if (items.length === 0) {
-    return slotInfo + `<div class="empty-state"><div class="empty-state-icon">🚫</div><h3>${emptyMsg}</h3></div>`;
-  }
-
-  const rows = items.map(item => {
-    const alreadyEquipped = equippedList.find(e => e.id === item.id);
-    const slotsLeft = slotMax - used;
-    const canAdd = !alreadyEquipped && slotsLeft > 0;
-    const badgeClass = typeColors[item.type || item.category] || 'badge-gray';
-    const label = item.type || item.category;
-    const detail = item.type
-      ? `${item.damage} · ${item.range} range`
-      : item.category;
-
-    return `
-      <div class="item-row">
-        <div class="item-row-info">
-          <div class="item-row-name">
-            ${item.name}
-            <span class="badge ${badgeClass}" style="margin-left:6px;font-size:0.65rem">${label}</span>
-            ${item.factionRestricted ? '<span class="badge badge-purple" style="margin-left:4px;font-size:0.65rem">Faction</span>' : ''}
-          </div>
-          <div class="item-row-detail">${detail}</div>
-          <div class="item-row-detail" style="font-family:var(--font-ui);color:var(--color-text-muted);font-size:0.75rem;margin-top:2px">${item.special || item.effect}</div>
-        </div>
-        <span class="item-row-cost">${item.cost}</span>
-        ${alreadyEquipped
-          ? `<button class="btn btn-danger btn-sm" data-remove="${item.id}">Remove</button>`
-          : `<button class="btn btn-secondary btn-sm" data-add="${item.id}" ${canAdd ? '' : 'disabled'}>Add</button>`
-        }
-      </div>`;
-  }).join('');
-
-  return slotInfo + `<div class="equipped-list">${rows}</div>`;
 }
 
-// ── Render the active tab content ────────────────────────────
-function renderActiveTab() {
-  const activeTab = document.querySelector('.tab-btn.active')?.dataset.tab || 'weapons';
-  const panel = $(`tab-${activeTab}`);
-  if (!panel) return;
+function saveSheet() {
+  localStorage.setItem('nsv_ssd_sheet', JSON.stringify(buildSaveData()));
+  showToast('SSD sheet saved.', 'success');
+}
 
-  if (activeTab === 'weapons') {
-    const ship = state.selectedShip;
-    panel.innerHTML = renderItemsList(
-      getAvailableWeapons(),
-      state.equippedWeapons,
-      ship?.slots.weapons ?? 0,
-      null, null,
-      'No compatible weapons available'
-    );
-    panel.querySelectorAll('[data-add]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const item = state.weapons.find(w => w.id === btn.dataset.add);
-        if (item && state.equippedWeapons.length < state.selectedShip.slots.weapons) {
-          state.equippedWeapons.push(item);
-          updateSummary();
-          renderActiveTab();
-        }
-      });
-    });
-    panel.querySelectorAll('[data-remove]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        state.equippedWeapons = state.equippedWeapons.filter(w => w.id !== btn.dataset.remove);
-        updateSummary();
-        renderActiveTab();
-      });
-    });
+function loadSheet() {
+  const raw = localStorage.getItem('nsv_ssd_sheet');
+  if (!raw) {
+    showToast('No SSD sheet saved yet.', 'warning');
+    return;
   }
 
-  if (activeTab === 'modules') {
-    const ship = state.selectedShip;
-    panel.innerHTML = renderItemsList(
-      getAvailableModules(),
-      state.equippedModules,
-      ship?.slots.modules ?? 0,
-      null, null,
-      'No compatible modules available'
-    );
-    panel.querySelectorAll('[data-add]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const item = state.modules.find(m => m.id === btn.dataset.add);
-        if (item && state.equippedModules.length < state.selectedShip.slots.modules) {
-          state.equippedModules.push(item);
-          updateSummary();
-          renderActiveTab();
-        }
-      });
-    });
-    panel.querySelectorAll('[data-remove]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        state.equippedModules = state.equippedModules.filter(m => m.id !== btn.dataset.remove);
-        updateSummary();
-        renderActiveTab();
-      });
-    });
-  }
+  try {
+    const data = JSON.parse(raw);
+    state.selectedFaction = state.factions.find((faction) => faction.id === data.faction) || null;
+    renderShipSelect();
+    if (state.selectedFaction) $('faction-select').value = state.selectedFaction.id;
 
-  if (activeTab === 'upgrades') {
-    panel.innerHTML = `<div class="empty-state"><div class="empty-state-icon">⚙️</div><h3>Upgrades Coming Soon</h3><p>Upgrade cards will be available in the next data pack.</p></div>`;
+    state.selectedShip = state.ships.find((ship) => ship.id === data.ship) || null;
+    if (state.selectedShip) $('ship-select').value = state.selectedShip.id;
+
+    state.weaponSlots = Array.isArray(data.weaponSlots) ? data.weaponSlots.slice(0, 3) : [null, null, null];
+    state.weaponTraits = Array.isArray(data.weaponTraits) ? data.weaponTraits.slice(0, 3) : ['', '', ''];
+    state.customFeatures = Array.isArray(data.customFeatures) ? data.customFeatures : [];
+
+    $('sheet-title').value = data.sheetTitle || 'Unnamed Class';
+    $('ship-name-input').value = data.shipName || '';
+    $('ship-type-input').value = data.shipType || '';
+
+    syncTracks();
+    syncHeaderAndStats();
+    renderFeatures();
+    renderWeaponSlots();
+    showToast('SSD sheet loaded.', 'success');
+  } catch (error) {
+    showToast('Unable to load saved sheet.', 'error');
   }
 }
 
-// ── Render build summary ─────────────────────────────────────
-function updateSummary() {
-  const total = totalCost();
-  const totalEl = $('total-cost');
-  if (totalEl) totalEl.textContent = total;
+function wireEvents() {
+  $('faction-select').addEventListener('change', (event) => {
+    state.selectedFaction = state.factions.find((faction) => faction.id === event.target.value) || null;
+    state.selectedShip = null;
+    renderShipSelect();
+    applyShipSelection();
+  });
 
-  const shipEl = $('summary-ship');
-  if (shipEl) {
-    shipEl.innerHTML = state.selectedShip
-      ? `<div class="equipped-item">
-           <span class="equipped-item-name">${state.selectedShip.name}</span>
-           <span class="equipped-item-cost">${state.selectedShip.baseCost}</span>
-         </div>`
-      : '<span style="color:var(--color-text-muted);font-size:0.85rem">No hull selected</span>';
-  }
+  $('ship-select').addEventListener('change', (event) => {
+    state.selectedShip = state.ships.find((ship) => ship.id === event.target.value) || null;
+    applyShipSelection();
+  });
 
-  const renderList = (containerId, list) => {
-    const el = $(containerId);
-    if (!el) return;
-    if (list.length === 0) {
-      el.innerHTML = '<span style="color:var(--color-text-muted);font-size:0.85rem">None equipped</span>';
+  $('ship-name-input').addEventListener('input', (event) => {
+    $('sheet-title').value = event.target.value.trim() ? event.target.value.toUpperCase() : 'Unnamed Class';
+  });
+
+  $('ship-type-input').addEventListener('input', (event) => {
+    $('sheet-subtitle').textContent = event.target.value.trim() || state.selectedShip?.type || 'No Hull Selected';
+  });
+
+  $('sheet-title').addEventListener('input', (event) => {
+    $('ship-name-input').value = event.target.value;
+  });
+
+  $('add-feature-btn').addEventListener('click', () => {
+    const input = $('feature-input');
+    const value = input.value.trim();
+    if (!value) return;
+    state.customFeatures.push(value);
+    input.value = '';
+    renderFeatures();
+  });
+
+  $('feature-input').addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      $('add-feature-btn').click();
+    }
+  });
+
+  $('save-sheet-btn').addEventListener('click', saveSheet);
+  $('load-sheet-btn').addEventListener('click', loadSheet);
+  $('print-sheet-btn').addEventListener('click', () => {
+    if (!state.selectedShip) {
+      showToast('Select a hull before printing.', 'warning');
       return;
     }
-    el.innerHTML = list.map(item => `
-      <div class="equipped-item">
-        <span class="equipped-item-name">${item.name}</span>
-        <span class="equipped-item-cost">${item.cost}</span>
-      </div>`).join('');
-  };
-
-  renderList('summary-weapons', state.equippedWeapons);
-  renderList('summary-modules', state.equippedModules);
-}
-
-// ── Build JSON object ─────────────────────────────────────────
-function buildExportObject() {
-  return {
-    version: '1.0',
-    faction: state.selectedFaction?.id ?? null,
-    ship: state.selectedShip?.id ?? null,
-    weapons: state.equippedWeapons.map(w => w.id),
-    modules: state.equippedModules.map(m => m.id),
-    upgrades: state.equippedUpgrades.map(u => u.id),
-    totalCost: totalCost(),
-    exportedAt: new Date().toISOString(),
-  };
-}
-
-// ── Save / Load Fleet ─────────────────────────────────────────
-function saveFleet() {
-  if (!state.selectedShip) {
-    showToast('Select a ship hull before saving.', 'warning');
-    return;
-  }
-  const fleet = buildExportObject();
-  fleet.factionName = state.selectedFaction?.name;
-  fleet.shipName = state.selectedShip?.name;
-  localStorage.setItem('nsv_fleet', JSON.stringify(fleet));
-  showToast('Fleet saved to local storage!', 'success');
-}
-
-function loadFleet() {
-  const raw = localStorage.getItem('nsv_fleet');
-  if (!raw) { showToast('No saved fleet found.', 'warning'); return; }
-  try {
-    const fleet = JSON.parse(raw);
-    const faction = state.factions.find(f => f.id === fleet.faction);
-    if (faction) {
-      state.selectedFaction = faction;
-      $('faction-select').value = faction.id;
-      renderShipDropdown();
-    }
-    const ship = state.ships.find(s => s.id === fleet.ship);
-    if (ship) {
-      state.selectedShip = ship;
-      $('ship-select').value = ship.id;
-      renderShipStats();
-    }
-    state.equippedWeapons = fleet.weapons.map(id => state.weapons.find(w => w.id === id)).filter(Boolean);
-    state.equippedModules = fleet.modules.map(id => state.modules.find(m => m.id === id)).filter(Boolean);
-    updateSummary();
-    renderActiveTab();
-    showToast(`Fleet loaded: ${fleet.shipName || ship?.name}`, 'success');
-  } catch (e) {
-    showToast('Failed to load fleet data.', 'error');
-  }
-}
-
-// ── Export Modal ──────────────────────────────────────────────
-function openExportModal() {
-  if (!state.selectedShip) { showToast('No ship to export.', 'warning'); return; }
-  const data = buildExportObject();
-  const json = JSON.stringify(data, null, 2);
-
-  let modal = $('export-modal');
-  if (!modal) {
-    modal = document.createElement('div');
-    modal.id = 'export-modal';
-    modal.className = 'modal-overlay';
-    document.body.appendChild(modal);
-  }
-  modal.innerHTML = `
-    <div class="modal-panel">
-      <div class="modal-header">
-        <h2 class="modal-title">Export Build — ${state.selectedShip.name}</h2>
-        <button class="modal-close" id="close-export-modal">✕</button>
-      </div>
-      <div class="modal-body">
-        <p style="color:var(--color-text-dim);margin-bottom:var(--sp-4);font-size:0.9rem">
-          Total Cost: <strong style="color:var(--color-cyan)">${totalCost()} pts</strong> ·
-          Faction: <strong>${state.selectedFaction?.name}</strong>
-        </p>
-        <pre style="background:rgba(0,0,0,0.4);border:1px solid var(--color-border);border-radius:4px;padding:1rem;overflow:auto;font-size:0.78rem;color:var(--color-cyan);max-height:360px">${json}</pre>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-ghost btn-sm" id="close-export-modal-2">Close</button>
-        <button class="btn btn-secondary btn-sm" id="copy-export-json">Copy JSON</button>
-        <button class="btn btn-primary btn-sm" onclick="window.print()">Print</button>
-      </div>
-    </div>`;
-  modal.classList.remove('hidden');
-  modal.querySelector('#close-export-modal').addEventListener('click', () => modal.classList.add('hidden'));
-  modal.querySelector('#close-export-modal-2').addEventListener('click', () => modal.classList.add('hidden'));
-  modal.querySelector('#copy-export-json').addEventListener('click', () => {
-    navigator.clipboard?.writeText(json).then(() => showToast('Copied to clipboard!', 'success'));
-  });
-  modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.add('hidden'); });
-}
-
-// ── Share Build ───────────────────────────────────────────────
-function shareBuild() {
-  if (!state.selectedShip) { showToast('No build to share.', 'warning'); return; }
-  const data = buildExportObject();
-  const encoded = btoa(JSON.stringify(data));
-  const url = `${window.location.origin}${window.location.pathname}?build=${encoded}`;
-  navigator.clipboard?.writeText(url).then(() => {
-    showToast('Share URL copied to clipboard!', 'success');
-  }).catch(() => {
-    showToast('Share URL: ' + url.substring(0, 60) + '…', 'info');
+    window.print();
   });
 }
 
-// ── Load build from URL ────────────────────────────────────────
-function loadFromURL() {
-  const params = new URLSearchParams(window.location.search);
-  const encoded = params.get('build');
-  if (!encoded) return false;
-  try {
-    const fleet = JSON.parse(atob(encoded));
-    const faction = state.factions.find(f => f.id === fleet.faction);
-    if (faction) { state.selectedFaction = faction; $('faction-select').value = faction.id; renderShipDropdown(); }
-    const ship = state.ships.find(s => s.id === fleet.ship);
-    if (ship) { state.selectedShip = ship; $('ship-select').value = ship.id; renderShipStats(); }
-    state.equippedWeapons = (fleet.weapons || []).map(id => state.weapons.find(w => w.id === id)).filter(Boolean);
-    state.equippedModules = (fleet.modules || []).map(id => state.modules.find(m => m.id === id)).filter(Boolean);
-    updateSummary();
-    renderActiveTab();
-    showToast('Build loaded from shared link!', 'success');
-    return true;
-  } catch { return false; }
-}
-
-// ── Tab switching ─────────────────────────────────────────────
-function initTabs() {
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      const panel = $(`tab-${btn.dataset.tab}`);
-      if (panel) panel.classList.add('active');
-      renderActiveTab();
-    });
-  });
-}
-
-// ── Wire up controls ─────────────────────────────────────────
-function wireControls() {
-  $('faction-select')?.addEventListener('change', (e) => {
-    state.selectedFaction = state.factions.find(f => f.id === e.target.value) || null;
-    state.selectedShip = null;
-    state.equippedWeapons = [];
-    state.equippedModules = [];
-    state.equippedUpgrades = [];
-    renderShipDropdown();
-    renderShipStats();
-    updateSummary();
-    renderActiveTab();
-  });
-
-  $('ship-select')?.addEventListener('change', (e) => {
-    state.selectedShip = state.ships.find(s => s.id === e.target.value) || null;
-    state.equippedWeapons = [];
-    state.equippedModules = [];
-    state.equippedUpgrades = [];
-    renderShipStats();
-    updateSummary();
-    renderActiveTab();
-  });
-
-  $('save-fleet-btn')?.addEventListener('click', saveFleet);
-  $('load-fleet-btn')?.addEventListener('click', loadFleet);
-  $('export-btn')?.addEventListener('click', openExportModal);
-  $('share-btn')?.addEventListener('click', shareBuild);
-}
-
-// ── Init ──────────────────────────────────────────────────────
 async function init() {
   initNav();
   initFooter();
 
   try {
-    [state.factions, state.ships, state.weapons, state.modules] = await Promise.all([
-      loadFactions(), loadShips(), loadWeapons(), loadModules()
+    [state.factions, state.ships, state.weapons] = await Promise.all([
+      loadFactions(),
+      loadShips(),
+      loadWeapons(),
     ]);
-  } catch (err) {
-    showToast('Failed to load game data: ' + err.message, 'error');
+  } catch (error) {
+    showToast(`Failed to load data: ${error.message}`, 'error');
     return;
   }
 
-  renderFactionDropdown();
-  renderShipDropdown();
-  renderShipStats();
-  updateSummary();
-  initTabs();
-  wireControls();
-
-  // Pre-select faction from sessionStorage (set by factions page)
-  const preselect = sessionStorage.getItem('selectedFaction');
-  if (preselect) {
-    sessionStorage.removeItem('selectedFaction');
-    const faction = state.factions.find(f => f.id === preselect);
-    if (faction) {
-      state.selectedFaction = faction;
-      $('faction-select').value = faction.id;
-      renderShipDropdown();
-      showToast(`Faction pre-selected: ${faction.name}`, 'info');
-    }
-  }
-
-  // Load from URL share link
-  loadFromURL();
+  renderFactionSelect();
+  renderShipSelect();
+  renderFeatures();
+  syncTracks();
+  syncHeaderAndStats();
+  renderWeaponSlots();
+  wireEvents();
 }
 
 init();
