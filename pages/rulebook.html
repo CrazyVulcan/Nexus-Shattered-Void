@@ -98,7 +98,7 @@
           <a href="#power-economy" class="toc-link">6. Power Economy</a>
           <a href="#movement" class="toc-link">7. Movement &amp; Arcs</a>
           <a href="#combat" class="toc-link">8. Combat</a>
-          <a href="#damage" class="toc-link">9. Damage &amp; Track System</a>
+          <a href="#damage" class="toc-link">9. Damage &amp; Subsystem Tracks</a>
           <a href="#weapons" class="toc-link">10. Weapons</a>
           <a href="#special-rules" class="toc-link">11. Special Rules</a>
           <a href="#scenarios" class="toc-link">12. Scenarios</a>
@@ -113,36 +113,41 @@
       <!-- Rulebook Content -->
       <main class="rulebook-main" id="rulebook-main">
         <div class="rulebook-header">
-          <h1>NEXUS: Shattered Void<br><span style="color:var(--color-cyan)">Core Rulebook</span></h1>
-          <div class="rulebook-version">VERSION 0.8 — CORE RULES</div>
+          <h1>NEXUS: Shattered Void<br><span style="color:var(--color-cyan)">Rules Primer</span></h1>
+          <div class="rulebook-version">VERSION 0.9 — RULES PRIMER (WORKING DRAFT)</div>
           <p style="color:var(--color-text-dim);max-width:640px;line-height:1.7">
-            Welcome to Nexus: Shattered Void. This rulebook contains everything you need to play competitive tactical fleet combat across the ruins of a shattered galaxy. Read through these rules, build your fleet, and prepare for battle.
+            This rules primer covers the confirmed core mechanics of Nexus: Shattered Void — a tactical starship combat game centered on subsystem degradation, power allocation, and progressive capability loss. Content labeled <em>[Placeholder]</em> is a working assumption subject to change.
           </p>
           <div style="display:flex;gap:var(--sp-3);flex-wrap:wrap;margin-top:var(--sp-5)">
-            <span class="badge badge-cyan">2 Players</span>
-            <span class="badge badge-gray">3–10 Ships/Side</span>
-            <span class="badge badge-gray">2–4 Hours</span>
-            <span class="badge badge-gray">Ages 14+</span>
-            <span class="badge badge-purple">v0.8 Core Rules</span>
+            <span class="badge badge-cyan">2+ Players</span>
+            <span class="badge badge-gray">d6 Only</span>
+            <span class="badge badge-gray">SSD-Centered</span>
+            <span class="badge badge-purple">v0.9 Draft</span>
           </div>
         </div>
 
         <!-- Section 1 -->
         <section class="rulebook-section" id="intro">
           <h2>1. Introduction</h2>
-          <p>Nexus: Shattered Void is a <strong>space navy tactical combat game</strong> for two players. Each player commands a fleet of 3–10 warships, battling for control of the Nexus Fragments—ancient shards of impossible power scattered across the ruins of the galactic core.</p>
-          <h3>Game Identity</h3>
-          <p>This is not a dogfight simulator. Nexus: Shattered Void emphasizes <strong>deliberate positioning, planning, and fleet coordination</strong> over reactive moment-to-moment maneuvering. The core experience is built around:</p>
+          <p>Nexus: Shattered Void is a <strong>tactical starship combat wargame</strong> centered on subsystem warfare, power allocation, and progressive capability loss. Ships are not abstract hit-point pools — they are machines under pressure. Damage changes what you can <em>do</em>, not just how close you are to dead.</p>
+          <h3>Design Intent</h3>
           <ul>
-            <li><strong>Positional Gameplay:</strong> Weapon arcs, range control, and facing decisions determine who can fire and where.</li>
-            <li><strong>Resource Allocation:</strong> Each round every ship allocates a limited power budget—spent on weapons, stat boosts, and systems—before a single shot is fired.</li>
-            <li><strong>Gradual Degradation:</strong> Ships do not have simple hit points. Four damage tracks (Structure, Engineering, Weapons, Systems) degrade independently, eroding a ship's fighting capability before it is destroyed.</li>
-            <li><strong>Predictive Decision-Making:</strong> Targets are chosen when a ship activates, not during power allocation, rewarding admirals who anticipate the flow of battle a full round ahead.</li>
+            <li><strong>Reduce friction.</strong> The SSD is the primary play surface. No separate tracking sheets, no looking things up mid-battle.</li>
+            <li><strong>Preserve depth.</strong> Every power decision matters. Every subsystem hit forces a trade-off.</li>
+            <li><strong>Make damage meaningful.</strong> Losing an Engineering threshold costs you power. Losing a Weapons threshold degrades your firepower. Ships feel like machines breaking down under fire.</li>
+            <li><strong>Tactical lifespan.</strong> Subsystem tracks communicate how long a ship can remain functionally dangerous, not just physically alive.</li>
           </ul>
-          <h3>Overview</h3>
-          <p>Each player builds a fleet within an agreed point budget, choosing ships from one of four asymmetric factions. At the start of every round both players simultaneously allocate power tokens to their ships. Ships then activate in alternation—firing weapons and moving. The round ends with a brief reset phase. Expect the first ship to be destroyed around round 2–3, with full games running 5–8 rounds and lasting 2–4 hours depending on fleet size.</p>
+          <h3>The SSD</h3>
+          <p>Each ship is represented by a <strong>Ship System Display (SSD)</strong>. The SSD is not a reference card. It is your primary gameplay interface for that ship. It tracks:</p>
+          <ul>
+            <li>All subsystem damage tracks (Engineering, FTL, Weapons)</li>
+            <li>Current power level</li>
+            <li>d6 hit allocation table (which subsystem gets hit on each d6 result)</li>
+            <li>Weapon stats and degradation state</li>
+          </ul>
+          <p>Use the <a href="/pages/builder.html">SSD Builder</a> to design and print your ships.</p>
           <div class="info-panel">
-            <strong style="color:var(--color-cyan)">Tip for New Players:</strong> We recommend starting with the Terran Republic for your first game. Their balanced playstyle is the most forgiving while you learn the power economy and track system.
+            <strong style="color:var(--color-cyan)">Note:</strong> Ship factions, detailed setting lore, and advanced campaign rules are <em>working assumptions</em> in this draft and are subject to change. Only the confirmed mechanics in this primer are canonical.
           </div>
         </section>
 
@@ -211,26 +216,21 @@
         <!-- Section 4 -->
         <section class="rulebook-section" id="fleet-building">
           <h2>4. Fleet Building</h2>
-          <p>Before a game, each player constructs a fleet within an agreed point limit. Fleets must follow these rules:</p>
+          <p>Before a game, each player constructs a fleet within an agreed point limit. Build ships using the <a href="/pages/builder.html">SSD Builder</a> and assign a faction label.</p>
           <h3>Fleet Construction Rules</h3>
           <ol>
-            <li><strong>Faction Lock:</strong> All ships in a fleet must belong to the same faction. Mixed-faction fleets require scenario-specific rules.</li>
-            <li><strong>Point Limit:</strong> The combined cost of all ships and their equipment cannot exceed the agreed limit.</li>
-            <li><strong>Hull Limits:</strong> You may take any number of ships, subject to the following:<br>
-              — Maximum of 1 Dreadnought per fleet<br>
-              — Maximum of 2 Cruisers (or Stealth Cruisers) per fleet<br>
-              — No limit on Frigates, Destroyers, Raiders, or Interceptors</li>
-            <li><strong>Slot Limits:</strong> Equipment is limited by the ship's weapon/module/upgrade slots. You cannot equip more items than available slots.</li>
-            <li><strong>Faction Restrictions:</strong> Faction-restricted weapons and modules may only be equipped on ships of the listed faction.</li>
-            <li><strong>Hull Size Minimums:</strong> Some items list a minimum hull size. You cannot equip them on ships smaller than the listed size.</li>
+            <li><strong>Faction [Placeholder]:</strong> Faction rules are a working assumption. For now, all ships in a fleet share the same faction label. Mixed-faction rules are not yet defined.</li>
+            <li><strong>Point Limit:</strong> The combined point cost of all ships cannot exceed the agreed limit.</li>
+            <li><strong>Hull Limits [Placeholder]:</strong> — Maximum of 1 capital ship (Dreadnought/Cruiser equivalent) per fleet<br>— No limit on Frigates, Destroyers, and lighter hulls</li>
+            <li><strong>Slot Limits:</strong> Each ship is defined at design time with a fixed set of subsystem tracks. You cannot equip more weapons than the ship's SSD defines.</li>
           </ol>
-          <h3>Ship Costs</h3>
-          <p>The cost of a ship is its <strong>Base Cost</strong> plus the <strong>cost of all equipped weapons, modules, and upgrades</strong>.</p>
+          <h3>Ship Costs [Placeholder]</h3>
+          <p>Point costs are assigned when designing ships in the SSD Builder. The exact point-cost formula is a working assumption.</p>
           <div class="rule-box">
-            <strong>Example Fleet (300 pts — Terran Republic)</strong>
-            Sovereign-class Cruiser (150) + Plasma Cannon (20) + Targeting Computer (18) = 188 pts<br>
-            Valiant-class Frigate × 2 (45 × 2 = 90) + Laser Battery × 2 (12 × 2 = 24) = 114 pts<br>
-            <strong>Total: 302 pts</strong> — over budget by 2! Swap one Laser Battery for a Flak Battery (8 pts) to bring it to 298 pts. ✓
+            <strong>Example Fleet (300 pts — placeholder)</strong><br>
+            Sovereign-class Cruiser (150 pts)<br>
+            Anvil-class Destroyer × 2 (85 pts each = 170 pts)<br>
+            <em>[placeholder costs — total 320 pts; adjust to fit your budget]</em>
           </div>
         </section>
 
@@ -402,85 +402,72 @@
 
         <!-- Section 9 -->
         <section class="rulebook-section" id="damage">
-          <h2>9. Damage &amp; Track System</h2>
-          <p>Each ship does not have a single hit-point pool. Instead it has <strong>four independent damage tracks</strong>—Structure, Engineering, Weapons, and Systems—each with a row of boxes and threshold markers. Damage erodes capability long before a ship is destroyed.</p>
+          <h2>9. Damage &amp; Subsystem Tracks</h2>
+          <p>Ships in Nexus do not have a single hit-point pool. Each ship has a set of <strong>independent subsystem tracks</strong>. When a ship is hit and damage penetrates its defenses, a d6 is rolled and the result is cross-referenced against that ship's <strong>d6 Hit Allocation table</strong> on its SSD. The matching subsystem track takes one box of damage.</p>
 
-          <h3>Step 1 — Shield Check (per Facing)</h3>
-          <p>Shields are tracked separately for each facing (Fore, Aft, Port, Starboard). When an attack generates damage events, check the shields on the facing the attack came from:</p>
+          <div class="info-panel">
+            <strong style="color:var(--color-cyan)">Key Principle:</strong> The hit allocation table is defined per ship, printed on its SSD. There is no universal table. Each ship design distributes d6 values across its tracks differently — making faction and hull design meaningful.
+          </div>
+
+          <h3>Confirmed Subsystem Tracks</h3>
+          <p>Every ship has at minimum:</p>
           <ul>
-            <li>While any shield boxes remain on that facing: each damage event removes <strong>1 shield box</strong>. The damage event is then fully absorbed—<strong>no track damage occurs and no location roll is made</strong>.</li>
-            <li>Shield boxes are <strong>not automatically restored</strong> between rounds. Once a shield box is removed it stays removed unless a Shield Boost power token is spent (which adds 1 <em>temporary</em> box, removed in the Reset phase) or a scenario rule restores them.</li>
-            <li>Once all shield boxes on the targeted facing are gone, subsequent damage events proceed to hull damage.</li>
+            <li><strong>Engineering Track</strong> — Power generation capacity. Crossing a threshold permanently reduces the ship's maximum available power for all future rounds. Example pattern: 3→2→1→0.</li>
+            <li><strong>FTL Track</strong> — FTL drive integrity. As this track degrades the ship loses its ability to jump. When fully degraded the FTL drive is disabled.</li>
+            <li><strong>Primary Weapon Track</strong> — The ship's main weapon system. The track degrades in steps — reducing firepower before the weapon is lost entirely.</li>
+          </ul>
+          <p>Ships may additionally carry:</p>
+          <ul>
+            <li><strong>Secondary Weapon Tracks</strong> — One track per secondary weapon system. Each secondary degrades independently.</li>
+            <li><strong>Generic Subsystem Tracks</strong> — Used for sensors, command, shields, or any other custom subsystem defined in the ship's design.</li>
           </ul>
 
-          <h3>Step 2 — Hull Damage: Location Roll</h3>
-          <p>Each damage event that penetrates the shields triggers a <strong>1d6 location die roll</strong>. A single result may damage more than one track—fill one box on each indicated track:</p>
+          <h3 id="engineering">Engineering Degradation &amp; Power</h3>
+          <p>Engineering is the most critical track. Each threshold crossed reduces the ship's maximum power by 1, permanently for the rest of the battle.</p>
           <div class="data-table" style="overflow-x:auto;display:block">
             <table class="data-table">
-              <thead><tr><th>Roll</th><th>Track(s) Damaged</th></tr></thead>
+              <thead><tr><th>Thresholds Crossed</th><th>Max Power (example: starts at 3)</th></tr></thead>
               <tbody>
-                <tr><td><strong>1</strong></td><td>Structure <em>and</em> Engineering</td></tr>
-                <tr><td><strong>2</strong></td><td>Engineering</td></tr>
-                <tr><td><strong>3</strong></td><td>Structure <em>and</em> Weapons</td></tr>
-                <tr><td><strong>4</strong></td><td>Weapons</td></tr>
-                <tr><td><strong>5</strong></td><td>Structure <em>and</em> Systems</td></tr>
-                <tr><td><strong>6</strong></td><td>Systems</td></tr>
+                <tr><td>0</td><td>3</td></tr>
+                <tr><td>1st</td><td>2</td></tr>
+                <tr><td>2nd</td><td>1</td></tr>
+                <tr><td>3rd</td><td>0 — cannot allocate power; effectively inert</td></tr>
               </tbody>
             </table>
           </div>
-          <div class="info-panel">
-            <strong style="color:var(--color-cyan)">Note:</strong> Odd rolls (1, 3, 5) always damage Structure, meaning approximately half of all damage events hit the Structure track. Even rolls target only the secondary systems (Engineering, Weapons, or Systems). This distribution—50% Structure, ~33% each secondary track—reflects the spec's intended probabilities.
-          </div>
+          <p>The engineering track's power levels are printed on the SSD beside the track. Cross-hatch (threshold) markers show where the power drops occur visually.</p>
 
-          <h3>The Four Damage Tracks</h3>
-          <p>Each track has a fixed number of boxes (printed on the SSD) and zero or more <strong>threshold markers</strong> (cross-hatched boxes). Filling a normal box has no immediate game effect; filling a threshold box triggers an immediate degradation effect.</p>
+          <h3>Weapon Track Degradation</h3>
+          <p>Weapons degrade in steps rather than flipping from active to destroyed. As a weapon track fills:</p>
+          <ul>
+            <li>Each threshold crossed degrades the weapon by one step (e.g., losing one die from its attack pool, or reducing range, or increasing power cost — specific effects are defined per weapon on the SSD).</li>
+            <li>The weapon is fully disabled only when all its track boxes are filled.</li>
+          </ul>
+          <p>This means a damaged weapon is still dangerous — it just costs more or hits less reliably.</p>
 
-          <h4>Structure Track</h4>
-          <p>Represents the ship's physical hull integrity. When all Structure boxes are filled the ship is <strong>destroyed</strong> and removed from the battlefield.</p>
+          <h3>FTL Degradation</h3>
+          <p>The FTL track works the same as any subsystem track. When all boxes are filled the ship cannot jump. When thresholds are crossed the ship's jump capability may be restricted (e.g., shorter jump range, longer spin-up time — <em>[specific effects are a working assumption, subject to design]</em>).</p>
 
-          <h4>Engineering Track</h4>
-          <p>Represents power generation capacity. Each <strong>threshold crossed</strong> permanently reduces the ship's maximum power by 1 for all future rounds.</p>
+          <h3>The d6 Hit Allocation Table</h3>
+          <p>Each ship's SSD includes a small table showing which d6 roll maps to which subsystem track. For example:</p>
           <div class="data-table" style="overflow-x:auto;display:block">
             <table class="data-table">
-              <thead><tr><th>Thresholds Crossed</th><th>Max Power (example start: 4)</th></tr></thead>
+              <thead><tr><th>d6</th><th>Track Hit</th></tr></thead>
               <tbody>
-                <tr><td>0</td><td>4</td></tr>
-                <tr><td>1st</td><td>3</td></tr>
-                <tr><td>2nd</td><td>2</td></tr>
-                <tr><td>3rd</td><td>1</td></tr>
-                <tr><td>4th (if applicable)</td><td>0 — ship cannot allocate power; effectively inert</td></tr>
+                <tr><td>1–2</td><td>Engineering</td></tr>
+                <tr><td>3</td><td>FTL Drive</td></tr>
+                <tr><td>4–5</td><td>Primary Weapon</td></tr>
+                <tr><td>6</td><td>Secondary Weapon</td></tr>
               </tbody>
             </table>
           </div>
+          <p>This table is defined per ship when the ship is designed in the SSD Builder. More engineering-focused hit numbers create a ship that is especially vulnerable to power loss. Heavier weighting on weapons creates a ship that loses firepower quickly under pressure. The designer chooses the distribution.</p>
 
-          <h4>Weapons Track</h4>
-          <p>Represents combat systems and ordnance. <strong>Secondary weapons degrade first</strong>: each threshold reduces the ship's secondary weapon capability (losing the highest-cost secondary weapon). The primary weapon is not lost until the final threshold is crossed.</p>
+          <h3>Threshold Markers (Cross-Hatch)</h3>
+          <p>On each track, threshold positions are shown as <strong>cross-hatched boxes</strong> instead of empty boxes. When a threshold box is filled, the degradation effect for that track triggers immediately. This is the primary visual signal on the SSD — degrade enough and the cross-hatch pattern shows the severity at a glance.</p>
 
-          <h4>Systems Track</h4>
-          <p>Represents auxiliary systems and subsystems. Each <strong>threshold crossed</strong> degrades one subsystem (e.g., reducing FTL range, disabling probe capacity). When the final threshold is crossed, all subsystems are disabled.</p>
-
-          <h3>Degradation Summary</h3>
-          <div class="data-table" style="overflow-x:auto;display:block">
-            <table class="data-table">
-              <thead><tr><th>Track</th><th>On Threshold</th><th>Final Box = 0</th></tr></thead>
-              <tbody>
-                <tr><td>Structure</td><td>No immediate effect</td><td>Ship destroyed</td></tr>
-                <tr><td>Engineering</td><td>Max power −1</td><td>Ship cannot act</td></tr>
-                <tr><td>Weapons</td><td>Lose a secondary weapon</td><td>Primary weapon lost</td></tr>
-                <tr><td>Systems</td><td>Subsystem degraded/disabled</td><td>All subsystems offline</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3>Combat Pacing</h3>
-          <p>Games typically progress through four stages of attrition:</p>
-          <ol>
-            <li><strong>Shield Stripping</strong> — early rounds spent burning through shield boxes on targeted facings.</li>
-            <li><strong>System Degradation</strong> — Systems and Weapons tracks start filling; subsystems and secondaries are lost.</li>
-            <li><strong>Power Collapse</strong> — Engineering thresholds reduce power, limiting options per activation.</li>
-            <li><strong>Structural Destruction</strong> — Structure fills to 0; the ship is destroyed.</li>
-          </ol>
-          <p>Expect the first ship to be destroyed around <strong>round 2–3</strong>. Full games last <strong>5–8 rounds</strong>.</p>
+          <h3>Tactical Lifespan</h3>
+          <p>Because damage goes to specific subsystems rather than an abstract pool, a ship can remain physically intact but be tactically crippled — out of power, weapons offline, FTL disabled. The subsystem tracks communicate exactly how much capability the ship has left at any moment. This is the core design goal.</p>
         </section>
 
         <!-- Section 10 -->
@@ -560,8 +547,8 @@
             <div class="special-rule-name">Overcharge</div>
             <div class="special-rule-text">You may spend the listed resource (crew, hull) to increase the weapon's output as described.</div>
           </div>
-          <h3>Faction Special Rules</h3>
-          <p>Each faction has two inherent special rules that apply to all ships of that faction automatically. These are detailed in the Factions Database. Faction special rules are always in effect and do not require activation.</p>
+          <h3>Faction Special Rules [Placeholder]</h3>
+          <p>Faction-specific special rules are a working assumption. These rules will be defined when confirmed factions are established. For now, use the faction field on the SSD as a text label only.</p>
         </section>
 
         <!-- Section 12 -->
