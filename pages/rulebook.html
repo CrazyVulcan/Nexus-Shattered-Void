@@ -95,11 +95,13 @@
           <a href="#setup" class="toc-link">3. Game Setup</a>
           <a href="#fleet-building" class="toc-link">4. Fleet Building</a>
           <a href="#turn-structure" class="toc-link">5. Turn Structure</a>
-          <a href="#movement" class="toc-link">6. Movement</a>
-          <a href="#combat" class="toc-link">7. Combat</a>
-          <a href="#damage" class="toc-link">8. Damage & Destruction</a>
-          <a href="#special-rules" class="toc-link">9. Special Rules</a>
-          <a href="#scenarios" class="toc-link">10. Scenarios</a>
+          <a href="#power-economy" class="toc-link">6. Power Economy</a>
+          <a href="#movement" class="toc-link">7. Movement &amp; Arcs</a>
+          <a href="#combat" class="toc-link">8. Combat</a>
+          <a href="#damage" class="toc-link">9. Damage &amp; Track System</a>
+          <a href="#weapons" class="toc-link">10. Weapons</a>
+          <a href="#special-rules" class="toc-link">11. Special Rules</a>
+          <a href="#scenarios" class="toc-link">12. Scenarios</a>
         </nav>
         <div style="margin-top:var(--sp-8);padding:var(--sp-4);border-top:1px solid var(--color-border)">
           <a href="#" class="btn btn-secondary btn-sm" style="width:100%;justify-content:center" onclick="return false" title="Download PDF (coming soon)">
@@ -112,58 +114,64 @@
       <main class="rulebook-main" id="rulebook-main">
         <div class="rulebook-header">
           <h1>NEXUS: Shattered Void<br><span style="color:var(--color-cyan)">Core Rulebook</span></h1>
-          <div class="rulebook-version">VERSION 1.0 — CORE RULES</div>
+          <div class="rulebook-version">VERSION 0.8 — CORE RULES</div>
           <p style="color:var(--color-text-dim);max-width:640px;line-height:1.7">
             Welcome to Nexus: Shattered Void. This rulebook contains everything you need to play competitive tactical fleet combat across the ruins of a shattered galaxy. Read through these rules, build your fleet, and prepare for battle.
           </p>
           <div style="display:flex;gap:var(--sp-3);flex-wrap:wrap;margin-top:var(--sp-5)">
-            <span class="badge badge-cyan">2–6 Players</span>
-            <span class="badge badge-gray">60–120 Min</span>
+            <span class="badge badge-cyan">2 Players</span>
+            <span class="badge badge-gray">3–10 Ships/Side</span>
+            <span class="badge badge-gray">2–4 Hours</span>
             <span class="badge badge-gray">Ages 14+</span>
-            <span class="badge badge-purple">Core Rules v1.0</span>
+            <span class="badge badge-purple">v0.8 Core Rules</span>
           </div>
         </div>
 
         <!-- Section 1 -->
         <section class="rulebook-section" id="intro">
           <h2>1. Introduction</h2>
-          <p>Nexus: Shattered Void is a tactical miniature fleet combat game for two to six players. Players command fleets of starships representing one of four major factions, battling for control of the Nexus Fragments—ancient shards of impossible power scattered across the ruins of the galactic core.</p>
-          <h3>Overview</h3>
-          <p>Each player builds a fleet from their chosen faction using a point budget. Fleets are made up of ship hulls equipped with weapons, modules, and upgrade cards. Players then take turns activating ships, moving them, and resolving attacks.</p>
-          <p>The game ends when one side's fleet is destroyed or when a scenario's victory condition is met. The player or team with the most victory points wins.</p>
-          <h3>Design Philosophy</h3>
-          <p>Nexus: Shattered Void is designed around three core pillars:</p>
+          <p>Nexus: Shattered Void is a <strong>space navy tactical combat game</strong> for two players. Each player commands a fleet of 3–10 warships, battling for control of the Nexus Fragments—ancient shards of impossible power scattered across the ruins of the galactic core.</p>
+          <h3>Game Identity</h3>
+          <p>This is not a dogfight simulator. Nexus: Shattered Void emphasizes <strong>deliberate positioning, planning, and fleet coordination</strong> over reactive moment-to-moment maneuvering. The core experience is built around:</p>
           <ul>
-            <li><strong>Meaningful Choices:</strong> Every decision—from fleet building to target selection—matters and carries consequences.</li>
-            <li><strong>Asymmetric Factions:</strong> Each faction has a distinct identity and playstyle that rewards mastering its particular strengths.</li>
-            <li><strong>Tactical Depth without Complexity:</strong> Rules are intuitive once learned, but create genuinely complex situations through interaction.</li>
+            <li><strong>Positional Gameplay:</strong> Weapon arcs, range control, and facing decisions determine who can fire and where.</li>
+            <li><strong>Resource Allocation:</strong> Each round every ship allocates a limited power budget—spent on weapons, stat boosts, and systems—before a single shot is fired.</li>
+            <li><strong>Gradual Degradation:</strong> Ships do not have simple hit points. Four damage tracks (Structure, Engineering, Weapons, Systems) degrade independently, eroding a ship's fighting capability before it is destroyed.</li>
+            <li><strong>Predictive Decision-Making:</strong> Targets are chosen when a ship activates, not during power allocation, rewarding admirals who anticipate the flow of battle a full round ahead.</li>
           </ul>
+          <h3>Overview</h3>
+          <p>Each player builds a fleet within an agreed point budget, choosing ships from one of four asymmetric factions. At the start of every round both players simultaneously allocate power tokens to their ships. Ships then activate in alternation—firing weapons and moving. The round ends with a brief reset phase. Expect the first ship to be destroyed around round 2–3, with full games running 5–8 rounds and lasting 2–4 hours depending on fleet size.</p>
           <div class="info-panel">
-            <strong style="color:var(--color-cyan)">Tip for New Players:</strong> We recommend starting with the Terran Republic for your first game. Their balanced playstyle is the most forgiving while you learn the rules.
+            <strong style="color:var(--color-cyan)">Tip for New Players:</strong> We recommend starting with the Terran Republic for your first game. Their balanced playstyle is the most forgiving while you learn the power economy and track system.
           </div>
         </section>
 
         <!-- Section 2 -->
         <section class="rulebook-section" id="components">
           <h2>2. Components</h2>
-          <p>A full Nexus: Shattered Void starter set includes the following components. The full rulebook assumes you have access to appropriate miniatures or ship tokens; this is a system-agnostic ruleset.</p>
+          <p>Nexus: Shattered Void is system-agnostic. You supply your own miniatures or ship tokens; the rules work with any suitable models.</p>
           <h3>Required Components</h3>
           <ul>
             <li>Ship models or tokens (one per ship in your fleet)</li>
-            <li>6-sided dice (d6) — at least 10 per player recommended</li>
-            <li>8-sided dice (d8) — at least 4 per player recommended</li>
+            <li><strong>6-sided dice (d6) only</strong> — at least 10 per player recommended; all dice rolls in the game use d6</li>
             <li>Measuring tape or ruler (in inches)</li>
-            <li>Ship record sheets (printable from the website)</li>
-            <li>Token set: Shield tokens, Damage markers, Status tokens</li>
+            <li>Ship System Displays (SSD) — printable from the Ship Builder on this website</li>
+            <li>Power allocation markers (poker chips, tokens, or counters) — 6–8 per ship recommended</li>
+            <li>Damage markers (for tracking filled track boxes)</li>
+            <li>Shield tokens (one set per facing per ship)</li>
+            <li>Ammo tokens (for tracking secondary weapon ammo)</li>
           </ul>
           <h3>Optional Components</h3>
           <ul>
-            <li>Terrain: asteroids, space stations, derelict hulks, debris fields</li>
-            <li>Scenario cards (available as free downloads)</li>
+            <li>Terrain: asteroids, space stations, derelict hulks, debris fields, nebulae</li>
+            <li>Scenario objective markers</li>
             <li>Fleet roster sheets</li>
           </ul>
           <h3>Dice Notation</h3>
-          <p>This rulebook uses standard dice notation: <code>XdY</code> means roll X dice with Y faces. <code>2d6</code> means roll two six-sided dice. <code>1d8+2</code> means roll one eight-sided die and add 2 to the result.</p>
+          <p>This rulebook uses standard dice notation: <code>XdY</code> means roll X dice with Y faces. Because Nexus uses only six-sided dice, all rolls in this game are expressed as <strong>Xd6</strong>.</p>
+          <div class="info-panel">
+            <strong style="color:var(--color-cyan)">Ship System Displays (SSDs):</strong> Each ship's track boxes, threshold markers, shields, weapons, and subsystems are recorded on its SSD card. Use the free Ship Builder tool to generate, customise, and print SSDs for every hull in your fleet.
+          </div>
         </section>
 
         <!-- Section 3 -->
@@ -229,103 +237,303 @@
         <!-- Section 5 -->
         <section class="rulebook-section" id="turn-structure">
           <h2>5. Turn Structure</h2>
-          <p>Nexus: Shattered Void uses an <strong>alternating activation</strong> system. Players do not take entire turns at once—instead, they take turns activating individual ships.</p>
-          <h3>Round Sequence</h3>
-          <ol>
-            <li><strong>Start of Round:</strong> Resolve any "start of round" effects (e.g., Bio-Regeneration, Spore tokens).</li>
-            <li><strong>Activation Phase:</strong> Starting with the player who has Priority, alternate activating one ship each until all ships have been activated.</li>
-            <li><strong>End of Round:</strong> Resolve "end of round" effects. Recharge shields (see Shields). Check victory conditions.</li>
-          </ol>
-          <h3>Activation</h3>
-          <p>When you activate a ship, it may perform <strong>two actions</strong> in any order:</p>
+          <p>Every round of Nexus: Shattered Void follows the same three-phase sequence. Understanding the distinction between phases is essential—decisions made in Phase 1 cannot be changed once Phase 2 begins.</p>
+
+          <h3>Phase 1 — Power Allocation (Simultaneous)</h3>
+          <p>Both players simultaneously and secretly allocate power markers to each of their ships.</p>
           <ul>
-            <li><strong>Move:</strong> Move the ship up to its Speed value in inches.</li>
-            <li><strong>Attack:</strong> Fire one or more weapons at an enemy ship.</li>
-            <li><strong>Boost:</strong> Move an additional half Speed (rounded down). This counts as an action.</li>
-            <li><strong>Reinforce:</strong> Spend an action to add 1 temporary Shield point (removed at end of round).</li>
-            <li><strong>Scan:</strong> Spend an action to reveal a stealthed ship within Sensors range.</li>
+            <li>Each ship generates power equal to its <strong>Engineering ÷ 3</strong> (rounded down). This is listed on the ship's SSD as its <em>Base Power</em>.</li>
+            <li>Typical values: Corvettes generate <strong>2–3 power</strong>; Cruisers generate <strong>4–5 power</strong>.</li>
+            <li>Power may be allocated to any of the following uses:
+              <ul>
+                <li><strong>Attack Resource</strong> — enables the ship to fire weapons this activation.</li>
+                <li><strong>Targeting Boost</strong> — improves hit chance (vs. Agility gate).</li>
+                <li><strong>Weapon Power Boost</strong> — improves damage penetration (vs. Toughness gate).</li>
+                <li><strong>Shield Boost</strong> — temporarily increases shield values on one or more facings.</li>
+                <li><strong>Repair</strong> — restores boxes on a chosen damage track.</li>
+                <li><strong>System Usage</strong> — activates a ship subsystem (e.g., FTL, Probes).</li>
+              </ul>
+            </li>
+            <li>Each stat boost category may only be used <strong>once per round</strong> per ship.</li>
+            <li><strong>Attack resource is separate from stat boosts</strong> — spending power on a Targeting Boost does not consume the attack resource, and vice versa.</li>
+            <li>All allocations are committed before Phase 2 begins. <strong>Targets are not chosen during allocation.</strong></li>
           </ul>
-          <h3>Priority</h3>
-          <p>At the start of each round, both players roll 1d6 and add their fleet's highest Sensors value. The player with the higher total has <strong>Priority</strong> and activates first. On a tie, Priority passes to the player who did not have it last round.</p>
+          <div class="info-panel">
+            <strong style="color:var(--color-cyan)">Key Principle:</strong> You must decide how to spend power before you know what you will shoot. This forces predictive decision-making—the hallmark of skilled play.
+          </div>
+
+          <h3>Phase 2 — Ship Activation (Alternating)</h3>
+          <p>Starting with the player who has Priority, players alternate activating one ship at a time until all ships have been activated. When you activate a ship:</p>
+          <ol>
+            <li><strong>Spend attack resource</strong> based on opportunity (targets must be in arc and range).</li>
+            <li><strong>Fire weapons</strong> — choose targets now; range and arc must be valid at the moment of firing.</li>
+            <li><strong>Move the ship</strong> — movement occurs <em>after</em> firing, not before.</li>
+          </ol>
+          <div class="warning-panel">
+            <strong style="color:#ff7733">⚠️ Important:</strong> A ship moves <em>after</em> it fires. You must position correctly in a previous round to have the correct arcs and range this round. Nexus rewards planning one turn ahead.
+          </div>
+          <p><strong>Priority</strong> at the start of each round is held by the player whose fleet has fewer remaining ships. On a tie, Priority passes to the player who did not hold it last round.</p>
+
+          <h3>Phase 3 — Reset</h3>
+          <ul>
+            <li>Remove all temporary power allocations and boost tokens.</li>
+            <li><strong>Persistent states are maintained:</strong> ammo spent, track damage filled, and any permanent degradation remain in place.</li>
+            <li>Begin the next round with Phase 1.</li>
+          </ul>
+
+          <h3>Round Flow Summary</h3>
+          <div class="data-table" style="overflow-x:auto;display:block">
+            <table class="data-table">
+              <thead><tr><th>Phase</th><th>Action</th><th>Key Rule</th></tr></thead>
+              <tbody>
+                <tr><td>1 — Power Allocation</td><td>Assign power markers to each ship</td><td>Simultaneous; targets not yet chosen</td></tr>
+                <tr><td>2 — Ship Activation</td><td>Alternate activating ships: fire then move</td><td>Targets chosen at activation time</td></tr>
+                <tr><td>3 — Reset</td><td>Clear temporary allocations</td><td>Persistent damage and ammo remain</td></tr>
+              </tbody>
+            </table>
+          </div>
         </section>
 
         <!-- Section 6 -->
-        <section class="rulebook-section" id="movement">
-          <h2>6. Movement</h2>
-          <p>Movement in Nexus is measured in inches from the front of the ship's base to the front of where it ends up.</p>
-          <h3>Movement Rules</h3>
-          <ul>
-            <li>Ships may move up to their <strong>Speed</strong> value in inches.</li>
-            <li>Ships may turn freely during their move—there is no facing restriction by default.</li>
-            <li>Ships may not move through other ships (friendly or enemy) unless a special rule specifically allows it.</li>
-            <li>Ships may end their movement in contact with terrain but not inside terrain (except when using specific modules).</li>
-          </ul>
-          <h3>Agility</h3>
-          <p>A ship's <strong>Agility</strong> determines how well it can evade attacks. It is used as a defense bonus when being targeted (see Combat). High-agility ships like the Phantom-class Interceptor are hard to hit, but often have low hull and shield values to compensate.</p>
-          <h3>Overwatch</h3>
-          <p>A ship that has not yet been activated may declare <strong>Overwatch</strong> at any point during the opponent's activation. The ship makes one attack with one weapon against the activating enemy ship. The overwatch ship then counts as activated for this round (it has used its activation defensively).</p>
-          <div class="warning-panel">
-            <strong style="color:#ff7733">⚠️ Important:</strong> Ships on Overwatch may only fire at ships that move within their weapon's range during the current activation. Overwatch does not trigger on attacks—only on movement.
+        <section class="rulebook-section" id="power-economy">
+          <h2>6. Power Economy</h2>
+          <p>Power is the central resource of the game. Every meaningful action a ship takes—firing weapons, boosting defences, repairing damage—costs power. Managing your power budget across all ships is the primary strategic challenge of the Power Allocation phase.</p>
+
+          <h3>Generating Power</h3>
+          <p>A ship's available power each round equals <strong>its Engineering track value ÷ 3</strong> (rounded down). This value is printed on the SSD as <em>Base Power</em>. As the Engineering track degrades (see Section 9), maximum power decreases.</p>
+          <div class="data-table" style="overflow-x:auto;display:block">
+            <table class="data-table">
+              <thead><tr><th>Ship Type</th><th>Typical Power</th><th>Typical Engineering</th></tr></thead>
+              <tbody>
+                <tr><td>Corvette / Interceptor</td><td>2–3</td><td>6–9</td></tr>
+                <tr><td>Destroyer / Frigate</td><td>3</td><td>9–11</td></tr>
+                <tr><td>Cruiser</td><td>4–5</td><td>12–15</td></tr>
+                <tr><td>Capital Ship / Dreadnought</td><td>5</td><td>15+</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Spending Power</h3>
+          <p>During Power Allocation, each power token must be assigned to one of these uses. Unspent power is wasted—it does not carry over to the next round.</p>
+          <div class="data-table" style="overflow-x:auto;display:block">
+            <table class="data-table">
+              <thead><tr><th>Use</th><th>Effect</th><th>Limit</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Attack Resource</strong></td><td>Enables firing of weapons this activation (each weapon lists its power cost)</td><td>One token per weapon firing</td></tr>
+                <tr><td><strong>Targeting Boost</strong></td><td>Add +1 to all dice rolls against the Agility gate this activation</td><td>Once per ship per round</td></tr>
+                <tr><td><strong>Weapon Power Boost</strong></td><td>Add +1 to all dice rolls against the Toughness gate this activation</td><td>Once per ship per round</td></tr>
+                <tr><td><strong>Shield Boost</strong></td><td>Temporarily increase shields on one facing by 1 (removed in Reset phase; does not restore permanently depleted shields)</td><td>Once per ship per round</td></tr>
+                <tr><td><strong>Repair</strong></td><td>Restore 1 filled box on any one of the four damage tracks (Structure, Engineering, Weapons, or Systems)</td><td>Once per ship per round</td></tr>
+                <tr><td><strong>System Usage</strong></td><td>Activates a subsystem (FTL, Probes, Aux Craft, etc.) as per its rules</td><td>Varies by subsystem</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Key Rule: Attack Resource vs. Stat Boosts</h3>
+          <p>Spending power on a Targeting or Weapon Power boost does <em>not</em> consume the attack resource—these are separate expenditures. A ship that allocates 1 power to Targeting Boost and 2 power to fire its primary weapon has used 3 power total.</p>
+          <div class="rule-box">
+            <strong>Example (Cruiser, 4 power):</strong><br>
+            1 power → Attack Resource (primary weapon, cost 1)<br>
+            2 power → Attack Resource (torpedo, cost 2)<br>
+            1 power → Targeting Boost<br>
+            <strong>Total: 4 power spent.</strong> No power remains for repairs or shields this round—a deliberate trade-off.
           </div>
         </section>
 
         <!-- Section 7 -->
-        <section class="rulebook-section" id="combat">
-          <h2>7. Combat</h2>
-          <p>Combat in Nexus: Shattered Void is resolved with dice rolls. Attacking is part of a ship's activation—a ship may attack once per activation unless a special rule says otherwise.</p>
-          <h3>Line of Sight</h3>
-          <p>To attack, a ship must have <strong>Line of Sight (LOS)</strong> to the target. Draw an imaginary line from any point on the attacking ship's base to any point on the target's base. If this line is not blocked by terrain with the "Full Block" cover type, LOS exists.</p>
-          <h3>Attack Resolution</h3>
-          <ol>
-            <li><strong>Select weapon and target.</strong> The target must be within the weapon's range and LOS.</li>
-            <li><strong>Roll to hit.</strong> Roll 1d6. Add the attacking ship's Sensors value. The result must meet or exceed the <strong>Target Number</strong> (see below).</li>
-            <li><strong>Roll damage.</strong> If the attack hits, roll the weapon's damage dice.</li>
-            <li><strong>Apply shields.</strong> Subtract the target's Shield value from the damage total (minimum 0). Note: some weapons bypass shields.</li>
-            <li><strong>Apply hull damage.</strong> Reduce the target's Hull points by the remaining damage.</li>
-          </ol>
-          <h3>Target Number</h3>
-          <p>The base Target Number to hit is <strong>7</strong>. Modifiers apply:</p>
-          <div class="data-table" style="overflow-x:auto;display:block">
-            <table class="data-table">
-              <thead><tr><th>Condition</th><th>Modifier</th></tr></thead>
-              <tbody>
-                <tr><td>Target Agility</td><td>+Agility value to TN</td></tr>
-                <tr><td>Cover (Asteroid/Debris)</td><td>+1 to TN</td></tr>
-                <tr><td>Attacker has Advanced Targeting Computer</td><td>−1 to TN</td></tr>
-                <tr><td>Target has Sensor-Absorbent Coating</td><td>+2 to TN for Long/Extreme range</td></tr>
-                <tr><td>Fleet Doctrine (Terran, 3+ ships in range)</td><td>−1 to TN</td></tr>
-              </tbody>
-            </table>
+        <section class="rulebook-section" id="movement">
+          <h2>7. Movement &amp; Arcs</h2>
+          <p>Movement in Nexus is measured in inches from the front of the ship's base to the front of where it ends up. Crucially, movement occurs <strong>after</strong> firing—you fire with your current position, then reposition for the next round.</p>
+          <h3>Movement Rules</h3>
+          <ul>
+            <li>Ships move up to their Speed value in inches.</li>
+            <li>Ships may turn freely during movement; there is no facing restriction unless a special rule applies.</li>
+            <li>Ships may not move through other ships (friendly or enemy).</li>
+            <li>Ships may not end their movement inside terrain.</li>
+          </ul>
+          <h3>Fire Arcs</h3>
+          <p>Each ship has four fire arcs—<strong>Fore, Aft, Port, and Starboard</strong>—defined by the weapon's listed arc. A weapon may only fire at targets within its arc at the moment of firing. Shields are also tracked per facing, so the arc from which an attack comes determines which shield pool is tested first.</p>
+          <h3>Range</h3>
+          <p>Weapons list a <strong>minimum range</strong> and a <strong>maximum range</strong>. If the target is closer than the minimum range, the weapon cannot fire (e.g., torpedoes cannot be used at point-blank distance). Measuring range and confirming the correct arc before committing power is essential—mistakes cannot be corrected after allocation.</p>
+          <div class="warning-panel">
+            <strong style="color:#ff7733">⚠️ Remember:</strong> Because you fire before you move, you must spend the current round positioning so that <em>next</em> round your chosen weapons have valid range and arc on likely targets. Nexus rewards anticipation.
           </div>
-          <h3>Critical Hits</h3>
-          <p>If the attack roll (before modifiers) is a natural 6, it is a <strong>Critical Hit</strong>. Critical hits deal an additional 1d6 damage that ignores shields. Some weapons have additional critical hit effects listed in their special rules.</p>
         </section>
 
         <!-- Section 8 -->
-        <section class="rulebook-section" id="damage">
-          <h2>8. Damage &amp; Destruction</h2>
-          <h3>Hull Points</h3>
-          <p>Each ship has a Hull Points (HP) value. Damage reduces HP. When a ship's HP reaches 0, it is <strong>destroyed</strong> and removed from the battlefield.</p>
-          <h3>Shields</h3>
-          <p>Shields absorb damage before it reaches the hull. Each point of incoming damage is reduced by 1 for each Shield point the ship has. Shields do not run out during a round—they apply to every hit the ship takes.</p>
-          <p>At the end of each round, shields recharge to their full value automatically, unless a specific rule prevents this (e.g., EMP Projector).</p>
-          <h3>Crippled State</h3>
-          <p>When a ship is reduced to half its starting HP (rounded down), it becomes <strong>Crippled</strong>. A Crippled ship:</p>
-          <ul>
-            <li>Moves at half Speed (rounded up).</li>
-            <li>Suffers −1 to all attack rolls.</li>
-            <li>Its shields are reduced by half (rounded down).</li>
-          </ul>
-          <h3>Destruction</h3>
-          <p>When a ship is destroyed, remove it from the table. The opponent scores Victory Points equal to the ship's <strong>total cost</strong> (base cost + all equipped items). Certain scenarios award bonus VP for destroying specific ship types.</p>
-          <div class="info-panel">
-            <strong style="color:var(--color-cyan)">Salvage Rule (Optional):</strong> In narrative campaigns, when a ship is destroyed, roll 1d6. On a 5+, one randomly determined equipped module survives and can be recovered if the destroying player holds the area at game end.
+        <section class="rulebook-section" id="combat">
+          <h2>8. Combat</h2>
+          <p>Combat in Nexus: Shattered Void uses a <strong>two-gate dice system</strong>. Every attack rolls a pool of d6; each die must clear two sequential thresholds before it deals damage. There is no single "to-hit" roll—instead, the dice are filtered through the target's Agility and then its Toughness.</p>
+
+          <h3>Step 1 — Roll the Dice Pool</h3>
+          <p>The attacker rolls a number of d6 equal to the firing weapon's <strong>Dice</strong> value (printed on the weapon entry of the SSD).</p>
+
+          <h3>Step 2 — Gate 1: Agility Check</h3>
+          <p>Each die is compared against the target ship's <strong>Agility</strong> stat. A die <strong>meets or exceeds</strong> the Agility value — it survives to Gate 2. Any die that falls below the Agility value is discarded (a miss).</p>
+          <p>If the attacker spent a power token on a <strong>Targeting Boost</strong> this round, add +1 to every die result before comparing to Agility.</p>
+
+          <h3>Step 3 — Gate 2: Toughness Check</h3>
+          <p>Surviving dice are now compared against the target ship's <strong>Toughness</strong> stat. A die <strong>meets or exceeds</strong> the Toughness value — it becomes a <em>damage event</em>. Dice that fall below Toughness are discarded (absorbed by armour).</p>
+          <p>If the attacker spent a power token on a <strong>Weapon Power Boost</strong> this round, add +1 to every surviving die result before comparing to Toughness.</p>
+
+          <h3>Damage Events</h3>
+          <p>Each die that passes both gates is one <strong>damage event</strong>. Damage events are resolved in sequence; see Section 9 for how shields and tracks are affected.</p>
+
+          <div class="rule-box">
+            <strong>Example Attack — Laser Battery (3 dice) vs. Phantom-class Interceptor (Agility 5, Toughness 2):</strong><br>
+            Roll: <strong>2, 4, 6</strong><br>
+            Gate 1 (Agility 5): 2 fails, 4 fails, 6 passes → <strong>1 die survives</strong><br>
+            Gate 2 (Toughness 2): 6 passes → <strong>1 damage event</strong>
           </div>
+
+          <div class="rule-box">
+            <strong>Same attack with Targeting Boost (+1 to Gate 1):</strong><br>
+            Roll: <strong>2, 4, 6</strong> → add +1 → <strong>3, 5, 7</strong><br>
+            Gate 1 (Agility 5): 3 fails, 5 passes, 7 passes → <strong>2 dice survive</strong><br>
+            Gate 2 (Toughness 2): both pass → <strong>2 damage events</strong>
+          </div>
+
+          <h3>Firing Multiple Weapons</h3>
+          <p>A ship may fire multiple weapons during its activation, provided it spent the required attack resource power token for each weapon. Each weapon is resolved as a separate dice pool; Targeting Boost and Weapon Power Boost apply to all pools fired this activation (since they were purchased once during allocation).</p>
+
+          <h3>Primary Weapons &amp; Repeatable Fire</h3>
+          <p>A ship's <strong>Primary Weapon</strong> has no ammo limit and is marked <em>repeatable</em>. If the ship has spare attack resource power tokens, it may fire its primary weapon multiple times in one activation.</p>
         </section>
 
         <!-- Section 9 -->
+        <section class="rulebook-section" id="damage">
+          <h2>9. Damage &amp; Track System</h2>
+          <p>Each ship does not have a single hit-point pool. Instead it has <strong>four independent damage tracks</strong>—Structure, Engineering, Weapons, and Systems—each with a row of boxes and threshold markers. Damage erodes capability long before a ship is destroyed.</p>
+
+          <h3>Step 1 — Shield Check (per Facing)</h3>
+          <p>Shields are tracked separately for each facing (Fore, Aft, Port, Starboard). When an attack generates damage events, check the shields on the facing the attack came from:</p>
+          <ul>
+            <li>While any shield boxes remain on that facing: each damage event removes <strong>1 shield box</strong>. The damage event is then fully absorbed—<strong>no track damage occurs and no location roll is made</strong>.</li>
+            <li>Shield boxes are <strong>not automatically restored</strong> between rounds. Once a shield box is removed it stays removed unless a Shield Boost power token is spent (which adds 1 <em>temporary</em> box, removed in the Reset phase) or a scenario rule restores them.</li>
+            <li>Once all shield boxes on the targeted facing are gone, subsequent damage events proceed to hull damage.</li>
+          </ul>
+
+          <h3>Step 2 — Hull Damage: Location Roll</h3>
+          <p>Each damage event that penetrates the shields triggers a <strong>1d6 location die roll</strong>. A single result may damage more than one track—fill one box on each indicated track:</p>
+          <div class="data-table" style="overflow-x:auto;display:block">
+            <table class="data-table">
+              <thead><tr><th>Roll</th><th>Track(s) Damaged</th></tr></thead>
+              <tbody>
+                <tr><td><strong>1</strong></td><td>Structure <em>and</em> Engineering</td></tr>
+                <tr><td><strong>2</strong></td><td>Engineering</td></tr>
+                <tr><td><strong>3</strong></td><td>Structure <em>and</em> Weapons</td></tr>
+                <tr><td><strong>4</strong></td><td>Weapons</td></tr>
+                <tr><td><strong>5</strong></td><td>Structure <em>and</em> Systems</td></tr>
+                <tr><td><strong>6</strong></td><td>Systems</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="info-panel">
+            <strong style="color:var(--color-cyan)">Note:</strong> Odd rolls (1, 3, 5) always damage Structure, meaning approximately half of all damage events hit the Structure track. Even rolls target only the secondary systems (Engineering, Weapons, or Systems). This distribution—50% Structure, ~33% each secondary track—reflects the spec's intended probabilities.
+          </div>
+
+          <h3>The Four Damage Tracks</h3>
+          <p>Each track has a fixed number of boxes (printed on the SSD) and zero or more <strong>threshold markers</strong> (cross-hatched boxes). Filling a normal box has no immediate game effect; filling a threshold box triggers an immediate degradation effect.</p>
+
+          <h4>Structure Track</h4>
+          <p>Represents the ship's physical hull integrity. When all Structure boxes are filled the ship is <strong>destroyed</strong> and removed from the battlefield.</p>
+
+          <h4>Engineering Track</h4>
+          <p>Represents power generation capacity. Each <strong>threshold crossed</strong> permanently reduces the ship's maximum power by 1 for all future rounds.</p>
+          <div class="data-table" style="overflow-x:auto;display:block">
+            <table class="data-table">
+              <thead><tr><th>Thresholds Crossed</th><th>Max Power (example start: 4)</th></tr></thead>
+              <tbody>
+                <tr><td>0</td><td>4</td></tr>
+                <tr><td>1st</td><td>3</td></tr>
+                <tr><td>2nd</td><td>2</td></tr>
+                <tr><td>3rd</td><td>1</td></tr>
+                <tr><td>4th (if applicable)</td><td>0 — ship cannot allocate power; effectively inert</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>Weapons Track</h4>
+          <p>Represents combat systems and ordnance. <strong>Secondary weapons degrade first</strong>: each threshold reduces the ship's secondary weapon capability (losing the highest-cost secondary weapon). The primary weapon is not lost until the final threshold is crossed.</p>
+
+          <h4>Systems Track</h4>
+          <p>Represents auxiliary systems and subsystems. Each <strong>threshold crossed</strong> degrades one subsystem (e.g., reducing FTL range, disabling probe capacity). When the final threshold is crossed, all subsystems are disabled.</p>
+
+          <h3>Degradation Summary</h3>
+          <div class="data-table" style="overflow-x:auto;display:block">
+            <table class="data-table">
+              <thead><tr><th>Track</th><th>On Threshold</th><th>Final Box = 0</th></tr></thead>
+              <tbody>
+                <tr><td>Structure</td><td>No immediate effect</td><td>Ship destroyed</td></tr>
+                <tr><td>Engineering</td><td>Max power −1</td><td>Ship cannot act</td></tr>
+                <tr><td>Weapons</td><td>Lose a secondary weapon</td><td>Primary weapon lost</td></tr>
+                <tr><td>Systems</td><td>Subsystem degraded/disabled</td><td>All subsystems offline</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Combat Pacing</h3>
+          <p>Games typically progress through four stages of attrition:</p>
+          <ol>
+            <li><strong>Shield Stripping</strong> — early rounds spent burning through shield boxes on targeted facings.</li>
+            <li><strong>System Degradation</strong> — Systems and Weapons tracks start filling; subsystems and secondaries are lost.</li>
+            <li><strong>Power Collapse</strong> — Engineering thresholds reduce power, limiting options per activation.</li>
+            <li><strong>Structural Destruction</strong> — Structure fills to 0; the ship is destroyed.</li>
+          </ol>
+          <p>Expect the first ship to be destroyed around <strong>round 2–3</strong>. Full games last <strong>5–8 rounds</strong>.</p>
+        </section>
+
+        <!-- Section 10 -->
+        <section class="rulebook-section" id="weapons">
+          <h2>10. Weapons</h2>
+          <p>Each ship carries a fixed loadout of weapons defined on its SSD. Weapons are divided into two categories: Primary and Secondary.</p>
+
+          <h3>Primary Weapons</h3>
+          <ul>
+            <li>Every ship has exactly one Primary Weapon.</li>
+            <li>Primary weapons have <strong>no ammo limit</strong> and the <em>repeatable</em> trait.</li>
+            <li>A ship may fire its primary weapon <strong>multiple times per activation</strong> if it has sufficient attack resource power tokens.</li>
+            <li>The primary weapon is not degraded until the Weapons track's final threshold is crossed.</li>
+            <li>Primary weapons are typically mid-range and reliable—consistent damage dealers each round.</li>
+          </ul>
+
+          <h3>Secondary Weapons</h3>
+          <ul>
+            <li>A ship may carry zero or more Secondary Weapons.</li>
+            <li>Secondary weapons are <strong>limited by power cost and/or ammo</strong>.</li>
+            <li>They provide tactical tools: higher burst damage, extreme range, area effects, or situational advantages.</li>
+            <li>Secondary weapons degrade first as the Weapons track fills (see Section 9).</li>
+          </ul>
+
+          <h3>Weapon Properties</h3>
+          <div class="data-table" style="overflow-x:auto;display:block">
+            <table class="data-table">
+              <thead><tr><th>Property</th><th>Description</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Name</strong></td><td>Identifier printed on the SSD</td></tr>
+                <tr><td><strong>Range (min / max)</strong></td><td>Minimum and maximum range in inches; weapon cannot fire outside these bounds</td></tr>
+                <tr><td><strong>Power Cost</strong></td><td>Number of power tokens required as attack resource to fire this weapon once</td></tr>
+                <tr><td><strong>Dice</strong></td><td>Number of d6 rolled for the attack pool</td></tr>
+                <tr><td><strong>Traits</strong></td><td>Special keywords (repeatable, guided, etc.); see Section 11</td></tr>
+                <tr><td><strong>Ammo</strong></td><td>Maximum times the weapon can be fired per game; tracked on the SSD (null = unlimited)</td></tr>
+                <tr><td><strong>Role</strong></td><td>Primary or Secondary</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Torpedo Example</h3>
+          <p>Torpedoes illustrate the design intent of secondary weapons:</p>
+          <ul>
+            <li><strong>High dice count</strong> — capable of generating many damage events.</li>
+            <li><strong>Long range</strong> — engage at ranges primaries cannot reach.</li>
+            <li><strong>Minimum range restriction</strong> — cannot fire at close-range targets; forces engagement distance management.</li>
+            <li><strong>Limited ammo</strong> — creates a tactical "spend now or save it?" decision each round.</li>
+          </ul>
+        </section>
+
+        <!-- Section 11 -->
         <section class="rulebook-section" id="special-rules">
-          <h2>9. Special Rules</h2>
+          <h2>11. Special Rules</h2>
           <p>Many ships, weapons, modules, and faction abilities reference special rules. The most common are listed here. Full special rule text is always printed on the item card; the entries below serve as reference summaries.</p>
           <h3>Common Special Rules</h3>
           <div class="special-rule">
@@ -356,9 +564,9 @@
           <p>Each faction has two inherent special rules that apply to all ships of that faction automatically. These are detailed in the Factions Database. Faction special rules are always in effect and do not require activation.</p>
         </section>
 
-        <!-- Section 10 -->
+        <!-- Section 12 -->
         <section class="rulebook-section" id="scenarios">
-          <h2>10. Scenarios</h2>
+          <h2>12. Scenarios</h2>
           <p>While simply destroying the enemy fleet is a valid victory condition, Nexus: Shattered Void is designed around objectives. The following standard scenarios can be played with any two factions.</p>
           <h3>Scenario 1: Total Annihilation</h3>
           <p><strong>Setup:</strong> Standard deployment. <strong>Victory:</strong> The player who destroys the most total point value of enemy ships wins. Play until one fleet is completely destroyed, or until agreed time limit. Tie goes to the player with more HP remaining across their fleet.</p>
