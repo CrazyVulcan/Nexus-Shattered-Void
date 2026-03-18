@@ -4,8 +4,7 @@
 
 const NAV_LINKS = [
   { href: '/index.html',           label: 'Home' },
-  { href: '/pages/builder.html',   label: 'Ship Builder' },
-  { href: '/pages/factions.html',  label: 'Factions' },
+  { href: '/pages/builder.html',   label: 'SSD Builder' },
   { href: '/pages/rulebook.html',  label: 'Rulebook' },
   { href: '/pages/about.html',     label: 'About' },
 ];
@@ -14,18 +13,8 @@ const FOOTER_COLS = [
   {
     title: 'Game',
     links: [
-      { href: '/pages/builder.html',  label: 'Ship Builder' },
-      { href: '/pages/factions.html', label: 'Factions Database' },
-      { href: '/pages/rulebook.html', label: 'Rulebook' },
-      { href: '/pages/battle-simulator.html', label: 'Battle Simulator' },
-    ],
-  },
-  {
-    title: 'Explore',
-    links: [
-      { href: '/pages/lore-archive.html', label: 'Lore Archive' },
-      { href: '/pages/news.html',         label: 'News' },
-      { href: '/pages/community.html',    label: 'Community' },
+      { href: '/pages/builder.html',  label: 'SSD Builder' },
+      { href: '/pages/rulebook.html', label: 'Rules Primer' },
     ],
   },
   {
@@ -88,7 +77,7 @@ function buildFooterHTML() {
     <div class="footer-grid">
       <div class="footer-brand">
         <h3>NEXUS<span>:SV</span></h3>
-        <p>A tactical fleet combat tabletop game set in the shattered remnants of a dead galaxy. Build your fleet, choose your faction, and conquer the void.</p>
+        <p>A tactical starship combat wargame centered on subsystem warfare, power allocation, and progressive capability loss. Each ship is an SSD — a machine under pressure.</p>
       </div>
       ${colsHTML}
     </div>

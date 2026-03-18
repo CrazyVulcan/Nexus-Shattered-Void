@@ -1,54 +1,24 @@
 [
   {
-    "id": "terran-republic",
-    "name": "Terran Republic",
-    "symbol": "../assets/faction-terran.svg",
-    "description": "The remnants of humanity's unified government, the Terran Republic fields powerful, well-balanced fleets. Their ships are rugged, reliable, and designed for sustained campaigns across deep space. The Republic favors coordinated fleet tactics and overwhelming firepower delivered in disciplined volleys.",
-    "playstyle": ["Balanced", "Fleet Coordination", "High Durability"],
-    "shipHulls": ["frigate-tf1", "destroyer-td1", "cruiser-tc1", "carrier-tfc1", "dreadnought-tdn1"],
-    "specialRules": [
-      {"name": "Iron Resolve", "description": "Terran ships may re-roll one defense die per combat round."},
-      {"name": "Fleet Doctrine", "description": "When 3+ Terran ships are within 6\" of each other, all gain +1 to hit."}
-    ],
+    "_note": "PLACEHOLDER — No canon factions are confirmed. These entries are working assumptions only.",
+    "id": "faction-a",
+    "name": "[Placeholder Faction A]",
+    "symbol": null,
+    "description": "[Placeholder] Faction A is a balanced all-rounder fleet. Description and lore TBD.",
+    "playstyle": ["Balanced", "Placeholder"],
+    "shipHulls": ["frigate-01", "destroyer-01"],
+    "specialRules": [],
     "color": "#1a6bbf"
   },
   {
-    "id": "void-syndicate",
-    "name": "Void Syndicate",
-    "symbol": "../assets/faction-void.svg",
-    "description": "A shadowy network of mercenaries, pirates, and rogue AI collectives, the Void Syndicate excels at hit-and-run tactics. Their ships are fast, lightly armored, and bristling with experimental weapons. The Syndicate never fights fair—and always fights to win.",
-    "playstyle": ["Stealth", "Aggressive", "High Speed"],
-    "shipHulls": ["interceptor-vi1", "raider-vr1", "gunship-vg1", "stealth-cruiser-vsc1"],
-    "specialRules": [
-      {"name": "Shadow Protocol", "description": "Once per game, a Syndicate ship may become undetectable for one round."},
-      {"name": "Scavenge", "description": "When a Syndicate ship destroys an enemy, roll a die—on 4+, recover 1 module."}
-    ],
+    "_note": "PLACEHOLDER — No canon factions are confirmed. These entries are working assumptions only.",
+    "id": "faction-b",
+    "name": "[Placeholder Faction B]",
+    "symbol": null,
+    "description": "[Placeholder] Faction B favors heavy, resilient capital ships. Description and lore TBD.",
+    "playstyle": ["Heavy Armor", "Placeholder"],
+    "shipHulls": ["cruiser-01"],
+    "specialRules": [],
     "color": "#8b00ff"
-  },
-  {
-    "id": "chorus-collective",
-    "name": "Chorus Collective",
-    "symbol": "../assets/faction-chorus.svg",
-    "description": "An ancient hive-mind species that perceives the universe as pure resonant energy, the Chorus Collective fields living starships that grow, adapt, and evolve mid-battle. Their technology is incomprehensible to most species, blending organic biotech with exotic energy manipulation.",
-    "playstyle": ["Adaptive", "Carrier-Focused", "Exotic Weapons"],
-    "shipHulls": ["spore-carrier-cs1", "resonance-cruiser-cr1", "tendril-frigate-ctf1", "worldship-cw1"],
-    "specialRules": [
-      {"name": "Bio-Regeneration", "description": "At the start of each round, heal 1 hull point on each Chorus ship."},
-      {"name": "Resonance Link", "description": "Chorus ships within 4\" of each other share defensive bonuses."}
-    ],
-    "color": "#00d4a0"
-  },
-  {
-    "id": "iron-dominion",
-    "name": "Iron Dominion",
-    "symbol": "../assets/faction-iron.svg",
-    "description": "A totalitarian empire built on conquest and absolute order, the Iron Dominion fields the largest, most heavily armored warships in the known galaxy. Their dreadnoughts are mobile fortresses, their doctrine is attrition, and their goal is total subjugation.",
-    "playstyle": ["Heavy Armor", "Siege Warfare", "Slow but Devastating"],
-    "shipHulls": ["battle-frigate-if1", "heavy-destroyer-ihd1", "siege-cruiser-isc1", "fortress-dreadnought-ifd1"],
-    "specialRules": [
-      {"name": "Unyielding", "description": "Iron Dominion ships ignore the first point of damage each round."},
-      {"name": "Suppression Fire", "description": "Enemy ships within 8\" of an Iron Dominion Dreadnought suffer -1 to attack rolls."}
-    ],
-    "color": "#c44a00"
   }
 ]
