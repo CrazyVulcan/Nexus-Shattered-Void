@@ -149,7 +149,7 @@ function leftSection(secY, secH, hitLabel, sectionName, rows, boostBoxDefs) {
   const hitParts = String(hitLabel || '').split(',');
   if (hitParts.length > 1) {
     g += `<text x="5" y="${secY + 14}" font-size="9" font-weight="700" font-family="${FONT}" fill="${INK}">${esc(hitParts[0])},${esc(hitParts[1])}</text>`;
-    if (hitParts[2]) {
+    if (hitParts.length > 2 && hitParts[2]) {
       g += `<text x="5" y="${secY + 24}" font-size="9" font-weight="700" font-family="${FONT}" fill="${INK}">${esc(hitParts[2])}</text>`;
     }
   } else {
