@@ -67,9 +67,9 @@ function renderDetail(faction) {
         <div class="item-row">
           <div class="item-row-info">
             <div class="item-row-name">${s.name}</div>
-            <div class="item-row-detail">${s.type} · Hull ${s.stats.hull} · Shields ${s.stats.shields} · Speed ${s.stats.speed}</div>
+            <div class="item-row-detail">${s.class} · AGI ${s.stats.agility} · TGH ${s.stats.toughness} · Shields F${s.stats.shields.fore}/A${s.stats.shields.aft}</div>
           </div>
-          <span class="cost-badge">${s.baseCost} pts</span>
+          <span class="cost-badge">${s.pointCost} pts</span>
         </div>`).join('')
     : '<p class="text-dim" style="font-size:0.9rem;padding:1rem 0">No ships listed for this faction.</p>';
 

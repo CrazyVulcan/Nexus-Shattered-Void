@@ -1,254 +1,1429 @@
 [
   {
     "id": "frigate-tf1",
+    "name": "Valiant",
+    "class": "Valiant-class Frigate",
     "faction": "terran-republic",
-    "name": "Valiant-class Frigate",
-    "type": "Frigate",
-    "baseCost": 45,
+    "pointCost": 45,
     "stats": {
-      "hull": 4,
-      "shields": 2,
-      "speed": 8,
       "agility": 3,
-      "sensors": 4,
-      "crew": 2
+      "toughness": 3,
+      "shields": {
+        "fore": 2,
+        "aft": 1,
+        "port": 1,
+        "starboard": 1
+      }
     },
-    "slots": {
-      "weapons": 2,
-      "modules": 2,
-      "upgrades": 1
+    "tracks": {
+      "structure": {
+        "boxCount": 8,
+        "thresholds": []
+      },
+      "engineering": {
+        "boxCount": 10,
+        "thresholds": [
+          4
+        ]
+      },
+      "weapons": {
+        "boxCount": 8,
+        "thresholds": [
+          4
+        ]
+      },
+      "systems": {
+        "boxCount": 8,
+        "thresholds": [
+          4
+        ]
+      }
     },
-    "description": "The backbone of the Republic fleet. Fast, reliable, and cheap enough to field in numbers."
+    "power": {
+      "basePower": 2,
+      "scalingRule": "1 per 3 engineering"
+    },
+    "weapons": [
+      {
+        "name": "Laser Battery",
+        "rangeMin": 0,
+        "rangeMax": 12,
+        "powerCost": 1,
+        "dice": 2,
+        "traits": [
+          "repeatable"
+        ],
+        "ammo": null,
+        "role": "primary"
+      },
+      {
+        "name": "Seeker Missile Pod",
+        "rangeMin": 6,
+        "rangeMax": 24,
+        "powerCost": 2,
+        "dice": 2,
+        "traits": [
+          "guided"
+        ],
+        "ammo": 3,
+        "role": "secondary"
+      }
+    ],
+    "subsystems": [
+      {
+        "name": "FTL Drive",
+        "type": "ftl",
+        "hp": null,
+        "effect": "Enables FTL transit between sectors"
+      }
+    ]
   },
   {
     "id": "destroyer-td1",
+    "name": "Ironclad",
+    "class": "Ironclad-class Destroyer",
     "faction": "terran-republic",
-    "name": "Ironclad-class Destroyer",
-    "type": "Destroyer",
-    "baseCost": 80,
+    "pointCost": 80,
     "stats": {
-      "hull": 7,
-      "shields": 3,
-      "speed": 6,
       "agility": 2,
-      "sensors": 4,
-      "crew": 4
+      "toughness": 4,
+      "shields": {
+        "fore": 3,
+        "aft": 2,
+        "port": 2,
+        "starboard": 2
+      }
     },
-    "slots": {
-      "weapons": 3,
-      "modules": 3,
-      "upgrades": 2
+    "tracks": {
+      "structure": {
+        "boxCount": 12,
+        "thresholds": []
+      },
+      "engineering": {
+        "boxCount": 12,
+        "thresholds": [
+          3,
+          7
+        ]
+      },
+      "weapons": {
+        "boxCount": 10,
+        "thresholds": [
+          4,
+          7
+        ]
+      },
+      "systems": {
+        "boxCount": 10,
+        "thresholds": [
+          5
+        ]
+      }
     },
-    "description": "A heavy escort vessel capable of independent patrol missions."
+    "power": {
+      "basePower": 3,
+      "scalingRule": "1 per 3 engineering"
+    },
+    "weapons": [
+      {
+        "name": "Plasma Cannon",
+        "rangeMin": 0,
+        "rangeMax": 12,
+        "powerCost": 2,
+        "dice": 3,
+        "traits": [
+          "fire-on-critical"
+        ],
+        "ammo": null,
+        "role": "primary"
+      },
+      {
+        "name": "Gauss Rifle Array",
+        "rangeMin": 6,
+        "rangeMax": 24,
+        "powerCost": 2,
+        "dice": 1,
+        "traits": [
+          "armor-piercing"
+        ],
+        "ammo": null,
+        "role": "secondary"
+      },
+      {
+        "name": "Point Defense System",
+        "rangeMin": 0,
+        "rangeMax": 6,
+        "powerCost": 1,
+        "dice": 1,
+        "traits": [
+          "defensive",
+          "intercept"
+        ],
+        "ammo": null,
+        "role": "secondary"
+      }
+    ],
+    "subsystems": [
+      {
+        "name": "FTL Drive",
+        "type": "ftl",
+        "hp": null,
+        "effect": "Enables FTL transit between sectors"
+      },
+      {
+        "name": "Sensor Array",
+        "type": "sensors",
+        "hp": null,
+        "effect": "Improves targeting; +1 die on long-range attacks"
+      }
+    ]
   },
   {
     "id": "cruiser-tc1",
+    "name": "Sovereign",
+    "class": "Sovereign-class Cruiser",
     "faction": "terran-republic",
-    "name": "Sovereign-class Cruiser",
-    "type": "Cruiser",
-    "baseCost": 150,
+    "pointCost": 150,
     "stats": {
-      "hull": 12,
-      "shields": 5,
-      "speed": 5,
       "agility": 1,
-      "sensors": 6,
-      "crew": 8
+      "toughness": 5,
+      "shields": {
+        "fore": 5,
+        "aft": 3,
+        "port": 3,
+        "starboard": 3
+      }
     },
-    "slots": {
-      "weapons": 5,
-      "modules": 5,
-      "upgrades": 3
+    "tracks": {
+      "structure": {
+        "boxCount": 16,
+        "thresholds": []
+      },
+      "engineering": {
+        "boxCount": 14,
+        "thresholds": [
+          3,
+          7,
+          11
+        ]
+      },
+      "weapons": {
+        "boxCount": 12,
+        "thresholds": [
+          4,
+          8
+        ]
+      },
+      "systems": {
+        "boxCount": 12,
+        "thresholds": [
+          6
+        ]
+      }
     },
-    "description": "The command ship of Republic battle groups. Heavily armed and armored."
+    "power": {
+      "basePower": 4,
+      "scalingRule": "1 per 3 engineering"
+    },
+    "weapons": [
+      {
+        "name": "Heavy Plasma Blaster",
+        "rangeMin": 0,
+        "rangeMax": 6,
+        "powerCost": 3,
+        "dice": 4,
+        "traits": [
+          "overcharge"
+        ],
+        "ammo": null,
+        "role": "primary"
+      },
+      {
+        "name": "Mass Driver Cannon",
+        "rangeMin": 6,
+        "rangeMax": 24,
+        "powerCost": 3,
+        "dice": 3,
+        "traits": [
+          "knockback",
+          "slow"
+        ],
+        "ammo": null,
+        "role": "secondary"
+      },
+      {
+        "name": "Gauss Rifle Array",
+        "rangeMin": 6,
+        "rangeMax": 24,
+        "powerCost": 2,
+        "dice": 1,
+        "traits": [
+          "armor-piercing"
+        ],
+        "ammo": null,
+        "role": "secondary"
+      },
+      {
+        "name": "EMP Projector",
+        "rangeMin": 0,
+        "rangeMax": 12,
+        "powerCost": 2,
+        "dice": 0,
+        "traits": [
+          "non-lethal",
+          "shield-offline"
+        ],
+        "ammo": null,
+        "role": "secondary"
+      },
+      {
+        "name": "Point Defense System",
+        "rangeMin": 0,
+        "rangeMax": 6,
+        "powerCost": 1,
+        "dice": 1,
+        "traits": [
+          "defensive",
+          "intercept"
+        ],
+        "ammo": null,
+        "role": "secondary"
+      }
+    ],
+    "subsystems": [
+      {
+        "name": "FTL Drive",
+        "type": "ftl",
+        "hp": null,
+        "effect": "Enables FTL transit between sectors"
+      },
+      {
+        "name": "Sensor Array",
+        "type": "sensors",
+        "hp": null,
+        "effect": "Improves targeting; +1 die on long-range attacks"
+      },
+      {
+        "name": "Command Bridge",
+        "type": "command",
+        "hp": null,
+        "effect": "Reroll one die on any check once per round"
+      }
+    ]
   },
   {
     "id": "carrier-tfc1",
+    "name": "Aegis",
+    "class": "Aegis-class Fleet Carrier",
     "faction": "terran-republic",
-    "name": "Aegis-class Fleet Carrier",
-    "type": "Carrier",
-    "baseCost": 180,
+    "pointCost": 180,
     "stats": {
-      "hull": 14,
-      "shields": 6,
-      "speed": 4,
       "agility": 1,
-      "sensors": 8,
-      "crew": 12
+      "toughness": 5,
+      "shields": {
+        "fore": 5,
+        "aft": 3,
+        "port": 4,
+        "starboard": 4
+      }
     },
-    "slots": {
-      "weapons": 3,
-      "modules": 7,
-      "upgrades": 4
+    "tracks": {
+      "structure": {
+        "boxCount": 18,
+        "thresholds": []
+      },
+      "engineering": {
+        "boxCount": 16,
+        "thresholds": [
+          3,
+          7,
+          11
+        ]
+      },
+      "weapons": {
+        "boxCount": 10,
+        "thresholds": [
+          4
+        ]
+      },
+      "systems": {
+        "boxCount": 14,
+        "thresholds": [
+          4,
+          9
+        ]
+      }
     },
-    "description": "A massive fleet support ship that deploys wings of fighter drones and coordinates fleet-wide tactics."
+    "power": {
+      "basePower": 4,
+      "scalingRule": "1 per 3 engineering"
+    },
+    "weapons": [
+      {
+        "name": "Laser Battery",
+        "rangeMin": 0,
+        "rangeMax": 12,
+        "powerCost": 1,
+        "dice": 2,
+        "traits": [
+          "repeatable"
+        ],
+        "ammo": null,
+        "role": "primary"
+      },
+      {
+        "name": "Flak Burst Battery",
+        "rangeMin": 0,
+        "rangeMax": 6,
+        "powerCost": 1,
+        "dice": 2,
+        "traits": [
+          "area-denial"
+        ],
+        "ammo": null,
+        "role": "secondary"
+      },
+      {
+        "name": "Point Defense System",
+        "rangeMin": 0,
+        "rangeMax": 6,
+        "powerCost": 1,
+        "dice": 1,
+        "traits": [
+          "defensive",
+          "intercept"
+        ],
+        "ammo": null,
+        "role": "secondary"
+      }
+    ],
+    "subsystems": [
+      {
+        "name": "FTL Drive",
+        "type": "ftl",
+        "hp": null,
+        "effect": "Enables FTL transit between sectors"
+      },
+      {
+        "name": "Hangar Bay",
+        "type": "hangar",
+        "hp": 4,
+        "effect": "Deploys 4 fighter drones each activation"
+      },
+      {
+        "name": "Fighter Control",
+        "type": "command",
+        "hp": null,
+        "effect": "Fighter wing gains +1 attack die while this is intact"
+      },
+      {
+        "name": "Sensor Array",
+        "type": "sensors",
+        "hp": null,
+        "effect": "Improves targeting; +1 die on long-range attacks"
+      }
+    ]
   },
   {
     "id": "dreadnought-tdn1",
+    "name": "Colossus",
+    "class": "Colossus-class Dreadnought",
     "faction": "terran-republic",
-    "name": "Colossus-class Dreadnought",
-    "type": "Dreadnought",
-    "baseCost": 260,
+    "pointCost": 260,
     "stats": {
-      "hull": 22,
-      "shields": 9,
-      "speed": 3,
       "agility": 0,
-      "sensors": 7,
-      "crew": 18
+      "toughness": 7,
+      "shields": {
+        "fore": 8,
+        "aft": 5,
+        "port": 6,
+        "starboard": 6
+      }
     },
-    "slots": {
-      "weapons": 7,
-      "modules": 7,
-      "upgrades": 5
+    "tracks": {
+      "structure": {
+        "boxCount": 22,
+        "thresholds": []
+      },
+      "engineering": {
+        "boxCount": 18,
+        "thresholds": [
+          3,
+          7,
+          11,
+          14
+        ]
+      },
+      "weapons": {
+        "boxCount": 16,
+        "thresholds": [
+          4,
+          9,
+          13
+        ]
+      },
+      "systems": {
+        "boxCount": 14,
+        "thresholds": [
+          4,
+          9
+        ]
+      }
     },
-    "description": "Humanity's ultimate warship. The Colossus-class turns the tide of any engagement it joins."
+    "power": {
+      "basePower": 5,
+      "scalingRule": "1 per 3 engineering"
+    },
+    "weapons": [
+      {
+        "name": "Railgun Spinal Mount",
+        "rangeMin": 12,
+        "rangeMax": 36,
+        "powerCost": 4,
+        "dice": 4,
+        "traits": [
+          "forward-arc",
+          "penetrating"
+        ],
+        "ammo": null,
+        "role": "primary"
+      },
+      {
+        "name": "Heavy Plasma Blaster",
+        "rangeMin": 0,
+        "rangeMax": 6,
+        "powerCost": 3,
+        "dice": 4,
+        "traits": [
+          "overcharge"
+        ],
+        "ammo": null,
+        "role": "secondary"
+      },
+      {
+        "name": "Mass Driver Cannon",
+        "rangeMin": 6,
+        "rangeMax": 24,
+        "powerCost": 3,
+        "dice": 3,
+        "traits": [
+          "knockback",
+          "slow"
+        ],
+        "ammo": null,
+        "role": "secondary"
+      },
+      {
+        "name": "Plasma Cannon",
+        "rangeMin": 0,
+        "rangeMax": 12,
+        "powerCost": 2,
+        "dice": 3,
+        "traits": [
+          "fire-on-critical"
+        ],
+        "ammo": null,
+        "role": "secondary"
+      },
+      {
+        "name": "Seeker Missile Pod",
+        "rangeMin": 6,
+        "rangeMax": 24,
+        "powerCost": 2,
+        "dice": 2,
+        "traits": [
+          "guided"
+        ],
+        "ammo": 3,
+        "role": "secondary"
+      },
+      {
+        "name": "EMP Projector",
+        "rangeMin": 0,
+        "rangeMax": 12,
+        "powerCost": 2,
+        "dice": 0,
+        "traits": [
+          "non-lethal",
+          "shield-offline"
+        ],
+        "ammo": null,
+        "role": "secondary"
+      },
+      {
+        "name": "Point Defense System",
+        "rangeMin": 0,
+        "rangeMax": 6,
+        "powerCost": 1,
+        "dice": 1,
+        "traits": [
+          "defensive",
+          "intercept"
+        ],
+        "ammo": null,
+        "role": "secondary"
+      }
+    ],
+    "subsystems": [
+      {
+        "name": "FTL Drive",
+        "type": "ftl",
+        "hp": null,
+        "effect": "Enables FTL transit between sectors"
+      },
+      {
+        "name": "Command Bridge",
+        "type": "command",
+        "hp": null,
+        "effect": "Reroll one die on any check once per round"
+      },
+      {
+        "name": "Damage Control",
+        "type": "repair",
+        "hp": 3,
+        "effect": "Repair 1 box on any track during activation"
+      },
+      {
+        "name": "Sensor Array",
+        "type": "sensors",
+        "hp": null,
+        "effect": "Improves targeting; +1 die on long-range attacks"
+      }
+    ]
   },
   {
     "id": "interceptor-vi1",
+    "name": "Phantom",
+    "class": "Phantom-class Interceptor",
     "faction": "void-syndicate",
-    "name": "Phantom-class Interceptor",
-    "type": "Interceptor",
-    "baseCost": 35,
+    "pointCost": 35,
     "stats": {
-      "hull": 2,
-      "shields": 1,
-      "speed": 14,
       "agility": 5,
-      "sensors": 3,
-      "crew": 1
+      "toughness": 2,
+      "shields": {
+        "fore": 1,
+        "aft": 0,
+        "port": 1,
+        "starboard": 1
+      }
     },
-    "slots": {
-      "weapons": 2,
-      "modules": 1,
-      "upgrades": 1
+    "tracks": {
+      "structure": {
+        "boxCount": 8,
+        "thresholds": []
+      },
+      "engineering": {
+        "boxCount": 8,
+        "thresholds": [
+          3
+        ]
+      },
+      "weapons": {
+        "boxCount": 6,
+        "thresholds": [
+          3
+        ]
+      },
+      "systems": {
+        "boxCount": 6,
+        "thresholds": [
+          3
+        ]
+      }
     },
-    "description": "Blazing fast and nearly invisible on sensors. Dies if you look at it wrong."
+    "power": {
+      "basePower": 2,
+      "scalingRule": "1 per 3 engineering"
+    },
+    "weapons": [
+      {
+        "name": "Scatter Laser",
+        "rangeMin": 0,
+        "rangeMax": 6,
+        "powerCost": 1,
+        "dice": 2,
+        "traits": [
+          "cone"
+        ],
+        "ammo": null,
+        "role": "primary"
+      },
+      {
+        "name": "Phase Displacer",
+        "rangeMin": 0,
+        "rangeMax": 6,
+        "powerCost": 2,
+        "dice": 1,
+        "traits": [
+          "phase"
+        ],
+        "ammo": null,
+        "role": "secondary"
+      }
+    ],
+    "subsystems": [
+      {
+        "name": "FTL Drive",
+        "type": "ftl",
+        "hp": null,
+        "effect": "Enables FTL transit between sectors"
+      },
+      {
+        "name": "Stealth Suite",
+        "type": "stealth",
+        "hp": null,
+        "effect": "Cannot be targeted while active; disengages on fire"
+      }
+    ]
   },
   {
     "id": "raider-vr1",
+    "name": "Jackal",
+    "class": "Jackal-class Raider",
     "faction": "void-syndicate",
-    "name": "Jackal-class Raider",
-    "type": "Raider",
-    "baseCost": 65,
+    "pointCost": 65,
     "stats": {
-      "hull": 4,
-      "shields": 2,
-      "speed": 11,
       "agility": 4,
-      "sensors": 4,
-      "crew": 3
+      "toughness": 3,
+      "shields": {
+        "fore": 2,
+        "aft": 1,
+        "port": 1,
+        "starboard": 1
+      }
     },
-    "slots": {
-      "weapons": 3,
-      "modules": 2,
-      "upgrades": 2
+    "tracks": {
+      "structure": {
+        "boxCount": 10,
+        "thresholds": []
+      },
+      "engineering": {
+        "boxCount": 10,
+        "thresholds": [
+          4
+        ]
+      },
+      "weapons": {
+        "boxCount": 10,
+        "thresholds": [
+          4
+        ]
+      },
+      "systems": {
+        "boxCount": 10,
+        "thresholds": [
+          5
+        ]
+      }
     },
-    "description": "The workhorse of the Syndicate fleet. Fast enough to pick its fights."
+    "power": {
+      "basePower": 2,
+      "scalingRule": "1 per 3 engineering"
+    },
+    "weapons": [
+      {
+        "name": "Void Lance",
+        "rangeMin": 6,
+        "rangeMax": 24,
+        "powerCost": 3,
+        "dice": 2,
+        "traits": [
+          "shield-bypass"
+        ],
+        "ammo": null,
+        "role": "primary"
+      },
+      {
+        "name": "Scatter Laser",
+        "rangeMin": 0,
+        "rangeMax": 6,
+        "powerCost": 1,
+        "dice": 2,
+        "traits": [
+          "cone"
+        ],
+        "ammo": null,
+        "role": "secondary"
+      },
+      {
+        "name": "Phase Displacer",
+        "rangeMin": 0,
+        "rangeMax": 6,
+        "powerCost": 2,
+        "dice": 1,
+        "traits": [
+          "phase"
+        ],
+        "ammo": null,
+        "role": "secondary"
+      }
+    ],
+    "subsystems": [
+      {
+        "name": "FTL Drive",
+        "type": "ftl",
+        "hp": null,
+        "effect": "Enables FTL transit between sectors"
+      },
+      {
+        "name": "Stealth Suite",
+        "type": "stealth",
+        "hp": null,
+        "effect": "Cannot be targeted while active; disengages on fire"
+      },
+      {
+        "name": "ECM Array",
+        "type": "ecm",
+        "hp": null,
+        "effect": "Attacker suffers -1 die when targeting this ship"
+      }
+    ]
   },
   {
     "id": "stealth-cruiser-vsc1",
+    "name": "Wraith",
+    "class": "Wraith-class Stealth Cruiser",
     "faction": "void-syndicate",
-    "name": "Wraith-class Stealth Cruiser",
-    "type": "Stealth Cruiser",
-    "baseCost": 130,
+    "pointCost": 130,
     "stats": {
-      "hull": 8,
-      "shields": 3,
-      "speed": 9,
       "agility": 3,
-      "sensors": 7,
-      "crew": 6
+      "toughness": 4,
+      "shields": {
+        "fore": 3,
+        "aft": 2,
+        "port": 2,
+        "starboard": 2
+      }
     },
-    "slots": {
-      "weapons": 4,
-      "modules": 4,
-      "upgrades": 3
+    "tracks": {
+      "structure": {
+        "boxCount": 14,
+        "thresholds": []
+      },
+      "engineering": {
+        "boxCount": 14,
+        "thresholds": [
+          3,
+          7,
+          11
+        ]
+      },
+      "weapons": {
+        "boxCount": 12,
+        "thresholds": [
+          4,
+          8
+        ]
+      },
+      "systems": {
+        "boxCount": 12,
+        "thresholds": [
+          6
+        ]
+      }
     },
-    "description": "The Syndicate's flagship terror weapon. Appears from nowhere, strikes hard, vanishes."
+    "power": {
+      "basePower": 4,
+      "scalingRule": "1 per 3 engineering"
+    },
+    "weapons": [
+      {
+        "name": "Void Lance",
+        "rangeMin": 6,
+        "rangeMax": 24,
+        "powerCost": 3,
+        "dice": 2,
+        "traits": [
+          "shield-bypass"
+        ],
+        "ammo": null,
+        "role": "primary"
+      },
+      {
+        "name": "Plasma Cannon",
+        "rangeMin": 0,
+        "rangeMax": 12,
+        "powerCost": 2,
+        "dice": 3,
+        "traits": [
+          "fire-on-critical"
+        ],
+        "ammo": null,
+        "role": "secondary"
+      },
+      {
+        "name": "Phase Displacer",
+        "rangeMin": 0,
+        "rangeMax": 6,
+        "powerCost": 2,
+        "dice": 1,
+        "traits": [
+          "phase"
+        ],
+        "ammo": null,
+        "role": "secondary"
+      },
+      {
+        "name": "Ion Disruptor",
+        "rangeMin": 0,
+        "rangeMax": 6,
+        "powerCost": 1,
+        "dice": 1,
+        "traits": [
+          "shield-disrupt"
+        ],
+        "ammo": null,
+        "role": "secondary"
+      }
+    ],
+    "subsystems": [
+      {
+        "name": "FTL Drive",
+        "type": "ftl",
+        "hp": null,
+        "effect": "Enables FTL transit between sectors"
+      },
+      {
+        "name": "Stealth Suite",
+        "type": "stealth",
+        "hp": null,
+        "effect": "Cannot be targeted while active; disengages on fire"
+      },
+      {
+        "name": "ECM Array",
+        "type": "ecm",
+        "hp": null,
+        "effect": "Attacker suffers -1 die when targeting this ship"
+      },
+      {
+        "name": "Sensor Array",
+        "type": "sensors",
+        "hp": null,
+        "effect": "Improves targeting; +1 die on long-range attacks"
+      }
+    ]
   },
   {
     "id": "spore-carrier-cs1",
+    "name": "Bloom",
+    "class": "Bloom-class Spore Carrier",
     "faction": "chorus-collective",
-    "name": "Bloom-class Spore Carrier",
-    "type": "Carrier",
-    "baseCost": 120,
+    "pointCost": 120,
     "stats": {
-      "hull": 9,
-      "shields": 4,
-      "speed": 4,
       "agility": 1,
-      "sensors": 8,
-      "crew": 0
+      "toughness": 4,
+      "shields": {
+        "fore": 3,
+        "aft": 2,
+        "port": 3,
+        "starboard": 3
+      }
     },
-    "slots": {
-      "weapons": 2,
-      "modules": 6,
-      "upgrades": 2
+    "tracks": {
+      "structure": {
+        "boxCount": 16,
+        "thresholds": []
+      },
+      "engineering": {
+        "boxCount": 14,
+        "thresholds": [
+          3,
+          7,
+          11
+        ]
+      },
+      "weapons": {
+        "boxCount": 10,
+        "thresholds": [
+          4
+        ]
+      },
+      "systems": {
+        "boxCount": 14,
+        "thresholds": [
+          4,
+          9
+        ]
+      }
     },
-    "description": "A living vessel that spawns swarms of bio-drones. Its true danger lies not in its own weapons."
+    "power": {
+      "basePower": 4,
+      "scalingRule": "1 per 3 engineering"
+    },
+    "weapons": [
+      {
+        "name": "Bio-Spore Cannon",
+        "rangeMin": 0,
+        "rangeMax": 6,
+        "powerCost": 2,
+        "dice": 1,
+        "traits": [
+          "bio-hazard"
+        ],
+        "ammo": null,
+        "role": "primary"
+      },
+      {
+        "name": "Resonance Beam",
+        "rangeMin": 0,
+        "rangeMax": 12,
+        "powerCost": 2,
+        "dice": 2,
+        "traits": [
+          "resonance"
+        ],
+        "ammo": null,
+        "role": "secondary"
+      }
+    ],
+    "subsystems": [
+      {
+        "name": "FTL Drive",
+        "type": "ftl",
+        "hp": null,
+        "effect": "Enables FTL transit between sectors"
+      },
+      {
+        "name": "Bio-Growth Matrix",
+        "type": "bio-growth",
+        "hp": 6,
+        "effect": "Regenerate 1 structure box per round while intact"
+      },
+      {
+        "name": "Spore Reserves",
+        "type": "ammo",
+        "hp": null,
+        "effect": "Replenish 2 ammo on any secondary weapon once per game"
+      },
+      {
+        "name": "Neural Link",
+        "type": "command",
+        "hp": null,
+        "effect": "Allied ships within 12\" gain +1 to agility checks"
+      }
+    ]
   },
   {
     "id": "resonance-cruiser-cr1",
+    "name": "Resonance",
+    "class": "Resonance-class Cruiser",
     "faction": "chorus-collective",
-    "name": "Resonance-class Cruiser",
-    "type": "Cruiser",
-    "baseCost": 140,
+    "pointCost": 140,
     "stats": {
-      "hull": 10,
-      "shields": 6,
-      "speed": 6,
       "agility": 2,
-      "sensors": 9,
-      "crew": 0
+      "toughness": 4,
+      "shields": {
+        "fore": 5,
+        "aft": 3,
+        "port": 4,
+        "starboard": 4
+      }
     },
-    "slots": {
-      "weapons": 5,
-      "modules": 5,
-      "upgrades": 2
+    "tracks": {
+      "structure": {
+        "boxCount": 16,
+        "thresholds": []
+      },
+      "engineering": {
+        "boxCount": 14,
+        "thresholds": [
+          3,
+          7,
+          11
+        ]
+      },
+      "weapons": {
+        "boxCount": 12,
+        "thresholds": [
+          4,
+          8
+        ]
+      },
+      "systems": {
+        "boxCount": 12,
+        "thresholds": [
+          6
+        ]
+      }
     },
-    "description": "Channels exotic energy frequencies as weapons. Its harmonics destabilize enemy shields."
+    "power": {
+      "basePower": 4,
+      "scalingRule": "1 per 3 engineering"
+    },
+    "weapons": [
+      {
+        "name": "Resonance Beam",
+        "rangeMin": 0,
+        "rangeMax": 12,
+        "powerCost": 2,
+        "dice": 2,
+        "traits": [
+          "resonance"
+        ],
+        "ammo": null,
+        "role": "primary"
+      },
+      {
+        "name": "Harmonic Lore Cannon",
+        "rangeMin": 6,
+        "rangeMax": 24,
+        "powerCost": 3,
+        "dice": 3,
+        "traits": [
+          "harmonic",
+          "max-on-critical"
+        ],
+        "ammo": null,
+        "role": "secondary"
+      },
+      {
+        "name": "Bio-Spore Cannon",
+        "rangeMin": 0,
+        "rangeMax": 6,
+        "powerCost": 2,
+        "dice": 1,
+        "traits": [
+          "bio-hazard"
+        ],
+        "ammo": null,
+        "role": "secondary"
+      },
+      {
+        "name": "Ion Disruptor",
+        "rangeMin": 0,
+        "rangeMax": 6,
+        "powerCost": 1,
+        "dice": 1,
+        "traits": [
+          "shield-disrupt"
+        ],
+        "ammo": null,
+        "role": "secondary"
+      },
+      {
+        "name": "EMP Projector",
+        "rangeMin": 0,
+        "rangeMax": 12,
+        "powerCost": 2,
+        "dice": 0,
+        "traits": [
+          "non-lethal",
+          "shield-offline"
+        ],
+        "ammo": null,
+        "role": "secondary"
+      }
+    ],
+    "subsystems": [
+      {
+        "name": "FTL Drive",
+        "type": "ftl",
+        "hp": null,
+        "effect": "Enables FTL transit between sectors"
+      },
+      {
+        "name": "Resonance Core",
+        "type": "power",
+        "hp": null,
+        "effect": "Generate +1 power while Resonance debuff is active on any enemy"
+      },
+      {
+        "name": "Harmonic Array",
+        "type": "sensors",
+        "hp": null,
+        "effect": "Detect all ships regardless of stealth within 24\""
+      },
+      {
+        "name": "Neural Link",
+        "type": "command",
+        "hp": null,
+        "effect": "Allied ships within 12\" gain +1 to agility checks"
+      }
+    ]
   },
   {
     "id": "battle-frigate-if1",
+    "name": "Vanguard",
+    "class": "Vanguard-class Battle Frigate",
     "faction": "iron-dominion",
-    "name": "Vanguard-class Battle Frigate",
-    "type": "Battle Frigate",
-    "baseCost": 60,
+    "pointCost": 60,
     "stats": {
-      "hull": 6,
-      "shields": 3,
-      "speed": 5,
       "agility": 1,
-      "sensors": 3,
-      "crew": 3
+      "toughness": 4,
+      "shields": {
+        "fore": 3,
+        "aft": 2,
+        "port": 2,
+        "starboard": 2
+      }
     },
-    "slots": {
-      "weapons": 3,
-      "modules": 2,
-      "upgrades": 1
+    "tracks": {
+      "structure": {
+        "boxCount": 12,
+        "thresholds": []
+      },
+      "engineering": {
+        "boxCount": 12,
+        "thresholds": [
+          3,
+          7
+        ]
+      },
+      "weapons": {
+        "boxCount": 10,
+        "thresholds": [
+          4,
+          7
+        ]
+      },
+      "systems": {
+        "boxCount": 10,
+        "thresholds": [
+          5
+        ]
+      }
     },
-    "description": "A heavily armored frigate that forms the anvil of Dominion assaults."
+    "power": {
+      "basePower": 3,
+      "scalingRule": "1 per 3 engineering"
+    },
+    "weapons": [
+      {
+        "name": "Gauss Rifle Array",
+        "rangeMin": 6,
+        "rangeMax": 24,
+        "powerCost": 2,
+        "dice": 1,
+        "traits": [
+          "armor-piercing"
+        ],
+        "ammo": null,
+        "role": "primary"
+      },
+      {
+        "name": "Flak Burst Battery",
+        "rangeMin": 0,
+        "rangeMax": 6,
+        "powerCost": 1,
+        "dice": 2,
+        "traits": [
+          "area-denial"
+        ],
+        "ammo": null,
+        "role": "secondary"
+      },
+      {
+        "name": "Laser Battery",
+        "rangeMin": 0,
+        "rangeMax": 12,
+        "powerCost": 1,
+        "dice": 2,
+        "traits": [
+          "repeatable"
+        ],
+        "ammo": null,
+        "role": "secondary"
+      }
+    ],
+    "subsystems": [
+      {
+        "name": "FTL Drive",
+        "type": "ftl",
+        "hp": null,
+        "effect": "Enables FTL transit between sectors"
+      },
+      {
+        "name": "Reinforced Hull",
+        "type": "armor",
+        "hp": 4,
+        "effect": "Reduce incoming structure damage by 1 per hit while intact"
+      }
+    ]
   },
   {
     "id": "fortress-dreadnought-ifd1",
+    "name": "Conquest",
+    "class": "Conquest-class Fortress Dreadnought",
     "faction": "iron-dominion",
-    "name": "Conquest-class Fortress Dreadnought",
-    "type": "Dreadnought",
-    "baseCost": 280,
+    "pointCost": 280,
     "stats": {
-      "hull": 25,
-      "shields": 10,
-      "speed": 3,
       "agility": 0,
-      "sensors": 5,
-      "crew": 20
+      "toughness": 8,
+      "shields": {
+        "fore": 9,
+        "aft": 6,
+        "port": 7,
+        "starboard": 7
+      }
     },
-    "slots": {
-      "weapons": 8,
-      "modules": 8,
-      "upgrades": 5
+    "tracks": {
+      "structure": {
+        "boxCount": 24,
+        "thresholds": []
+      },
+      "engineering": {
+        "boxCount": 18,
+        "thresholds": [
+          3,
+          7,
+          11,
+          14
+        ]
+      },
+      "weapons": {
+        "boxCount": 16,
+        "thresholds": [
+          4,
+          9,
+          13
+        ]
+      },
+      "systems": {
+        "boxCount": 14,
+        "thresholds": [
+          4,
+          9
+        ]
+      }
     },
-    "description": "A mobile space station with guns. The Dominion's ultimate expression of overwhelming force."
+    "power": {
+      "basePower": 5,
+      "scalingRule": "1 per 3 engineering"
+    },
+    "weapons": [
+      {
+        "name": "Dominion Annihilator Lance",
+        "rangeMin": 12,
+        "rangeMax": 36,
+        "powerCost": 4,
+        "dice": 5,
+        "traits": [
+          "super-powered",
+          "cripple-on-critical"
+        ],
+        "ammo": null,
+        "role": "primary"
+      },
+      {
+        "name": "Siege Macro-Cannon",
+        "rangeMin": 6,
+        "rangeMax": 24,
+        "powerCost": 3,
+        "dice": 4,
+        "traits": [
+          "bombardment"
+        ],
+        "ammo": null,
+        "role": "secondary"
+      },
+      {
+        "name": "Mass Driver Cannon",
+        "rangeMin": 6,
+        "rangeMax": 24,
+        "powerCost": 3,
+        "dice": 3,
+        "traits": [
+          "knockback",
+          "slow"
+        ],
+        "ammo": null,
+        "role": "secondary"
+      },
+      {
+        "name": "Railgun Spinal Mount",
+        "rangeMin": 12,
+        "rangeMax": 36,
+        "powerCost": 4,
+        "dice": 4,
+        "traits": [
+          "forward-arc",
+          "penetrating"
+        ],
+        "ammo": null,
+        "role": "secondary"
+      },
+      {
+        "name": "Heavy Plasma Blaster",
+        "rangeMin": 0,
+        "rangeMax": 6,
+        "powerCost": 3,
+        "dice": 4,
+        "traits": [
+          "overcharge"
+        ],
+        "ammo": null,
+        "role": "secondary"
+      },
+      {
+        "name": "Point Defense System",
+        "rangeMin": 0,
+        "rangeMax": 6,
+        "powerCost": 1,
+        "dice": 1,
+        "traits": [
+          "defensive",
+          "intercept"
+        ],
+        "ammo": null,
+        "role": "secondary"
+      },
+      {
+        "name": "Flak Burst Battery",
+        "rangeMin": 0,
+        "rangeMax": 6,
+        "powerCost": 1,
+        "dice": 2,
+        "traits": [
+          "area-denial"
+        ],
+        "ammo": null,
+        "role": "secondary"
+      },
+      {
+        "name": "EMP Projector",
+        "rangeMin": 0,
+        "rangeMax": 12,
+        "powerCost": 2,
+        "dice": 0,
+        "traits": [
+          "non-lethal",
+          "shield-offline"
+        ],
+        "ammo": null,
+        "role": "secondary"
+      }
+    ],
+    "subsystems": [
+      {
+        "name": "FTL Drive",
+        "type": "ftl",
+        "hp": null,
+        "effect": "Enables FTL transit between sectors"
+      },
+      {
+        "name": "Fortress Shields",
+        "type": "shields",
+        "hp": 8,
+        "effect": "Double shield values on all facings until depleted"
+      },
+      {
+        "name": "Damage Control",
+        "type": "repair",
+        "hp": 3,
+        "effect": "Repair 1 box on any track during activation"
+      },
+      {
+        "name": "Command Bridge",
+        "type": "command",
+        "hp": null,
+        "effect": "Reroll one die on any check once per round"
+      },
+      {
+        "name": "Ammunition Storage",
+        "type": "ammo",
+        "hp": null,
+        "effect": "Secondary weapons gain +2 ammo capacity"
+      }
+    ]
   }
 ]

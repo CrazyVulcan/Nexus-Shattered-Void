@@ -4,151 +4,416 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SSD Builder — NEXUS: Shattered Void</title>
-  <meta name="description" content="Build and print Star Ship Displays (SSD) for Nexus: Shattered Void.">
+  <meta name="description" content="Build and print Ship System Displays (SSD) for Nexus: Shattered Void.">
   <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="stylesheet" href="../css/global.css">
   <link rel="stylesheet" href="../css/components.css">
   <style>
-    :root { --sheet-line: #1f1f1f; --sheet-bg: #f4f4f4; }
+    /* ── SSD page wrapper ─────────────────────────────── */
+    :root { --sl: #111; --sbg: #f5f5f5; --box: 20px; }
     .ssd-page { padding: var(--sp-5); max-width: 1200px; margin: 0 auto; }
+
+    /* ── Builder toolbar ──────────────────────────────── */
     .builder-toolbar {
       display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-template-columns: 1fr 1fr 1fr 1fr auto;
       gap: var(--sp-3);
       margin-bottom: var(--sp-4);
       align-items: end;
     }
     .toolbar-actions { display: flex; gap: var(--sp-2); flex-wrap: wrap; justify-content: flex-end; }
+    .active-edit { background: var(--color-cyan) !important; color: #000 !important; }
 
+    /* ── SSD Sheet ────────────────────────────────────── */
     .ssd-sheet {
-      background: var(--sheet-bg);
-      border: 2px solid var(--sheet-line);
+      background: var(--sbg);
+      border: 2px solid var(--sl);
       color: #111;
       width: 100%;
       max-width: 1080px;
       margin: 0 auto;
-      padding: 8mm;
+      padding: 6mm;
       box-shadow: 0 10px 30px rgba(0,0,0,0.25);
       font-family: var(--font-mono);
+      font-size: 0.82rem;
     }
+
+    /* ── Sheet Header ─────────────────────────────────── */
     .sheet-header {
       display: grid;
-      grid-template-columns: 2fr auto 1fr;
-      align-items: center;
+      grid-template-columns: 2fr 1fr 1.5fr auto;
+      align-items: start;
       gap: var(--sp-3);
-      border-bottom: 2px solid var(--sheet-line);
+      border-bottom: 2px solid var(--sl);
       padding-bottom: var(--sp-2);
       margin-bottom: var(--sp-3);
     }
     .sheet-title-input {
+      display: block;
       width: 100%;
-      border: 1px solid var(--sheet-line);
-      background: white;
+      border: none;
+      border-bottom: 1px solid var(--sl);
+      background: transparent;
       color: #111;
-      font-size: 1.25rem;
-      font-weight: 700;
-      padding: 0.35rem 0.5rem;
+      font-size: 1.35rem;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      padding: 0 0 2px 0;
       text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
-    .sheet-subtitle { font-size: 0.9rem; font-weight: 700; margin-top: 2px; }
-    .fp-display { font-size: 2rem; font-weight: 800; text-align: center; }
-    .faction-display { text-align: right; font-size: 0.95rem; font-weight: 700; text-transform: uppercase; }
+    .sheet-subtitle { font-size: 0.78rem; font-weight: 700; margin-top: 2px; color: #333; }
+    .fp-display {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+    .fp-number { font-size: 2rem; font-weight: 800; line-height: 1; }
+    .fp-label  { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; }
+    .faction-display { font-size: 0.95rem; font-weight: 800; text-transform: uppercase; text-align: right; }
+    .sheet-id-box { border: 2px solid var(--sl); width: 36px; height: 36px; display: grid; place-items: center; font-weight: 800; font-size: 0.7rem; align-self: center; }
 
-    .sheet-body { display: grid; grid-template-columns: 1.25fr 1fr; gap: var(--sp-3); }
-    .left-grid { display: grid; gap: var(--sp-3); }
-    .subsystem {
-      border: 1px solid var(--sheet-line);
-      padding: var(--sp-2);
-      background: rgba(255,255,255,0.65);
+    /* ── Sheet Body: 3 columns ────────────────────────── */
+    .sheet-body {
+      display: grid;
+      grid-template-columns: 220px 1fr 240px;
+      gap: var(--sp-3);
+      align-items: start;
     }
-    .subsystem-header { display: flex; justify-content: space-between; margin-bottom: var(--sp-2); font-weight: 700; }
-    .track-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 4px; }
+
+    /* ── Left Column: Tracks ──────────────────────────── */
+    .tracks-column { display: grid; gap: var(--sp-3); }
+    .track-section {
+      border: 1px solid var(--sl);
+      background: rgba(255,255,255,0.7);
+      padding: 5px 6px;
+    }
+    .track-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+      font-weight: 700;
+      font-size: 0.78rem;
+    }
+    .track-label { font-size: 0.75rem; }
+    .track-total { font-size: 0.7rem; color: #555; }
+    .track-grid {
+      display: grid;
+      gap: 2px;
+    }
+    /* Individual track box */
     .track-box {
       appearance: none;
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      margin: 0;
-      border: 1px solid #1f1f1f;
+      width: var(--box);
+      height: var(--box);
+      border: 1.5px solid var(--sl);
       background: #fff;
       cursor: pointer;
+      display: block;
     }
-    .track-box:checked { background: #111; }
+    .track-box:checked { background: var(--sl); }
+    /* Threshold marker — X crosshatch pattern */
+    .track-threshold {
+      width: var(--box);
+      height: var(--box);
+      border: 1.5px solid var(--sl);
+      background:
+        linear-gradient(to top right,
+          transparent calc(50% - 0.8px), var(--sl) calc(50% - 0.8px),
+          var(--sl) calc(50% + 0.8px), transparent calc(50% + 0.8px)),
+        linear-gradient(to top left,
+          transparent calc(50% - 0.8px), var(--sl) calc(50% - 0.8px),
+          var(--sl) calc(50% + 0.8px), transparent calc(50% + 0.8px)),
+        white;
+      display: block;
+    }
+    /* Edit-mode toggle buttons */
+    .track-toggle {
+      width: var(--box);
+      height: var(--box);
+      border: 1.5px dashed #888;
+      background: rgba(255,255,255,0.5);
+      cursor: pointer;
+      padding: 0;
+      display: block;
+    }
+    .track-toggle.is-threshold {
+      background:
+        linear-gradient(to top right,
+          transparent calc(50% - 0.8px), var(--sl) calc(50% - 0.8px),
+          var(--sl) calc(50% + 0.8px), transparent calc(50% + 0.8px)),
+        linear-gradient(to top left,
+          transparent calc(50% - 0.8px), var(--sl) calc(50% - 0.8px),
+          var(--sl) calc(50% + 0.8px), transparent calc(50% + 0.8px)),
+        white;
+      border: 1.5px solid var(--sl);
+    }
 
-    .center-panel {
-      border: 1px solid var(--sheet-line);
-      background: rgba(255,255,255,0.65);
-      padding: var(--sp-3);
-    }
-    .silhouette {
-      border: 1px solid var(--sheet-line);
-      height: 180px;
+    /* ── Power level column ───────────────────────────── */
+    .track-with-levels {
       display: grid;
-      place-items: center;
-      margin-bottom: var(--sp-3);
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      background: repeating-linear-gradient(45deg, #f7f7f7, #f7f7f7 6px, #efefef 6px, #efefef 12px);
+      grid-template-columns: 1fr auto;
+      gap: 4px;
+      align-items: start;
     }
-    .stat-line { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-2); margin-bottom: var(--sp-3); }
-    .stat-chip { border: 1px solid var(--sheet-line); padding: 0.4rem; text-align: center; font-weight: 700; background: #fff; }
-
-    .weapon-list { display: grid; gap: var(--sp-3); }
-    .weapon-slot {
-      border: 1px solid var(--sheet-line);
-      background: rgba(255,255,255,0.65);
-      padding: var(--sp-2);
+    #power-levels { display: flex; flex-direction: column; gap: 2px; justify-content: center; }
+    .power-level-badge {
+      border: 1px solid var(--sl);
+      background: #fff;
+      font-size: 0.6rem;
+      font-weight: 700;
+      padding: 1px 3px;
+      text-align: center;
+      white-space: nowrap;
     }
-    .weapon-slot-header { font-weight: 700; margin-bottom: var(--sp-2); }
-    .weapon-meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; margin-top: 6px; }
-    .weapon-meta div { border: 1px solid var(--sheet-line); padding: 0.2rem 0.35rem; background: #fff; font-size: 0.8rem; }
 
-    .feature-add { display: flex; gap: var(--sp-2); margin-top: var(--sp-2); }
-    .feature-list { margin-top: var(--sp-2); display: grid; gap: 4px; }
-    .feature-item {
+    /* ── Center Column ────────────────────────────────── */
+    .center-column { display: grid; gap: var(--sp-2); }
+
+    /* Silhouette + shields layout */
+    .silhouette-area {
+      border: 1px solid var(--sl);
+      background: rgba(255,255,255,0.7);
+      padding: 4px;
+      position: relative;
+    }
+    .shield-row {
+      display: flex;
+      justify-content: center;
+      gap: 2px;
+      margin: 2px 0;
+    }
+    .shield-sides {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border: 1px solid var(--sheet-line);
+      gap: 4px;
+    }
+    .shield-col {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      flex-shrink: 0;
+    }
+    .shield-box {
+      appearance: none;
+      width: 12px;
+      height: 12px;
+      border: 1px solid var(--sl);
       background: #fff;
-      padding: 0.25rem 0.45rem;
-      font-size: 0.8rem;
+      cursor: pointer;
+      display: block;
+    }
+    .shield-box:checked { background: var(--sl); }
+    .shield-zero { font-size: 0.6rem; color: #888; line-height: 12px; }
+    .shield-label {
+      font-size: 0.55rem;
+      font-weight: 700;
+      text-align: center;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .silhouette-img {
+      min-height: 140px;
+      flex: 1;
+      display: grid;
+      place-items: center;
+      background: repeating-linear-gradient(
+        45deg, rgba(0,0,0,0.04) 0px, rgba(0,0,0,0.04) 4px,
+        transparent 4px, transparent 8px
+      );
+      font-size: 0.7rem;
+      color: #aaa;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
     }
 
+    /* Stats row */
+    .stats-section {
+      border: 1px solid var(--sl);
+      background: rgba(255,255,255,0.7);
+      padding: 5px 6px;
+    }
+    .stats-grid {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+    .stat-chip {
+      border: 1px solid var(--sl);
+      background: #fff;
+      padding: 3px 6px;
+      font-weight: 700;
+      font-size: 0.75rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 48px;
+    }
+    .stat-label { font-size: 0.58rem; color: #555; font-weight: 600; text-transform: uppercase; }
+    .stat-value { font-size: 1.05rem; font-weight: 800; line-height: 1.1; }
+
+    /* Subsystems */
+    .subsystems-section {
+      border: 1px solid var(--sl);
+      background: rgba(255,255,255,0.7);
+      padding: 5px 6px;
+    }
+    .subsystems-label { font-weight: 700; font-size: 0.75rem; margin-bottom: 4px; }
+    .subsystem-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 5px;
+      margin-bottom: 4px;
+      font-size: 0.72rem;
+    }
+    .subsystem-check {
+      appearance: none;
+      width: 13px;
+      height: 13px;
+      border: 1.5px solid var(--sl);
+      background: #fff;
+      cursor: pointer;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .subsystem-check:checked { background: var(--sl); }
+    .subsystem-info { display: flex; flex-direction: column; gap: 1px; }
+    .subsystem-name { font-weight: 700; }
+    .subsystem-hp { color: #555; font-size: 0.65rem; }
+    .subsystem-effect { color: #333; font-size: 0.67rem; line-height: 1.3; }
+    .no-subsystems { color: #888; font-size: 0.75rem; }
+
+    /* ── Right Column: Weapons ────────────────────────── */
+    .weapons-column { display: grid; gap: var(--sp-2); align-content: start; }
+    .weapons-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-weight: 700;
+      font-size: 0.78rem;
+      padding-bottom: 2px;
+      border-bottom: 1px solid var(--sl);
+      margin-bottom: 2px;
+    }
+    .weapon-card {
+      border: 1px solid var(--sl);
+      background: rgba(255,255,255,0.7);
+      padding: 4px 6px;
+    }
+    .weapon-card-inner { display: flex; gap: 6px; align-items: flex-start; }
+    /* Role icon: diagonal X for primary, single diagonal for secondary */
+    .weapon-role-icon {
+      width: 32px;
+      height: 32px;
+      border: 1.5px solid var(--sl);
+      flex-shrink: 0;
+    }
+    .icon-primary {
+      background:
+        linear-gradient(to top right,
+          transparent calc(50% - 0.8px), var(--sl) calc(50% - 0.8px),
+          var(--sl) calc(50% + 0.8px), transparent calc(50% + 0.8px)),
+        linear-gradient(to top left,
+          transparent calc(50% - 0.8px), var(--sl) calc(50% - 0.8px),
+          var(--sl) calc(50% + 0.8px), transparent calc(50% + 0.8px)),
+        white;
+    }
+    .icon-secondary {
+      background:
+        linear-gradient(to top right,
+          transparent calc(50% - 0.8px), var(--sl) calc(50% - 0.8px),
+          var(--sl) calc(50% + 0.8px), transparent calc(50% + 0.8px)),
+        white;
+    }
+    .weapon-details { flex: 1; }
+    .weapon-name {
+      font-weight: 700;
+      font-size: 0.78rem;
+      margin-bottom: 3px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .weapon-stats-row { display: flex; gap: 3px; flex-wrap: wrap; }
+    .weapon-stat-tag {
+      border: 1px solid var(--sl);
+      padding: 1px 4px;
+      background: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+    .weapon-traits { font-size: 0.65rem; color: #555; font-style: italic; margin-top: 2px; }
+    .btn-remove-weapon {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 0.65rem;
+      color: #888;
+      padding: 0 2px;
+      line-height: 1;
+    }
+    .btn-remove-weapon:hover { color: #c00; }
+    .no-weapons { font-size: 0.75rem; color: #888; padding: 4px; }
+
+    /* Add weapon row */
+    .weapon-add-row {
+      display: flex;
+      gap: var(--sp-2);
+      margin-top: var(--sp-1);
+    }
+    .weapon-add-row select { flex: 1; }
+
+    /* ── Sheet Footer ─────────────────────────────────── */
     .sheet-footer {
       margin-top: var(--sp-3);
-      border-top: 1px solid var(--sheet-line);
+      border-top: 1px solid var(--sl);
       padding-top: var(--sp-2);
       display: flex;
       justify-content: space-between;
-      font-size: 0.72rem;
+      font-size: 0.65rem;
       text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #555;
     }
 
-    @media (max-width: 980px) {
+    /* ── Responsive ───────────────────────────────────── */
+    @media (max-width: 900px) {
       .builder-toolbar { grid-template-columns: 1fr 1fr; }
       .sheet-body { grid-template-columns: 1fr; }
     }
 
-    @page { size: A4 portrait; margin: 8mm; }
+    /* ── Print ────────────────────────────────────────── */
+    @page { size: A4 landscape; margin: 8mm; }
     @media print {
       body, .page-wrapper, .page-content { background: #fff !important; }
       .ssd-page { padding: 0; max-width: none; }
-      .builder-toolbar, .btn-remove-feature { display: none !important; }
-      .ssd-sheet { box-shadow: none; max-width: none; width: 100%; padding: 6mm; }
+      .builder-toolbar,
+      .btn-remove-weapon,
+      .weapon-add-row,
+      #toggle-edit-btn { display: none !important; }
+      .ssd-sheet { box-shadow: none; max-width: none; width: 100%; padding: 4mm; }
+      .track-toggle { display: none !important; }
     }
   </style>
 </head>
 <body class="page-wrapper">
   <div class="page-content">
     <main class="ssd-page">
+
+      <!-- ── Builder Toolbar ─────────────────────────── -->
       <section class="builder-toolbar">
         <div class="form-group">
           <label class="form-label" for="faction-select">Faction</label>
           <select id="faction-select" class="form-select"></select>
         </div>
         <div class="form-group">
-          <label class="form-label" for="ship-select">Hull</label>
+          <label class="form-label" for="ship-select">Hull Class</label>
           <select id="ship-select" class="form-select"></select>
         </div>
         <div class="form-group">
@@ -156,87 +421,156 @@
           <input id="ship-name-input" class="form-input" type="text" maxlength="40" placeholder="AKIRA CLASS">
         </div>
         <div class="form-group">
-          <label class="form-label" for="ship-type-input">Class / Type</label>
-          <input id="ship-type-input" class="form-input" type="text" maxlength="40" placeholder="Battle Cruiser">
+          <label class="form-label" for="ship-class-input">Class / Type</label>
+          <input id="ship-class-input" class="form-input" type="text" maxlength="40" placeholder="Battle Cruiser">
         </div>
         <div class="toolbar-actions">
+          <button id="toggle-edit-btn" class="btn btn-ghost btn-sm" title="Toggle track threshold editor">✏️ Edit Tracks</button>
           <button id="save-sheet-btn" class="btn btn-secondary btn-sm">💾 Save</button>
           <button id="load-sheet-btn" class="btn btn-ghost btn-sm">📂 Load</button>
           <button id="print-sheet-btn" class="btn btn-primary btn-sm">🖨️ Print A4</button>
         </div>
       </section>
 
+      <!-- ── SSD Sheet ───────────────────────────────── -->
       <section class="ssd-sheet" id="ssd-sheet">
+
+        <!-- Header -->
         <header class="sheet-header">
           <div>
-            <input id="sheet-title" class="sheet-title-input" type="text" value="Unnamed Class">
+            <input id="sheet-title" class="sheet-title-input" type="text" value="Unnamed Class" aria-label="Ship name">
             <div class="sheet-subtitle" id="sheet-subtitle">No Hull Selected</div>
           </div>
-          <div class="fp-display"><span id="sheet-fp">0</span> FP</div>
+          <div class="fp-display">
+            <span class="fp-number" id="sheet-fp">0</span>
+            <span class="fp-label">FP</span>
+          </div>
           <div class="faction-display" id="sheet-faction">Unaligned</div>
+          <div class="sheet-id-box" title="Fleet ID">ID</div>
         </header>
 
+        <!-- Body: 3 columns -->
         <div class="sheet-body">
-          <div class="left-grid">
-            <article class="subsystem">
-              <div class="subsystem-header"><span>1-3 Structure</span><span id="structure-total">0</span></div>
+
+          <!-- ── LEFT: Damage Tracks ──────────────────── -->
+          <div class="tracks-column">
+
+            <!-- Structure (1,3,5) -->
+            <div class="track-section">
+              <div class="track-header">
+                <span class="track-label">1,3,5 &nbsp;Structure</span>
+                <span class="track-total" id="structure-total">0</span>
+              </div>
               <div id="track-structure" class="track-grid"></div>
-            </article>
-            <article class="subsystem">
-              <div class="subsystem-header"><span>1-2 Engineering</span><span id="engineering-total">0</span></div>
-              <div id="track-engineering" class="track-grid"></div>
-            </article>
-            <article class="subsystem">
-              <div class="subsystem-header"><span>3-4 Weapons</span><span id="weapons-total">0</span></div>
+            </div>
+
+            <!-- Engineering (2) -->
+            <div class="track-section">
+              <div class="track-header">
+                <span class="track-label">2 &nbsp;Engineering</span>
+                <span class="track-total" id="engineering-total">0</span>
+              </div>
+              <div class="track-with-levels">
+                <div id="track-engineering" class="track-grid"></div>
+                <div id="power-levels"></div>
+              </div>
+            </div>
+
+            <!-- Weapons (4) -->
+            <div class="track-section">
+              <div class="track-header">
+                <span class="track-label">4 &nbsp;Weapons</span>
+                <span class="track-total" id="weapons-total">0</span>
+              </div>
               <div id="track-weapons" class="track-grid"></div>
-            </article>
-            <article class="subsystem">
-              <div class="subsystem-header"><span>5-6 Systems</span><span id="systems-total">0</span></div>
+            </div>
+
+            <!-- Systems (6) -->
+            <div class="track-section">
+              <div class="track-header">
+                <span class="track-label">6 &nbsp;Systems</span>
+                <span class="track-total" id="systems-total">0</span>
+              </div>
               <div id="track-systems" class="track-grid"></div>
-            </article>
-          </div>
-
-          <div class="right-grid">
-            <article class="center-panel">
-              <div class="silhouette">Ship Silhouette Area</div>
-              <div class="stat-line">
-                <div class="stat-chip">SPD <span id="stat-speed">0</span></div>
-                <div class="stat-chip">AGI <span id="stat-agility">0</span></div>
-                <div class="stat-chip">SNS <span id="stat-sensors">0</span></div>
-              </div>
-              <div class="stat-line">
-                <div class="stat-chip">HULL <span id="stat-hull">0</span></div>
-                <div class="stat-chip">SHD <span id="stat-shields">0</span></div>
-                <div class="stat-chip">CREW <span id="stat-crew">0</span></div>
-              </div>
-
-              <div class="subsystem-header"><span>SSD Features</span><span id="feature-count">0</span></div>
-              <div class="feature-add">
-                <input id="feature-input" class="form-input" type="text" maxlength="80" placeholder="Add feature (ex: FTL Drive)">
-                <button id="add-feature-btn" class="btn btn-secondary btn-sm">Add</button>
-              </div>
-              <div id="feature-list" class="feature-list"></div>
-            </article>
-
-            <article class="weapon-list" id="weapon-list"></article>
-          </div>
-          <div class="build-summary-section" style="margin-top:var(--sp-5)">
-            <div class="build-summary-label">SSD Features</div>
-            <div class="feature-input-row">
-              <input id="feature-input" class="form-input" type="text" maxlength="80" placeholder="Add custom SSD feature">
-              <button class="btn btn-secondary btn-sm" id="add-feature-btn">Add</button>
             </div>
-            <div id="summary-features" class="feature-list">
-              <span style="color:var(--color-text-muted);font-size:0.85rem">No custom features</span>
+
+          </div><!-- /tracks-column -->
+
+          <!-- ── CENTER: Silhouette + Shields + Stats ── -->
+          <div class="center-column">
+
+            <!-- Silhouette with surrounding shield boxes -->
+            <div class="silhouette-area">
+              <div class="shield-label" style="text-align:center;margin-bottom:2px">FORE</div>
+              <div class="shield-row" id="shields-fore"></div>
+
+              <div class="shield-sides">
+                <div>
+                  <div class="shield-label" style="writing-mode:vertical-lr;transform:rotate(180deg);margin-right:2px">PORT</div>
+                  <div class="shield-col" id="shields-port"></div>
+                </div>
+
+                <div class="silhouette-img">Silhouette</div>
+
+                <div>
+                  <div class="shield-label" style="writing-mode:vertical-lr;margin-left:2px">STBD</div>
+                  <div class="shield-col" id="shields-starboard"></div>
+                </div>
+              </div>
+
+              <div class="shield-row" id="shields-aft"></div>
+              <div class="shield-label" style="text-align:center;margin-top:2px">AFT</div>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-section">
+              <div class="stats-grid">
+                <div class="stat-chip">
+                  <span class="stat-label">Agility</span>
+                  <span class="stat-value" id="stat-agility">0</span>
+                </div>
+                <div class="stat-chip">
+                  <span class="stat-label">Tough</span>
+                  <span class="stat-value" id="stat-toughness">0</span>
+                </div>
+                <div class="stat-chip">
+                  <span class="stat-label">Power</span>
+                  <span class="stat-value" id="stat-power">0</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Subsystems -->
+            <div class="subsystems-section">
+              <div class="subsystems-label">Subsystems</div>
+              <div id="subsystem-list"></div>
+            </div>
+
+          </div><!-- /center-column -->
+
+          <!-- ── RIGHT: Weapons ───────────────────────── -->
+          <div class="weapons-column">
+            <div class="weapons-header">
+              <span>Weapons</span>
+              <span id="weapon-count">0</span>
+            </div>
+            <div id="weapon-list"></div>
+            <div class="weapon-add-row" id="weapon-add-row">
+              <select id="weapon-add-select" class="form-select"></select>
+              <button id="weapon-add-btn" class="btn btn-secondary btn-sm">+ Add</button>
             </div>
           </div>
-        </div>
 
+        </div><!-- /sheet-body -->
+
+        <!-- Footer -->
         <footer class="sheet-footer">
-          <span>Nexus: Shattered Void — Starship Display Builder</span>
+          <span>Nexus: Shattered Void™ &nbsp;·&nbsp; Starship Display v0.9</span>
           <span id="print-date"></span>
+          <span>© 2026 Vulcans' Forge Studio</span>
         </footer>
-      </section>
+
+      </section><!-- /ssd-sheet -->
     </main>
   </div>
 

@@ -34,10 +34,6 @@ export async function loadWeapons() {
   return loadJSON('weapons.json');
 }
 
-export async function loadModules() {
-  return loadJSON('modules.json');
-}
-
 export function clearCache() {
   Object.keys(cache).forEach(k => delete cache[k]);
 }
