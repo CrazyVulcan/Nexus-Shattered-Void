@@ -38,6 +38,8 @@
       flex-shrink: 0;
     }
     .toolbar-actions { display: flex; gap: var(--sp-2); flex-wrap: wrap; margin-left: auto; }
+    /* hide file input */
+    #import-file { display: none; }
 
     /* ── Two-panel layout ─────────────────────────────── */
     .builder-body {
@@ -71,9 +73,6 @@
       letter-spacing: 0.08em;
       color: var(--color-text-dim);
       border-bottom: 1px solid var(--color-border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
     }
     .editor-section-body {
       padding: var(--sp-4);
@@ -81,7 +80,7 @@
       flex-direction: column;
       gap: var(--sp-3);
     }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3); }
+    .form-row   { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3); }
     .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--sp-3); }
     .form-group { display: flex; flex-direction: column; gap: var(--sp-1); }
     .form-group.full { grid-column: 1 / -1; }
@@ -106,10 +105,39 @@
       border-color: var(--color-cyan);
     }
     .form-textarea { resize: vertical; min-height: 60px; line-height: 1.5; }
-    input[type=number].form-input { width: 100%; }
+    .hint {
+      font-size: 0.67rem;
+      color: var(--color-text-muted);
+      margin-top: 2px;
+    }
 
-    /* Track editor */
-    .track-editor {
+    /* ── Arc selector grid ─────────────────────────────── */
+    .arc-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+      max-width: 140px;
+    }
+    .arc-grid .arc-spacer { /* centre cell placeholder */ }
+    .arc-cell {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+    .arc-cell input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      accent-color: var(--color-cyan);
+    }
+    .arc-cell label {
+      font-size: 0.62rem;
+      color: var(--color-text-dim);
+      cursor: pointer;
+      letter-spacing: 0.04em;
+    }
+    .weapon-editor {
       border: 1px solid var(--color-border);
       border-radius: var(--radius);
       padding: var(--sp-3);
@@ -118,403 +146,42 @@
       flex-direction: column;
       gap: var(--sp-3);
     }
-    .track-editor-header {
+    .weapon-arc-row {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: var(--sp-2);
+      gap: var(--sp-4);
+      align-items: flex-start;
     }
-    .track-editor-name {
-      font-size: 0.8rem;
+    .arc-label {
+      font-size: 0.7rem;
       font-weight: 700;
-      color: var(--color-text-bright);
-      flex: 1;
-    }
-    .track-editor-controls {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--sp-3);
-    }
-    .hit-numbers-hint {
-      font-size: 0.67rem;
-      color: var(--color-text-muted);
-      margin-top: var(--sp-1);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--color-text-dim);
+      margin-bottom: var(--sp-1);
     }
 
-    /* Secondary/generic weapon list items */
-    .list-track-item {
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius);
-      overflow: hidden;
-    }
-    .list-track-item-header {
-      background: var(--color-bg-card);
-      display: flex;
-      align-items: center;
-      gap: var(--sp-2);
-      padding: var(--sp-2) var(--sp-3);
-      border-bottom: 1px solid var(--color-border);
-    }
-    .list-track-item-title {
-      flex: 1;
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: var(--color-text-bright);
-    }
-    .list-track-item-body {
-      padding: var(--sp-3);
-      display: flex;
-      flex-direction: column;
-      gap: var(--sp-3);
-    }
-    .btn-icon {
-      background: none;
-      border: 1px solid var(--color-border);
-      color: var(--color-text-dim);
-      width: 24px;
-      height: 24px;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      font-size: 0.75rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      line-height: 1;
-      transition: all var(--transition);
-      flex-shrink: 0;
-    }
-    .btn-icon:hover { border-color: var(--color-cyan); color: var(--color-cyan); }
-    .btn-icon.danger:hover { border-color: var(--color-red); color: var(--color-red); }
-    .btn-add {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: var(--sp-2);
-      width: 100%;
-      padding: var(--sp-2) var(--sp-3);
-      background: rgba(0,212,255,0.05);
-      border: 1px dashed var(--color-cyan-dim);
-      border-radius: var(--radius);
-      color: var(--color-cyan);
-      font-size: 0.78rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all var(--transition);
-    }
-    .btn-add:hover {
-      background: rgba(0,212,255,0.1);
-      border-color: var(--color-cyan);
-    }
-    .load-ship-row {
+    /* ── Stats band editor ─────────────────────────────── */
+    .stats-grid {
       display: grid;
-      grid-template-columns: 1fr auto;
+      grid-template-columns: repeat(4, 1fr);
       gap: var(--sp-2);
-      align-items: end;
     }
+    .stat-pair { display: flex; flex-direction: column; gap: 4px; }
+    .stat-pair-inner { display: grid; grid-template-columns: 40px 1fr; gap: 4px; }
 
     /* ── Preview panel (right) ────────────────────────── */
     .preview-panel {
-      background: #e8e8e8;
+      background: #cccccc;
       overflow-y: auto;
       padding: var(--sp-6);
       display: flex;
       flex-direction: column;
       align-items: center;
     }
-
-    /* ── SSD Sheet styles ─────────────────────────────── */
-    :root {
-      --sl: #1a1a1a;
-      --sl-dim: #555;
-      --sbg: #f8f8f8;
-      --box: 18px;
-    }
     .ssd-sheet {
-      background: var(--sbg);
-      border: 2px solid var(--sl);
-      color: var(--sl);
       width: 100%;
-      max-width: 960px;
-      padding: 6mm;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-    }
-    /* Sheet Header */
-    .sheet-header {
-      display: grid;
-      grid-template-columns: 1fr auto auto auto;
-      gap: 8px;
-      align-items: start;
-      border-bottom: 2px solid var(--sl);
-      padding-bottom: 6px;
-      margin-bottom: 8px;
-    }
-    .sheet-main-title {
-      font-size: 1.3rem;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      line-height: 1.1;
-    }
-    .sheet-class {
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: var(--sl-dim);
-      margin-top: 2px;
-    }
-    .sheet-faction-role {
-      font-size: 0.68rem;
-      color: var(--sl-dim);
-      margin-top: 1px;
-    }
-    .sheet-stat-box {
-      border: 1.5px solid var(--sl);
-      padding: 3px 8px;
-      text-align: center;
-      min-width: 48px;
-    }
-    .sheet-stat-label {
-      font-size: 0.55rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: var(--sl-dim);
-    }
-    .sheet-stat-value {
-      font-size: 1.3rem;
-      font-weight: 900;
-      line-height: 1.1;
-    }
-    /* Sheet Body */
-    .sheet-body {
-      display: grid;
-      grid-template-columns: 200px 1fr 200px;
-      gap: 8px;
-    }
-    /* ── Track sections ───────────────────────────────── */
-    .ssd-track-section {
-      border: 1.5px solid var(--sl);
-      background: rgba(255,255,255,0.7);
-      padding: 4px 6px;
-      margin-bottom: 5px;
-    }
-    .ssd-track-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 3px;
-    }
-    .ssd-track-label {
-      font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-    .ssd-track-hit {
-      font-size: 0.62rem;
-      font-weight: 700;
-      color: var(--sl-dim);
-      background: rgba(0,0,0,0.08);
-      padding: 0 4px;
-      border: 1px solid rgba(0,0,0,0.15);
-    }
-    .ssd-track-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 2px;
-    }
-    .ssd-box {
-      width: var(--box);
-      height: var(--box);
-      border: 1.5px solid var(--sl);
-      background: #fff;
-      cursor: pointer;
-      appearance: none;
-      display: block;
-      flex-shrink: 0;
-    }
-    .ssd-box:checked { background: var(--sl); }
-    /* Threshold / cross-hatch marker */
-    .ssd-threshold {
-      width: var(--box);
-      height: var(--box);
-      border: 1.5px solid var(--sl);
-      flex-shrink: 0;
-      background:
-        linear-gradient(to top right,
-          transparent calc(50% - 0.8px), var(--sl) calc(50% - 0.8px),
-          var(--sl) calc(50% + 0.8px), transparent calc(50% + 0.8px)),
-        linear-gradient(to top left,
-          transparent calc(50% - 0.8px), var(--sl) calc(50% - 0.8px),
-          var(--sl) calc(50% + 0.8px), transparent calc(50% + 0.8px)),
-        white;
-    }
-    /* Power level sidebar */
-    .ssd-engineering-row {
-      display: flex;
-      gap: 5px;
-      align-items: flex-start;
-    }
-    .ssd-power-levels {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-    .ssd-power-badge {
-      border: 1px solid var(--sl);
-      background: #fff;
-      font-size: 0.6rem;
-      font-weight: 800;
-      padding: 1px 4px;
-      text-align: center;
-      white-space: nowrap;
-    }
-    /* ── Center column ────────────────────────────────── */
-    .ssd-center {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-    /* Hit allocation table */
-    .ssd-hit-table {
-      border: 1.5px solid var(--sl);
-      background: rgba(255,255,255,0.7);
-    }
-    .ssd-hit-table-title {
-      font-size: 0.65rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      padding: 2px 5px;
-      border-bottom: 1px solid var(--sl);
-      background: rgba(0,0,0,0.05);
-    }
-    .ssd-hit-row {
-      display: flex;
-      border-bottom: 1px solid rgba(0,0,0,0.1);
-    }
-    .ssd-hit-row:last-child { border-bottom: none; }
-    .ssd-hit-die {
-      width: 22px;
-      font-size: 0.68rem;
-      font-weight: 800;
-      text-align: center;
-      padding: 2px 0;
-      border-right: 1px solid var(--sl);
-      background: rgba(0,0,0,0.05);
-      flex-shrink: 0;
-    }
-    .ssd-hit-target {
-      font-size: 0.65rem;
-      padding: 2px 5px;
-      flex: 1;
-    }
-    /* Stats */
-    .ssd-stats-row {
-      border: 1.5px solid var(--sl);
-      background: rgba(255,255,255,0.7);
-      padding: 4px 6px;
-    }
-    .ssd-stats-grid {
-      display: flex;
-      gap: 5px;
-      flex-wrap: wrap;
-    }
-    .ssd-stat-chip {
-      border: 1px solid var(--sl);
-      background: #fff;
-      padding: 2px 8px;
-      font-weight: 800;
-      font-size: 0.72rem;
-      text-align: center;
-      min-width: 44px;
-    }
-    .ssd-stat-chip-label {
-      font-size: 0.52rem;
-      color: var(--sl-dim);
-      font-weight: 700;
-      text-transform: uppercase;
-      display: block;
-    }
-    /* Generic tracks in center */
-    .ssd-generic-tracks { display: flex; flex-direction: column; gap: 4px; }
-    /* Notes */
-    .ssd-notes {
-      border: 1.5px solid var(--sl);
-      background: rgba(255,255,255,0.7);
-      padding: 4px 6px;
-      font-size: 0.67rem;
-      line-height: 1.5;
-      color: var(--sl-dim);
-    }
-    .ssd-notes-label {
-      font-size: 0.62rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: var(--sl);
-      margin-bottom: 2px;
-    }
-    /* ── Right column: weapons ────────────────────────── */
-    .ssd-weapons-col {
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-    .ssd-weapon-section {
-      border: 1.5px solid var(--sl);
-      background: rgba(255,255,255,0.7);
-    }
-    .ssd-weapon-header {
-      border-bottom: 1px solid var(--sl);
-      padding: 3px 6px;
-      background: rgba(0,0,0,0.05);
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-    }
-    .ssd-weapon-name {
-      font-size: 0.72rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-    .ssd-weapon-hit {
-      font-size: 0.6rem;
-      font-weight: 700;
-      color: var(--sl-dim);
-    }
-    .ssd-weapon-body { padding: 4px 6px; }
-    .ssd-weapon-stats {
-      display: flex;
-      gap: 3px;
-      flex-wrap: wrap;
-      margin-bottom: 3px;
-    }
-    .ssd-weapon-stat-tag {
-      border: 1px solid var(--sl);
-      padding: 1px 4px;
-      background: #fff;
-      font-size: 0.63rem;
-      font-weight: 700;
-    }
-    .ssd-weapon-traits {
-      font-size: 0.6rem;
-      color: var(--sl-dim);
-      font-style: italic;
-    }
-    /* Sheet footer */
-    .ssd-footer {
-      margin-top: 6px;
-      border-top: 1px solid var(--sl);
-      padding-top: 4px;
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.6rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--sl-dim);
+      max-width: 920px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
     }
 
     /* ── Toast ────────────────────────────────────────── */
@@ -574,15 +241,12 @@
     <!-- ── Toolbar ──────────────────────────────────────── -->
     <div class="builder-toolbar" id="builder-toolbar">
       <span class="toolbar-title">⚙ SSD Builder</span>
-      <div class="form-group" style="flex-direction:row;align-items:center;gap:var(--sp-2)">
-        <label class="form-label" for="load-ship-select" style="white-space:nowrap">Load Template:</label>
-        <select id="load-ship-select" class="form-select" style="max-width:220px"></select>
-        <button id="load-ship-btn" class="btn btn-ghost btn-sm">Load →</button>
-      </div>
       <div class="toolbar-actions">
-        <button id="new-ship-btn"   class="btn btn-ghost btn-sm">+ New Ship</button>
+        <button id="new-ship-btn"   class="btn btn-ghost btn-sm">+ New</button>
         <button id="save-btn"       class="btn btn-secondary btn-sm">💾 Save</button>
         <button id="load-local-btn" class="btn btn-ghost btn-sm">📂 Load Saved</button>
+        <button id="import-btn"     class="btn btn-ghost btn-sm">⬆ Import JSON</button>
+        <input  id="import-file"    type="file" accept=".json">
         <button id="export-btn"     class="btn btn-ghost btn-sm">⬇ Export JSON</button>
         <button id="print-btn"      class="btn btn-primary btn-sm">🖨 Print</button>
       </div>
@@ -598,93 +262,111 @@
         <div class="editor-section">
           <div class="editor-section-header">Ship Identity</div>
           <div class="editor-section-body">
+            <div class="form-group">
+              <label class="form-label" for="e-classname">Class Name</label>
+              <input id="e-classname" class="form-input" type="text" maxlength="40" placeholder="CLASSNAME">
+            </div>
             <div class="form-row">
               <div class="form-group">
-                <label class="form-label" for="e-name">Ship Name</label>
-                <input id="e-name" class="form-input" type="text" maxlength="40" placeholder="Resolve">
+                <label class="form-label" for="e-shiptype">Ship Type</label>
+                <input id="e-shiptype" class="form-input" type="text" maxlength="40" placeholder="shiptype">
               </div>
               <div class="form-group">
-                <label class="form-label" for="e-class">Class</label>
-                <input id="e-class" class="form-input" type="text" maxlength="60" placeholder="Resolve-class Frigate">
+                <label class="form-label" for="e-idcode">ID Code</label>
+                <input id="e-idcode" class="form-input" type="text" maxlength="6" placeholder="ID">
               </div>
             </div>
             <div class="form-row">
               <div class="form-group">
                 <label class="form-label" for="e-faction">Faction</label>
-                <input id="e-faction" class="form-input" type="text" maxlength="60" placeholder="[Placeholder Faction]">
+                <input id="e-faction" class="form-input" type="text" maxlength="40" placeholder="FACTION">
               </div>
               <div class="form-group">
-                <label class="form-label" for="e-role">Role</label>
-                <input id="e-role" class="form-input" type="text" maxlength="40" placeholder="Frigate">
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label" for="e-base-power">Base Power</label>
-                <input id="e-base-power" class="form-input" type="number" min="1" max="12" value="3">
-              </div>
-              <div class="form-group">
-                <label class="form-label" for="e-agility">Agility</label>
-                <input id="e-agility" class="form-input" type="number" min="0" max="10" value="2">
-              </div>
-            </div>
-            <div class="form-row">
-              <div class="form-group">
-                <label class="form-label" for="e-toughness">Toughness</label>
-                <input id="e-toughness" class="form-input" type="number" min="0" max="10" value="3">
+                <label class="form-label" for="e-fleetpoints">Fleet Points</label>
+                <input id="e-fleetpoints" class="form-input" type="text" maxlength="8" placeholder="000">
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Engineering Track -->
+        <!-- Left-column Sections -->
         <div class="editor-section">
-          <div class="editor-section-header">Engineering Track</div>
+          <div class="editor-section-header">Left Column — Sections</div>
           <div class="editor-section-body">
-            <div class="track-editor" id="eng-track-editor">
-              <div class="track-editor-controls">
+            <p style="font-size:0.72rem;color:var(--color-text-dim);margin:0">
+              Each section shows a d6 hit-location label and up to two boost-box labels.<br>
+              Use <code style="font-size:0.7rem">|</code> as a line-break within a boost box (e.g. <code style="font-size:0.7rem">⇒|⚡+|</code>).
+            </p>
+
+            <!-- Structure -->
+            <div style="border-top:1px solid var(--color-border);padding-top:var(--sp-3)">
+              <div style="font-size:0.75rem;font-weight:700;color:var(--color-cyan);margin-bottom:var(--sp-2)">Structure</div>
+              <div class="form-row">
                 <div class="form-group">
-                  <label class="form-label">Box Count</label>
-                  <input id="eng-box-count" class="form-input" type="number" min="1" max="20" value="8">
+                  <label class="form-label" for="e-str-hit">Hit Label</label>
+                  <input id="e-str-hit" class="form-input" type="text" maxlength="12" placeholder="1,3,5">
                 </div>
                 <div class="form-group">
-                  <label class="form-label">Hit d6 Nums</label>
-                  <input id="eng-hit-nums" class="form-input" type="text" placeholder="1,2" value="1,2">
-                  <span class="hit-numbers-hint">d6 values (1–6) that target this track</span>
+                  <label class="form-label" for="e-str-boost1">Boost Box 1</label>
+                  <input id="e-str-boost1" class="form-input" type="text" maxlength="20" placeholder="⚡+1">
                 </div>
               </div>
               <div class="form-group">
-                <label class="form-label">Power Levels (comma-separated, high→low)</label>
-                <input id="eng-power-levels" class="form-input" type="text" placeholder="3,2,1">
-                <span class="hit-numbers-hint">Power available at each degradation step (e.g. 3,2,1)</span>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Threshold Positions</label>
-                <input id="eng-thresholds" class="form-input" type="text" placeholder="3,5,7">
-                <span class="hit-numbers-hint">Box indices (0-based) where cross-hatch markers appear</span>
+                <label class="form-label" for="e-str-boost2">Boost Box 2</label>
+                <input id="e-str-boost2" class="form-input" type="text" maxlength="20" placeholder="⚙⚡">
               </div>
             </div>
-          </div>
-        </div>
 
-        <!-- FTL Track -->
-        <div class="editor-section">
-          <div class="editor-section-header">FTL Track</div>
-          <div class="editor-section-body">
-            <div class="track-editor">
-              <div class="track-editor-controls">
+            <!-- Engineering -->
+            <div style="border-top:1px solid var(--color-border);padding-top:var(--sp-3)">
+              <div style="font-size:0.75rem;font-weight:700;color:var(--color-cyan);margin-bottom:var(--sp-2)">Engineering</div>
+              <div class="form-row">
                 <div class="form-group">
-                  <label class="form-label">Box Count</label>
-                  <input id="ftl-box-count" class="form-input" type="number" min="1" max="12" value="4">
+                  <label class="form-label" for="e-eng-hit">Hit Label</label>
+                  <input id="e-eng-hit" class="form-input" type="text" maxlength="12" placeholder="1-2">
                 </div>
                 <div class="form-group">
-                  <label class="form-label">Hit d6 Nums</label>
-                  <input id="ftl-hit-nums" class="form-input" type="text" placeholder="3" value="3">
+                  <label class="form-label" for="e-eng-boost1">Boost Box 1</label>
+                  <input id="e-eng-boost1" class="form-input" type="text" maxlength="20" placeholder="⇒⚡+1">
                 </div>
               </div>
               <div class="form-group">
-                <label class="form-label">Threshold Positions</label>
-                <input id="ftl-thresholds" class="form-input" type="text" placeholder="2">
+                <label class="form-label" for="e-eng-boost2">Boost Box 2</label>
+                <input id="e-eng-boost2" class="form-input" type="text" maxlength="20" placeholder="▶⚡">
+              </div>
+            </div>
+
+            <!-- Weapons -->
+            <div style="border-top:1px solid var(--color-border);padding-top:var(--sp-3)">
+              <div style="font-size:0.75rem;font-weight:700;color:var(--color-cyan);margin-bottom:var(--sp-2)">Weapons</div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="e-wpn-hit">Hit Label</label>
+                  <input id="e-wpn-hit" class="form-input" type="text" maxlength="12" placeholder="3-4">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="e-wpn-boost1">Boost Box 1</label>
+                  <input id="e-wpn-boost1" class="form-input" type="text" maxlength="20" placeholder="▽/⚡">
+                </div>
+              </div>
+            </div>
+
+            <!-- Systems -->
+            <div style="border-top:1px solid var(--color-border);padding-top:var(--sp-3)">
+              <div style="font-size:0.75rem;font-weight:700;color:var(--color-cyan);margin-bottom:var(--sp-2)">Systems</div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="e-sys-hit">Hit Label</label>
+                  <input id="e-sys-hit" class="form-input" type="text" maxlength="12" placeholder="5-6">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="e-sys-boost1">Boost Box 1</label>
+                  <input id="e-sys-boost1" class="form-input" type="text" maxlength="20" placeholder="⚙⚡+1">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="e-sys-boost2">Boost Box 2</label>
+                <input id="e-sys-boost2" class="form-input" type="text" maxlength="20" placeholder="⊕⚡+1">
               </div>
             </div>
           </div>
@@ -694,77 +376,285 @@
         <div class="editor-section">
           <div class="editor-section-header">Primary Weapon</div>
           <div class="editor-section-body">
-            <div class="track-editor">
-              <div class="form-group">
-                <label class="form-label">Weapon Name</label>
-                <input id="pw-name" class="form-input" type="text" placeholder="Main Battery">
-              </div>
-              <div class="track-editor-controls">
-                <div class="form-group">
-                  <label class="form-label">Box Count</label>
-                  <input id="pw-box-count" class="form-input" type="number" min="1" max="16" value="6">
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Hit d6 Nums</label>
-                  <input id="pw-hit-nums" class="form-input" type="text" placeholder="4,5">
+            <div class="weapon-editor">
+              <div class="form-row">
+                <div class="form-group full">
+                  <label class="form-label" for="e-pw-name">Weapon Name</label>
+                  <input id="e-pw-name" class="form-input" type="text" maxlength="40" placeholder="Primary Weapon">
                 </div>
               </div>
               <div class="form-group">
-                <label class="form-label">Threshold Positions</label>
-                <input id="pw-thresholds" class="form-input" type="text" placeholder="3">
+                <label class="form-label" for="e-pw-trait">Trait</label>
+                <input id="e-pw-trait" class="form-input" type="text" maxlength="60" placeholder="e.g. Guided, Repeatable">
               </div>
-              <div class="track-editor-controls">
-                <div class="form-group">
-                  <label class="form-label">Range</label>
-                  <input id="pw-range" class="form-input" type="text" placeholder='0–12"'>
+              <div class="weapon-arc-row">
+                <div>
+                  <div class="arc-label">Firing Arcs</div>
+                  <div class="arc-grid">
+                    <div class="arc-cell"><input type="checkbox" id="e-pw-arc-NW"><label for="e-pw-arc-NW">NW</label></div>
+                    <div class="arc-cell"><input type="checkbox" id="e-pw-arc-N"><label for="e-pw-arc-N">N</label></div>
+                    <div class="arc-cell"><input type="checkbox" id="e-pw-arc-NE"><label for="e-pw-arc-NE">NE</label></div>
+                    <div class="arc-cell"><input type="checkbox" id="e-pw-arc-W"><label for="e-pw-arc-W">W</label></div>
+                    <div class="arc-spacer"></div>
+                    <div class="arc-cell"><input type="checkbox" id="e-pw-arc-E"><label for="e-pw-arc-E">E</label></div>
+                    <div class="arc-cell"><input type="checkbox" id="e-pw-arc-SW"><label for="e-pw-arc-SW">SW</label></div>
+                    <div class="arc-cell"><input type="checkbox" id="e-pw-arc-S"><label for="e-pw-arc-S">S</label></div>
+                    <div class="arc-cell"><input type="checkbox" id="e-pw-arc-SE"><label for="e-pw-arc-SE">SE</label></div>
+                  </div>
                 </div>
-                <div class="form-group">
-                  <label class="form-label">Dice</label>
-                  <input id="pw-dice" class="form-input" type="number" min="1" max="8" value="2">
-                </div>
-              </div>
-              <div class="track-editor-controls">
-                <div class="form-group">
-                  <label class="form-label">Power Cost</label>
-                  <input id="pw-power-cost" class="form-input" type="number" min="0" max="6" value="1">
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Traits</label>
-                  <input id="pw-traits" class="form-input" type="text" placeholder="repeatable">
+                <div style="flex:1;display:flex;flex-direction:column;gap:var(--sp-2)">
+                  <div class="form-row-3">
+                    <div class="form-group">
+                      <label class="form-label" for="e-pw-stat1">Stat 1</label>
+                      <input id="e-pw-stat1" class="form-input" type="text" maxlength="10" placeholder="1 - 2">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="e-pw-stat2">Stat 2</label>
+                      <input id="e-pw-stat2" class="form-input" type="text" maxlength="10" placeholder="1 ▼">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="e-pw-stat3">Stat 3</label>
+                      <input id="e-pw-stat3" class="form-input" type="text" maxlength="10" placeholder="x1">
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Secondary Weapons -->
+        <!-- Alt Weapon A -->
         <div class="editor-section">
-          <div class="editor-section-header">
-            <span>Secondary Weapons</span>
-          </div>
+          <div class="editor-section-header">Alt Weapon A</div>
           <div class="editor-section-body">
-            <div id="secondary-weapons-list"></div>
-            <button class="btn-add" id="add-secondary-btn">+ Add Secondary Weapon</button>
+            <div class="weapon-editor">
+              <div class="form-group">
+                <label class="form-label" for="e-aw-a-name">Weapon Name</label>
+                <input id="e-aw-a-name" class="form-input" type="text" maxlength="40" placeholder="Alt Weapon A">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="e-aw-a-trait">Trait</label>
+                <input id="e-aw-a-trait" class="form-input" type="text" maxlength="60" placeholder="">
+              </div>
+              <div class="weapon-arc-row">
+                <div>
+                  <div class="arc-label">Firing Arcs</div>
+                  <div class="arc-grid">
+                    <div class="arc-cell"><input type="checkbox" id="e-aw-a-arc-NW"><label for="e-aw-a-arc-NW">NW</label></div>
+                    <div class="arc-cell"><input type="checkbox" id="e-aw-a-arc-N"><label for="e-aw-a-arc-N">N</label></div>
+                    <div class="arc-cell"><input type="checkbox" id="e-aw-a-arc-NE"><label for="e-aw-a-arc-NE">NE</label></div>
+                    <div class="arc-cell"><input type="checkbox" id="e-aw-a-arc-W"><label for="e-aw-a-arc-W">W</label></div>
+                    <div class="arc-spacer"></div>
+                    <div class="arc-cell"><input type="checkbox" id="e-aw-a-arc-E"><label for="e-aw-a-arc-E">E</label></div>
+                    <div class="arc-cell"><input type="checkbox" id="e-aw-a-arc-SW"><label for="e-aw-a-arc-SW">SW</label></div>
+                    <div class="arc-cell"><input type="checkbox" id="e-aw-a-arc-S"><label for="e-aw-a-arc-S">S</label></div>
+                    <div class="arc-cell"><input type="checkbox" id="e-aw-a-arc-SE"><label for="e-aw-a-arc-SE">SE</label></div>
+                  </div>
+                </div>
+                <div style="flex:1;display:flex;flex-direction:column;gap:var(--sp-2)">
+                  <div class="form-row-3">
+                    <div class="form-group">
+                      <label class="form-label" for="e-aw-a-stat1">Stat 1</label>
+                      <input id="e-aw-a-stat1" class="form-input" type="text" maxlength="10" placeholder="1 - 2">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="e-aw-a-stat2">Stat 2</label>
+                      <input id="e-aw-a-stat2" class="form-input" type="text" maxlength="10" placeholder="1 ▼">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="e-aw-a-stat3">Stat 3</label>
+                      <input id="e-aw-a-stat3" class="form-input" type="text" maxlength="10" placeholder="x1">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- Generic Tracks -->
+        <!-- Alt Weapon B -->
         <div class="editor-section">
-          <div class="editor-section-header">
-            <span>Generic Subsystem Tracks</span>
-          </div>
+          <div class="editor-section-header">Alt Weapon B</div>
           <div class="editor-section-body">
-            <div id="generic-tracks-list"></div>
-            <button class="btn-add" id="add-generic-btn">+ Add Generic Track</button>
+            <div class="weapon-editor">
+              <div class="form-group">
+                <label class="form-label" for="e-aw-b-name">Weapon Name</label>
+                <input id="e-aw-b-name" class="form-input" type="text" maxlength="40" placeholder="Alt Weapon B">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="e-aw-b-trait">Trait</label>
+                <input id="e-aw-b-trait" class="form-input" type="text" maxlength="60" placeholder="">
+              </div>
+              <div class="weapon-arc-row">
+                <div>
+                  <div class="arc-label">Firing Arcs</div>
+                  <div class="arc-grid">
+                    <div class="arc-cell"><input type="checkbox" id="e-aw-b-arc-NW"><label for="e-aw-b-arc-NW">NW</label></div>
+                    <div class="arc-cell"><input type="checkbox" id="e-aw-b-arc-N"><label for="e-aw-b-arc-N">N</label></div>
+                    <div class="arc-cell"><input type="checkbox" id="e-aw-b-arc-NE"><label for="e-aw-b-arc-NE">NE</label></div>
+                    <div class="arc-cell"><input type="checkbox" id="e-aw-b-arc-W"><label for="e-aw-b-arc-W">W</label></div>
+                    <div class="arc-spacer"></div>
+                    <div class="arc-cell"><input type="checkbox" id="e-aw-b-arc-E"><label for="e-aw-b-arc-E">E</label></div>
+                    <div class="arc-cell"><input type="checkbox" id="e-aw-b-arc-SW"><label for="e-aw-b-arc-SW">SW</label></div>
+                    <div class="arc-cell"><input type="checkbox" id="e-aw-b-arc-S"><label for="e-aw-b-arc-S">S</label></div>
+                    <div class="arc-cell"><input type="checkbox" id="e-aw-b-arc-SE"><label for="e-aw-b-arc-SE">SE</label></div>
+                  </div>
+                </div>
+                <div style="flex:1;display:flex;flex-direction:column;gap:var(--sp-2)">
+                  <div class="form-row-3">
+                    <div class="form-group">
+                      <label class="form-label" for="e-aw-b-stat1">Stat 1</label>
+                      <input id="e-aw-b-stat1" class="form-input" type="text" maxlength="10" placeholder="1 - 2">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="e-aw-b-stat2">Stat 2</label>
+                      <input id="e-aw-b-stat2" class="form-input" type="text" maxlength="10" placeholder="1 ▼">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="e-aw-b-stat3">Stat 3</label>
+                      <input id="e-aw-b-stat3" class="form-input" type="text" maxlength="10" placeholder="x1">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <!-- Notes -->
+        <!-- Alt Weapon C -->
         <div class="editor-section">
-          <div class="editor-section-header">Notes / Special Traits</div>
+          <div class="editor-section-header">Alt Weapon C</div>
+          <div class="editor-section-body">
+            <div class="weapon-editor">
+              <div class="form-group">
+                <label class="form-label" for="e-aw-c-name">Weapon Name</label>
+                <input id="e-aw-c-name" class="form-input" type="text" maxlength="40" placeholder="Alt Weapon C">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="e-aw-c-trait">Trait</label>
+                <input id="e-aw-c-trait" class="form-input" type="text" maxlength="60" placeholder="">
+              </div>
+              <div class="weapon-arc-row">
+                <div>
+                  <div class="arc-label">Firing Arcs</div>
+                  <div class="arc-grid">
+                    <div class="arc-cell"><input type="checkbox" id="e-aw-c-arc-NW"><label for="e-aw-c-arc-NW">NW</label></div>
+                    <div class="arc-cell"><input type="checkbox" id="e-aw-c-arc-N"><label for="e-aw-c-arc-N">N</label></div>
+                    <div class="arc-cell"><input type="checkbox" id="e-aw-c-arc-NE"><label for="e-aw-c-arc-NE">NE</label></div>
+                    <div class="arc-cell"><input type="checkbox" id="e-aw-c-arc-W"><label for="e-aw-c-arc-W">W</label></div>
+                    <div class="arc-spacer"></div>
+                    <div class="arc-cell"><input type="checkbox" id="e-aw-c-arc-E"><label for="e-aw-c-arc-E">E</label></div>
+                    <div class="arc-cell"><input type="checkbox" id="e-aw-c-arc-SW"><label for="e-aw-c-arc-SW">SW</label></div>
+                    <div class="arc-cell"><input type="checkbox" id="e-aw-c-arc-S"><label for="e-aw-c-arc-S">S</label></div>
+                    <div class="arc-cell"><input type="checkbox" id="e-aw-c-arc-SE"><label for="e-aw-c-arc-SE">SE</label></div>
+                  </div>
+                </div>
+                <div style="flex:1;display:flex;flex-direction:column;gap:var(--sp-2)">
+                  <div class="form-row-3">
+                    <div class="form-group">
+                      <label class="form-label" for="e-aw-c-stat1">Stat 1</label>
+                      <input id="e-aw-c-stat1" class="form-input" type="text" maxlength="10" placeholder="1 - 2">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="e-aw-c-stat2">Stat 2</label>
+                      <input id="e-aw-c-stat2" class="form-input" type="text" maxlength="10" placeholder="1 ▼">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" for="e-aw-c-stat3">Stat 3</label>
+                      <input id="e-aw-c-stat3" class="form-input" type="text" maxlength="10" placeholder="x1">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Band Stats -->
+        <div class="editor-section">
+          <div class="editor-section-header">Bottom-Band Stats (8 entries)</div>
+          <div class="editor-section-body">
+            <p class="hint" style="margin:0">Each stat shows an icon symbol and a numeric value in the lower-centre band of the card.</p>
+            <div class="stats-grid">
+              <!-- Stat 1 -->
+              <div class="stat-pair">
+                <label class="form-label">Stat 1</label>
+                <div class="stat-pair-inner">
+                  <input id="e-stat1-icon"  class="form-input" type="text" maxlength="3" placeholder="⇒">
+                  <input id="e-stat1-value" class="form-input" type="text" maxlength="4" placeholder="1">
+                </div>
+              </div>
+              <!-- Stat 2 -->
+              <div class="stat-pair">
+                <label class="form-label">Stat 2</label>
+                <div class="stat-pair-inner">
+                  <input id="e-stat2-icon"  class="form-input" type="text" maxlength="3" placeholder="⊙">
+                  <input id="e-stat2-value" class="form-input" type="text" maxlength="4" placeholder="1">
+                </div>
+              </div>
+              <!-- Stat 3 -->
+              <div class="stat-pair">
+                <label class="form-label">Stat 3</label>
+                <div class="stat-pair-inner">
+                  <input id="e-stat3-icon"  class="form-input" type="text" maxlength="3" placeholder="✕">
+                  <input id="e-stat3-value" class="form-input" type="text" maxlength="4" placeholder="1">
+                </div>
+              </div>
+              <!-- Stat 4 -->
+              <div class="stat-pair">
+                <label class="form-label">Stat 4</label>
+                <div class="stat-pair-inner">
+                  <input id="e-stat4-icon"  class="form-input" type="text" maxlength="3" placeholder="▶">
+                  <input id="e-stat4-value" class="form-input" type="text" maxlength="4" placeholder="1">
+                </div>
+              </div>
+              <!-- Stat 5 -->
+              <div class="stat-pair">
+                <label class="form-label">Stat 5</label>
+                <div class="stat-pair-inner">
+                  <input id="e-stat5-icon"  class="form-input" type="text" maxlength="3" placeholder="↩">
+                  <input id="e-stat5-value" class="form-input" type="text" maxlength="4" placeholder="1">
+                </div>
+              </div>
+              <!-- Stat 6 -->
+              <div class="stat-pair">
+                <label class="form-label">Stat 6</label>
+                <div class="stat-pair-inner">
+                  <input id="e-stat6-icon"  class="form-input" type="text" maxlength="3" placeholder="⚐">
+                  <input id="e-stat6-value" class="form-input" type="text" maxlength="4" placeholder="1">
+                </div>
+              </div>
+              <!-- Stat 7 -->
+              <div class="stat-pair">
+                <label class="form-label">Stat 7</label>
+                <div class="stat-pair-inner">
+                  <input id="e-stat7-icon"  class="form-input" type="text" maxlength="3" placeholder="⚙">
+                  <input id="e-stat7-value" class="form-input" type="text" maxlength="4" placeholder="1">
+                </div>
+              </div>
+              <!-- Stat 8 -->
+              <div class="stat-pair">
+                <label class="form-label">Stat 8</label>
+                <div class="stat-pair-inner">
+                  <input id="e-stat8-icon"  class="form-input" type="text" maxlength="3" placeholder="▽">
+                  <input id="e-stat8-value" class="form-input" type="text" maxlength="4" placeholder="1">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notes + FTL -->
+        <div class="editor-section">
+          <div class="editor-section-header">Notes &amp; FTL Drive</div>
           <div class="editor-section-body">
             <div class="form-group">
-              <textarea id="e-notes" class="form-textarea" placeholder="Special rules, traits, or designer notes..."></textarea>
+              <label class="form-label" for="e-notes">Notes / Special Rules</label>
+              <textarea id="e-notes" class="form-textarea" placeholder="Special rules, traits, designer notes..."></textarea>
+            </div>
+            <div class="form-group" style="flex-direction:row;align-items:center;gap:var(--sp-3)">
+              <input id="e-ftl" type="checkbox">
+              <label class="form-label" for="e-ftl" style="margin:0;cursor:pointer">FTL Drive enabled</label>
             </div>
           </div>
         </div>
